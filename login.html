@@ -2,19 +2,46 @@
 
 <html lang="en">
 <head>
-  <meta charset="utf-8">
+  	<meta charset="UTF-8">
+	<title>MUMS Login</title>
+	<meta name=“viewport” content=“width=device-width, intitial-scale=1.0”>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> 	 
+  	<link rel="stylesheet" href="css/login.css">
 
-  <title>MUMS Login</title>
-  <meta name="Authentication for healthcare workers" content="Login">
-  
-  <link rel="stylesheet" href="css/login.css">
-
-  <!--[if lt IE 9]>
-  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-  <![endif]-->
 </head>
 
 <body>
-  <script src="js/scripts.js"></script>
+	<h2 style="text-align:center">Simple Login Page</h2>
+	
+<div class="col-md-4"></div>
+<div id="LoginBox" class="col-md-4">
+	<form name="login">
+
+		Username<input type="text" name="userid"/></br>
+		Password<input type="password" name="pswrd"/></br>
+		
+		<input type="button" onclick="check(this.form)" value="Login"/>
+		<input type="reset" value="Cancel"/>
+
+	</form>
+</div>
+
+	
+	<script language="javascript">
+	function check(form)/*function to check userid & password*/
+	{
+	 /*the following code checks whether the entered userid and password are matching*/
+	 if(form.userid.value == "MUMS" && form.pswrd.value == "babies")
+	  {
+	    window.open('PatientList.html')
+	    /*opens the target page while Id & password matches*/
+	  }
+	 else
+	 {
+	   alert("Error Password or Username")/*displays error message*/
+	  }
+	}
+	</script>
+
 </body>
 </html>
