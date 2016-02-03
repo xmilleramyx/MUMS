@@ -1,0 +1,186 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Profile: Summary</title>
+        
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="../dist/js/bootstrap.min.js"></script>
+
+        <!-- Bootstrap Select -->
+        <script src="../dist/js/bootstrap-select.js"></script>
+        <link rel="stylesheet" href="../dist/css/bootstrap-select.css">
+
+    	<!-- Bootstrap -->
+    	<link href="../dist/css/bootstrap.min.css" rel="stylesheet">
+    	<link href="../dist/css/style.css" rel="stylesheet">
+        
+        
+        <style>
+            
+            body {
+                font-family: arial; 
+            }
+            #nav {
+                background: #a0a0a0;
+                width: auto;
+                height: 30px;
+                outline: 10px solid #a0a0a0;
+                position: relative;
+                top: -10px;
+            }
+            
+            #nav h2 {
+                text-align:center;
+                position: relative;
+                top: 2px;
+            }
+            
+            #container {
+                background: white;
+                width: auto;  
+            }
+            #main {
+                background: #e0e0e0;
+                width: auto;
+                outline: 10px solid #e0e0e0;
+                position: relative;
+                top: 5px;
+                height: 525px;
+            }
+            .button {
+                background: white;
+                height: 36px;
+                width: 160px;
+                border: 1px solid white;
+                position: relative;
+                text-align: center;
+                font-size: 16px;
+                border-radius: 5px;
+            }
+            .left {
+                float:left;
+                left: 20px;
+                position: relative;
+                top: -4px;
+            }
+            
+            .right {
+                float:right;
+                right:20px;
+                background: lightgrey;
+                border: 1px solid lightgrey;
+                position: relative;
+                top: -4px;
+            }
+            
+            .tab{
+                background: #a0a0a0;
+                width: 16%;
+                position: relative;
+                top: 10px;
+                left: 20px;
+                border: 2px solid #a0a0a0;
+                vertical-align: center;
+                height: 55px;
+            }
+            
+            .tab a {
+                position: relative;
+                top: -4px;
+            }
+            
+            .active{
+                background: #e0e0e0;
+                border: 1px solid #e0e0e0;
+            }
+            #results_container{
+                background: white;
+                width: 97%;
+                height: 94%;
+                position: relative;
+                top: 13px;
+                left: 20px;
+                float: left;
+            }
+            
+            #photo {
+                padding: 20px 0px 0px 20px;
+                width:200px;
+                float: left;
+            }
+            
+            #photo img {
+                width:200px;
+            }
+            
+            #photo h4 {
+                text-align: center;
+                position: relative;
+                top: -10px;
+            }
+            
+            #info {
+                float: right;
+                width: 540px;
+                height: 270px;
+                position: relative;
+                top: 20px;
+                right: 20px;
+                padding: 10px;
+            }
+            
+            #currentLevels{
+                background: #c0c0c0;
+                width: 31%;
+                height: 94%;
+                position: relative;
+                top: 13px;
+                right: 20px;
+                float: right;
+            }
+            
+            label {
+                width: 80px;
+                font-weight: bold;
+                display: inline-block;
+                vertical-align: top;
+                text-align: right;
+            }
+            
+            .note {
+                background: #c0c0c0;
+                height: 150px;
+                width: 600px;
+            }
+            
+            .currentnote {
+                position: relative;
+                width: 95%;
+                left: 20px;
+                float: left;
+            }
+            
+        </style>
+    </head>
+    <body>
+        <div id="nav">
+            <input type="button" class="button left" value="Back to Database">
+            <input type="button" class="button right" value="Start New Test">
+            <h2><span style="color:#e0e0e0">PROFILE</span> JANE DOE</h2>
+        </div>
+        <div id="container">
+            <button class="button tab"><a href="profile_summary.html">OVERVIEW</a></button>
+            <button class="button tab active"><a href="profile_results.html">RESULTS</a></button>
+            <button class="button tab"><a href="profile_notes.html">NOTES</a></button>
+            <div id="main">
+                <div id="results_container">
+
+                </div>
+                
+            </div>
+        </div>
+    </body>
+</html>
