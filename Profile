@@ -5,12 +5,74 @@
   	<meta charset="UTF-8">
 	<title>Profile</title>
 	<meta name=“viewport” content=“width=device-width, intitial-scale=1.0”>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> 	 
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	
+	<link rel="stylesheet" type="text/css" href="bootstrap.css">
+	<link rel="javascript" type="text/javascript" href="bootstrap.min.js">
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> 
   	<link rel="stylesheet" href="css/login.css">
+
+  	<script>/*credit to https://gist.github.com/anantn/4323949 -- Firebase: Detecting 
+  			if data exists. This snippet detects if a user ID is already taken*/
+
+		function go() {
+		  var userId = prompt('Username?', 'Guest');
+		  checkIfUserExists(userId);
+		}
+
+		var USERS_LOCATION = 'https://SampleChat.firebaseIO-demo.com/users';
+
+		function userExistsCallback(userId, exists) {
+		  if (exists) {
+		    alert('user ' + userId + ' exists!');
+		  } else {
+		    alert('user ' + userId + ' does not exist!');
+		  }
+		}
+
+		// Tests to see if /users/<userId> has any data. 
+		function checkIfUserExists(userId) {
+		  var usersRef = new Firebase(USERS_LOCATION);
+		  usersRef.child(userId).once('value', function(snapshot) {
+		    var exists = (snapshot.val() !== null);
+		    userExistsCallback(userId, exists);
+		  });
+		}
+
+
+/*OR THIS CODE by lgomez in the comments
+					// The ideantifier in the collection.
+			var uid = 2;
+			// the data for the object being created/updated.
+			var user = {
+			    name: "Luis",
+			    twitter: "@luisgo"
+			};
+			// attempt to get the child in the collection by uid.
+			db.child('users').child(uid).once('value', function(snapshot){
+			    // if data exists
+			    if (snapshot.exists()) {
+			        // get the ref (in this case /users/2) and update its contents
+			        snapshot.ref().update(user);
+			    } else {
+			        // data does not exist so we wrap the data in an object with
+			        // a member named after the uid so we can pass it as an update
+			        // to the parent.
+			        var payload = {};
+			            payload[uid] = user;
+			        // get the ref's parent and call update on it.
+			        snapshot.ref().parent().update(payload);
+			    }
+			});*/
+	</script>
 
 </head>
 
 <body>
+
+	<!--enabling tabs-->	
 	<script language="javascript">
 		$('#myTabs a').click(function (e) {
 		  e.preventDefault()
@@ -22,10 +84,120 @@
 		$('#myTabs a:last').tab('show') // Select last tab
 		$('#myTabs li:eq(2) a').tab('show') // Select third tab (0-indexed)
 
-
+		$('#someTab').tab('show')
+		
+		$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+		  e.target // newly activated tab
+		  e.relatedTarget // previous active tab
+		})
 	</script>
+	<!--end enabling tabs-->
 	
-Patient Profile w/ tabs
+	<!--Horizontal Nav Bar at Top, credit to http://www.bootply.com/98314-->
+		<nav class="navbar navbar-default" role="navigation">
+		  <div class="navbar-header">
+		    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		      <span class="icon-bar"></span>
+		      <span class="icon-bar"></span>
+		      <span class="icon-bar"></span>
+		    </button>    
+		  </div>
+		  <a class="navbar-brand" href="#">MUMS</a>
+		  <div class="navbar-collapse collapse">
+		    <!--<ul class="nav navbar-nav navbar-left">
+		        <li><a href="#">Left</a></li>
+		        <li><a href="#about">Left</a></li>
+		    </ul>-->
+		    <ul class="nav navbar-nav navbar-right">
+		      <li><a href="#about">Start New Test</a></li>
+		      <li><a href="#contact">Back To Database</a></li>
+		    </ul>
+		  </div>
+		</nav>
+	<!--end nav bar-->
+
+	<!--tab header-->
+	<ul class="nav nav-tabs">
+	  <li class="active"><a data-toggle="tab" href="#home">Overview</a></li>
+	  <li><a data-toggle="tab" href="#results">Results</a></li>
+	  <li><a data-toggle="tab" href="#notes">Notes</a></li>
+	</ul>
+	<!--end tab header-->
+
+	<div class="tab-content">
+		  <div id="home" class="tab-pane fade in active">
+		  
+			<div id="container">
+			            
+			           <div id="spacer" class="col-sm-1"></div>
+			            <div id="main" >
+			                <div id="profile" class="col-sm-6" style="border:solid 1px;">
+			                    <div id="photo" style="width:100%">
+			                        <img name="photo" src="IMG_1978.png"><br>
+			                        <h4>JANE DOE, 34</h4>
+			                    </div>
+			                    <div id="info">
+			                        <label for="location">Location:</label>
+			                        Location name
+			                        <br>
+			                        <label for="allergies">Allergies:</label>
+			                        Location name
+			                        <br>
+			                        <label for="diseases">Diseases:</label>
+			                        Location name
+			                        <br>
+			                        <label for="children">Children:</label>
+			                        Location name
+			                        <br>  
+			                    </div>  
+			                   
+			                </div>
+			 
+			                <div id="spacer" class="col-sm-1" ></div>
+			                <div id="currentLevels" class="col-sm-3" style="border:solid 1px;">
+			                    <div ><span>CURRENT LEVELS</span></div>
+			                    <label for="location">Location:</label>
+			                        Location name
+			                        <br>
+			                        <label for="allergies">Allergies:</label>
+			                        Location name
+			                        <br>
+			                        <label for="diseases">Diseases:</label>
+			                        Location name
+			                        <br>
+			                        <label for="children">Children:</label>
+			                        Location name
+			                        <br>     
+			                </div>
+			                <div id="spacer" class="col-sm-1"></div>
+			                
+							<div class="note currentnote"></div> 
+
+			            </div>
+			</div><!--end container div-->
+
+
+
+
+
+
+		 </div><!--end home tab-->
+
+
+
+
+		  <div id="results" class="tab-pane fade">
+		    <h3>Menu 1</h3>
+		    <p>Some content in menu 1.</p>
+		  </div>
+
+
+		  <div id="notes" class="tab-pane fade">
+		    <h3>Menu 2</h3>
+		    <p>Some content in menu 2.</p>
+		  </div>
+	</div><!--end tab content div-->
+
 
 
 </body>
