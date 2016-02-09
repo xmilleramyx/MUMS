@@ -109,15 +109,19 @@
 		        <li><a href="#about">Left</a></li>
 		    </ul>-->
 		    <ul class="nav navbar-nav navbar-right">
-		      <li><a href="#about">Start New Test</a></li>
-		      <li><a href="#contact">Back To Database</a></li>
+		      <li>
+		      	<a href="#about">
+		      		<span class="glyphicon glyphicon-camera" aria-hidden="true"></span> Start New Test</a>
+		      </li>
+		      <li><a href="#contact"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Back To Database</a>
+		      </li>
 		    </ul>
 		  </div>
 		</nav>
 	<!--end nav bar-->
 
 	<!--tab header-->
-	<ul class="nav nav-tabs">
+	<ul id="mainTabs" style="margin-bottom:20px;" class="nav nav-tabs">
 	  <li class="active"><a data-toggle="tab" href="#home">Overview</a></li>
 	  <li><a data-toggle="tab" href="#results">Results</a></li>
 	  <li><a data-toggle="tab" href="#notes">Notes</a></li>
@@ -128,46 +132,98 @@
 		  <div id="home" class="tab-pane fade in active">
 		  
 			<div id="container">
-			            
-			           <div id="spacer" class="col-sm-1"></div>
+
+			            <div id="spacer" class="col-sm-1"></div>
 			            <div id="main" >
-			                <div id="profile" class="col-sm-6" style="border:solid 1px;">
-			                    <div id="photo" style="width:100%">
-			                        <img name="photo" src="IMG_1978.png"><br>
-			                        <h4>JANE DOE, 34</h4>
+			                <div id="profile" class="col-sm-4">
+			                    <div id="photo">
+			                        <img style="width: 200px; "name="photo" src="IMG_1978.png"><br>
 			                    </div>
-			                    <div id="info">
+
+								<div id="patientTitle">
+									<h2 id="grabName"></h2>
+
+									<script>
+									var patientName = "Jane Doe";/*this will pull from db*/
+									document.getElementById("grabName").innerHTML = patientName;
+									</script>
+
+								</div>
+
+			                    <div id="patientInfo">
+			                      
 			                        <label for="location">Location:</label>
-			                        Location name
-			                        <br>
+			                        <p id="location"></p>
+			                        <script>
+										var patientLocation = "Santa Clara, CA";/*this will pull from db*/
+										document.getElementById("location").innerHTML = patientLocation;
+									</script>
+
 			                        <label for="allergies">Allergies:</label>
-			                        Location name
-			                        <br>
-			                        <label for="diseases">Diseases:</label>
-			                        Location name
-			                        <br>
-			                        <label for="children">Children:</label>
-			                        Location name
-			                        <br>  
+			                        <p id="allergies"></p>
+			                        <script>
+										var patientAllergies = "none";/*this will pull from db*/
+										document.getElementById("allergies").innerHTML = patientAllergies;
+									</script>
+
+			                        <label for="diseases">Location:</label>
+			                        <p id="diseases"></p>
+			                        <script>
+										var patientDiseases = "Diabetes";/*this will pull from db*/
+										document.getElementById("diseases").innerHTML = patientDiseases;
+									</script>
+
+			                        <label for="children">Location:</label>
+			                        <p id="children"></p>
+			                        <script>
+										var patientOffspring = "Mimi (8), Joey (2)";/*this will pull from db*/
+										document.getElementById("children").innerHTML = patientOffspring;
+									</script>
+
 			                    </div>  
 			                   
 			                </div>
 			 
 			                <div id="spacer" class="col-sm-1" ></div>
-			                <div id="currentLevels" class="col-sm-3" style="border:solid 1px;">
-			                    <div ><span>CURRENT LEVELS</span></div>
-			                    <label for="location">Location:</label>
-			                        Location name
-			                        <br>
-			                        <label for="allergies">Allergies:</label>
-			                        Location name
-			                        <br>
-			                        <label for="diseases">Diseases:</label>
-			                        Location name
-			                        <br>
-			                        <label for="children">Children:</label>
-			                        Location name
-			                        <br>     
+			                <div id="currentLevels" class="col-sm-5">
+			                     	<!--dropdown lists-->
+			                        <div class="dropdown">
+										<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+										    Current Levels
+										    <span class="caret"></span>
+										</button>
+
+										  	<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+										    <li><a href="#">Date</a></li><!--onclick generate new info-->
+										    <li><a href="#">Date2</a></li>
+										    <li><a href="#">Date3</a></li>
+										    <li role="separator" class="divider"></li>
+										    <li><a href="#">Separated link</a></li>
+										  </ul>
+
+									</div> 
+										<!--end dropdown-->  
+
+			                    <table class="table table-striped">
+								    <tbody>
+								      <tr>
+								        <td>Location</td>
+								        <td>sample</td>
+								        <td>john@example.com</td>
+								      </tr>
+								      <tr>
+								        <td>Mary</td>
+								        <td>Moe</td>
+								        <td>mary@example.com</td>
+								      </tr>
+								      <tr>
+								        <td>July</td>
+								        <td>Dooley</td>
+								        <td>july@example.com</td>
+								      </tr>
+								    </tbody>
+								</table>
+		                       
 			                </div>
 			                <div id="spacer" class="col-sm-1"></div>
 			                
