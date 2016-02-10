@@ -133,24 +133,23 @@
 		  
 			<div id="container">
 
-			            <div id="spacer" class="col-sm-1"></div>
-			            <div id="main" >
-			                <div id="profile" class="col-sm-4">
-			                    <div id="photo">
-			                        <img style="width: 200px; "name="photo" src="IMG_1978.png"><br>
-			                    </div>
+			            
+			            <div id="main" class="row">
+			                
+			                <div id="profile" class="col-sm-3" style="margin-left:10px;">
+			                        <img class="img-responsive" style="margin-bottom:-30px;" name="photo" src="IMG_1978.png"><br>
 
-								<div id="patientTitle">
-									<h2 id="grabName"></h2>
+									<h3 id="patientTitle"></h3>
 
 									<script>
 									var patientName = "Jane Doe";/*this will pull from db*/
-									document.getElementById("grabName").innerHTML = patientName;
+									document.getElementById("patientTitle").innerHTML = patientName;
 									</script>
 
-								</div>
+								
+							</div><!--end profile(name and pic)-->
 
-			                    <div id="patientInfo">
+			                    <div id="patientInfo" class="col-sm-2">
 			                      
 			                        <label for="location">Location:</label>
 			                        <p id="location"></p>
@@ -166,14 +165,14 @@
 										document.getElementById("allergies").innerHTML = patientAllergies;
 									</script>
 
-			                        <label for="diseases">Location:</label>
-			                        <p id="diseases"></p>
+			                        <label for="ailments">Known Ailments:</label>
+			                        <p id="ailments"></p>
 			                        <script>
-										var patientDiseases = "Diabetes";/*this will pull from db*/
-										document.getElementById("diseases").innerHTML = patientDiseases;
+										var patientAilments = "Diabetes";/*this will pull from db*/
+										document.getElementById("ailments").innerHTML = patientAilments;
 									</script>
 
-			                        <label for="children">Location:</label>
+			                        <label for="children">Children:</label>
 			                        <p id="children"></p>
 			                        <script>
 										var patientOffspring = "Mimi (8), Joey (2)";/*this will pull from db*/
@@ -182,17 +181,17 @@
 
 			                    </div>  
 			                   
-			                </div>
+			            
 			 
 			                <div id="spacer" class="col-sm-1" ></div>
-			                <div id="currentLevels" class="col-sm-5">
+			                <div id="recentLevels" class="col-sm-5">
 			                     	<!--dropdown lists-->
-			                        <div class="dropdown">
+			                        <div style="margin-bottom: 10px;"class="dropdown">
 										<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-										    Current Levels
+										    Most Recent Levels
 										    <span class="caret"></span>
 										</button>
-
+											</br>
 										  	<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 										    <li><a href="#">Date</a></li><!--onclick generate new info-->
 										    <li><a href="#">Date2</a></li>
@@ -202,34 +201,45 @@
 										  </ul>
 
 									</div> 
-										<!--end dropdown-->  
+									<!--end dropdown-->  
 
-			                    <table class="table table-striped">
-								    <tbody>
-								      <tr>
-								        <td>Location</td>
-								        <td>sample</td>
-								        <td>john@example.com</td>
-								      </tr>
-								      <tr>
-								        <td>Mary</td>
-								        <td>Moe</td>
-								        <td>mary@example.com</td>
-								      </tr>
-								      <tr>
-								        <td>July</td>
-								        <td>Dooley</td>
-								        <td>july@example.com</td>
-								      </tr>
-								    </tbody>
-								</table>
+					                    <table class="table table-striped">
+										    <tbody>
+										      <tr>
+										        <td>pH</td>
+										        <td id="pHResults">4.0-9.0pH</td>
+										       
+										      </tr>
+										      <tr>
+										        <td>Nitrites</td>
+										        <td id="nitriteResults">Positive/Negative</td>
+										    
+										      </tr>
+										      <tr>
+										        <td>Ketones</td>
+										        <td id="ketoneResults"> 0-5,000mg/d</td>
+										       
+										      </tr>
+										      <tr>								
+										        <td>Glucose</td>
+										        <td id="glucoseResults">0-5,000mg/dL</td>
+										   
+										      </tr>
+										    </tbody>
+										</table>
 		                       
-			                </div>
-			                <div id="spacer" class="col-sm-1"></div>
+			               			 </div><!--end results table-->
+			               			 <div id="spacer" class="col-sm-1"></div>
 			                
-							<div class="note currentnote"></div> 
+			            </div><!--end main-->
 
-			            </div>
+						<div id="secondary" class="row">
+
+							<div class="well well-lg">oh hey</div> 
+
+
+						</div><!--end secondary-->
+			            
 			</div><!--end container div-->
 
 
@@ -241,18 +251,72 @@
 
 
 
+<div id="results" class="tab-pane fade">
+		    
 
-		  <div id="results" class="tab-pane fade">
-		    <h3>Menu 1</h3>
-		    <p>Some content in menu 1.</p>
-		  </div>
+		<div class="container">
+			  <h2>Colored Progress Bars</h2>
+			  <p>The contextual classes colors the progress bars:</p> 
+			<div class="progress">
+			    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:40%">
+			      40% Complete (success)
+			    </div>
+			</div>
+			<div class="progress">
+			    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:50%">
+			      50% Complete (info)
+			    </div>
+			</div>
+			<div class="progress">
+			    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:60%">
+			      60% Complete (warning)
+			    </div>
+			</div>
+			<div class="progress">
+			    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:70%">
+			      70% Complete (danger)
+			    </div>
+			</div>
+
+<!--progress bar that updates with javascript-->
+		<div class="progress">
+		    <div class="progress-bar progress-bar-info" id="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+		    progress    
+		    </div>
+		</div>
+
+		<script>
+		$(function() {
+		  var value = 0;
+		  var interval = setInterval(function() {
+		      value += 10;
+		      $("#progress-bar")
+		      .css("width", value + "%")/*this is how the css is changed to move the bar, could also be used to change the color of the bar*/
+		      .attr("aria-valuenow", value)
+		      .text(value + "%");
+		      if (value >= 100)
+		          clearInterval(interval);
+		  }, 1000);
+		});
+		</script>
+
+<!--end dynamic progress bar-->
+
+		</div><!--end container-->
 
 
-		  <div id="notes" class="tab-pane fade">
-		    <h3>Menu 2</h3>
-		    <p>Some content in menu 2.</p>
-		  </div>
-	</div><!--end tab content div-->
+</div><!--end results tab-->
+
+
+
+<div id="notes" class="tab-pane fade">
+		    
+	<div class="container">
+	    <h3>Menu 2</h3>
+	    <p>Some content in menu 2.</p>
+	</div>
+
+</div><!--end notes tab div-->
 
 
 
