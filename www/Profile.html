@@ -1,0 +1,324 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  	<meta charset="UTF-8">
+	<title>Profile</title>
+	<meta name=“viewport” content=“width=device-width, intitial-scale=1.0”>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	
+	<link rel="stylesheet" type="text/css" href="bootstrap.css">
+	<link rel="javascript" type="text/javascript" href="bootstrap.min.js">
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> 
+  	<link rel="stylesheet" href="css/login.css">
+
+  	<script>/*credit to https://gist.github.com/anantn/4323949 -- Firebase: Detecting 
+  			if data exists. This snippet detects if a user ID is already taken*/
+
+		function go() {
+		  var userId = prompt('Username?', 'Guest');
+		  checkIfUserExists(userId);
+		}
+
+		var USERS_LOCATION = 'https://SampleChat.firebaseIO-demo.com/users';
+
+		function userExistsCallback(userId, exists) {
+		  if (exists) {
+		    alert('user ' + userId + ' exists!');
+		  } else {
+		    alert('user ' + userId + ' does not exist!');
+		  }
+		}
+
+		// Tests to see if /users/<userId> has any data. 
+		function checkIfUserExists(userId) {
+		  var usersRef = new Firebase(USERS_LOCATION);
+		  usersRef.child(userId).once('value', function(snapshot) {
+		    var exists = (snapshot.val() !== null);
+		    userExistsCallback(userId, exists);
+		  });
+		}
+
+
+/*OR THIS CODE by lgomez in the comments
+					// The ideantifier in the collection.
+			var uid = 2;
+			// the data for the object being created/updated.
+			var user = {
+			    name: "Luis",
+			    twitter: "@luisgo"
+			};
+			// attempt to get the child in the collection by uid.
+			db.child('users').child(uid).once('value', function(snapshot){
+			    // if data exists
+			    if (snapshot.exists()) {
+			        // get the ref (in this case /users/2) and update its contents
+			        snapshot.ref().update(user);
+			    } else {
+			        // data does not exist so we wrap the data in an object with
+			        // a member named after the uid so we can pass it as an update
+			        // to the parent.
+			        var payload = {};
+			            payload[uid] = user;
+			        // get the ref's parent and call update on it.
+			        snapshot.ref().parent().update(payload);
+			    }
+			});*/
+	</script>
+
+</head>
+
+<body>
+
+	<!--enabling tabs-->	
+	<script language="javascript">
+		$('#myTabs a').click(function (e) {
+		  e.preventDefault()
+		  $(this).tab('show')
+		})
+
+		$('#myTabs a[href="#profile"]').tab('show') // Select tab by name
+		$('#myTabs a:first').tab('show') // Select first tab
+		$('#myTabs a:last').tab('show') // Select last tab
+		$('#myTabs li:eq(2) a').tab('show') // Select third tab (0-indexed)
+
+		$('#someTab').tab('show')
+		
+		$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+		  e.target // newly activated tab
+		  e.relatedTarget // previous active tab
+		})
+	</script>
+	<!--end enabling tabs-->
+	
+	<!--Horizontal Nav Bar at Top, credit to http://www.bootply.com/98314-->
+		<nav class="navbar navbar-default" role="navigation">
+		  <div class="navbar-header">
+		    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		      <span class="icon-bar"></span>
+		      <span class="icon-bar"></span>
+		      <span class="icon-bar"></span>
+		    </button>    
+		  </div>
+		  <a class="navbar-brand" href="#">MUMS</a>
+		  <div class="navbar-collapse collapse">
+		    <!--<ul class="nav navbar-nav navbar-left">
+		        <li><a href="#">Left</a></li>
+		        <li><a href="#about">Left</a></li>
+		    </ul>-->
+		    <ul class="nav navbar-nav navbar-right">
+		      <li>
+		      	<a href="#about">
+		      		<span class="glyphicon glyphicon-camera" aria-hidden="true"></span> Start New Test</a>
+		      </li>
+		      <li><a href="#contact"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Back To Database</a>
+		      </li>
+		    </ul>
+		  </div>
+		</nav>
+	<!--end nav bar-->
+
+	<!--tab header-->
+	<ul id="mainTabs" style="margin-bottom:20px;" class="nav nav-tabs">
+	  <li class="active"><a data-toggle="tab" href="#home">Overview</a></li>
+	  <li><a data-toggle="tab" href="#results">Results</a></li>
+	  <li><a data-toggle="tab" href="#notes">Notes</a></li>
+	</ul>
+	<!--end tab header-->
+
+	<div class="tab-content">
+		  <div id="home" class="tab-pane fade in active">
+		  
+			<div id="container">
+
+			            
+			            <div id="main" class="row">
+			                
+			                <div id="profile" class="col-sm-3" style="margin-left:10px;">
+			                        <img class="img-responsive" style="margin-bottom:-30px;" name="photo" src="IMG_1978.png"><br>
+
+									<h3 id="patientTitle"></h3>
+
+									<script>
+									var patientName = "Jane Doe";/*this will pull from db*/
+									document.getElementById("patientTitle").innerHTML = patientName;
+									</script>
+
+								
+							</div><!--end profile(name and pic)-->
+
+			                    <div id="patientInfo" class="col-sm-2">
+			                      
+			                        <label for="location">Location:</label>
+			                        <p id="location"></p>
+			                        <script>
+										var patientLocation = "Santa Clara, CA";/*this will pull from db*/
+										document.getElementById("location").innerHTML = patientLocation;
+									</script>
+
+			                        <label for="allergies">Allergies:</label>
+			                        <p id="allergies"></p>
+			                        <script>
+										var patientAllergies = "none";/*this will pull from db*/
+										document.getElementById("allergies").innerHTML = patientAllergies;
+									</script>
+
+			                        <label for="ailments">Known Ailments:</label>
+			                        <p id="ailments"></p>
+			                        <script>
+										var patientAilments = "Diabetes";/*this will pull from db*/
+										document.getElementById("ailments").innerHTML = patientAilments;
+									</script>
+
+			                        <label for="children">Children:</label>
+			                        <p id="children"></p>
+			                        <script>
+										var patientOffspring = "Mimi (8), Joey (2)";/*this will pull from db*/
+										document.getElementById("children").innerHTML = patientOffspring;
+									</script>
+
+			                    </div>  
+			                   
+			            
+			 
+			                <div id="spacer" class="col-sm-1" ></div>
+			                <div id="recentLevels" class="col-sm-5">
+			                     	<!--dropdown lists-->
+			                        <div style="margin-bottom: 10px;"class="dropdown">
+										<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+										    Most Recent Levels
+										    <span class="caret"></span>
+										</button>
+											</br>
+										  	<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+										    <li><a href="#">Date</a></li><!--onclick generate new info-->
+										    <li><a href="#">Date2</a></li>
+										    <li><a href="#">Date3</a></li>
+										    <li role="separator" class="divider"></li>
+										    <li><a href="#">Separated link</a></li>
+										  </ul>
+
+									</div> 
+									<!--end dropdown-->  
+
+					                    <table class="table table-striped">
+										    <tbody>
+										      <tr>
+										        <td>pH</td>
+										        <td id="pHResults">4.0-9.0pH</td>
+										       
+										      </tr>
+										      <tr>
+										        <td>Nitrites</td>
+										        <td id="nitriteResults">Positive/Negative</td>
+										    
+										      </tr>
+										      <tr>
+										        <td>Ketones</td>
+										        <td id="ketoneResults"> 0-5,000mg/d</td>
+										       
+										      </tr>
+										      <tr>								
+										        <td>Glucose</td>
+										        <td id="glucoseResults">0-5,000mg/dL</td>
+										   
+										      </tr>
+										    </tbody>
+										</table>
+		                       
+			               			 </div><!--end results table-->
+			               			 <div id="spacer" class="col-sm-1"></div>
+			                
+			            </div><!--end main-->
+
+						<div id="secondary" class="row">
+
+							<div class="well well-lg">oh hey</div> 
+
+
+						</div><!--end secondary-->
+			            
+			</div><!--end container div-->
+
+
+
+
+
+
+		 </div><!--end home tab-->
+
+
+
+<div id="results" class="tab-pane fade">
+		    
+
+		<div class="container">
+			  <h2>Colored Progress Bars</h2>
+			  <p>The contextual classes colors the progress bars:</p> 
+			<div class="progress">
+			    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:40%">
+			      40% Complete (success)
+			    </div>
+			</div>
+			<div class="progress">
+			    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:50%">
+			      50% Complete (info)
+			    </div>
+			</div>
+			<div class="progress">
+			    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:60%">
+			      60% Complete (warning)
+			    </div>
+			</div>
+			<div class="progress">
+			    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:70%">
+			      70% Complete (danger)
+			    </div>
+			</div>
+
+<!--progress bar that updates with javascript-->
+		<div class="progress">
+		    <div class="progress-bar progress-bar-info" id="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+		    progress    
+		    </div>
+		</div>
+
+		<script>
+		$(function() {
+		  var value = 0;
+		  var interval = setInterval(function() {
+		      value += 10;
+		      $("#progress-bar")
+		      .css("width", value + "%")/*this is how the css is changed to move the bar, could also be used to change the color of the bar*/
+		      .attr("aria-valuenow", value)
+		      .text(value + "%");
+		      if (value >= 100)
+		          clearInterval(interval);
+		  }, 1000);
+		});
+		</script>
+
+<!--end dynamic progress bar-->
+
+		</div><!--end container-->
+
+
+</div><!--end results tab-->
+
+
+
+<div id="notes" class="tab-pane fade">
+		    
+	<div class="container">
+	    <h3>Menu 2</h3>
+	    <p>Some content in menu 2.</p>
+	</div>
+
+</div><!--end notes tab div-->
+
+
+
+</body>
+</html>
