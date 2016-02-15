@@ -8,25 +8,11 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> 	 
   	<link rel="stylesheet" href="css/login.css">
 
-</head>
-
-<body>
-	<h2 style="text-align:center">Simple Login Page</h2>
-	
-<div class="col-md-4"></div>
-<div id="LoginBox" class="col-md-4">
-	<form name="login">
-
-		Username<input type="text" name="userid"/></br>
-		Password<input type="password" name="pswrd"/></br>
-		
-		<input type="button" onclick="check(this.form)" value="Login"/>
-		<input type="reset" value="Cancel"/>
-
-	</form>
-</div>
-
-	
+    <script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+    
+    
+    	<!--
 	<script language="javascript">
 	function check(form)/*function to check userid & password*/
 	{
@@ -42,6 +28,52 @@
 	  }
 	}
 	</script>
+    -->
+
+    <script>
+        
+        function checkLogin(){
+            var ref = new Firebase("https://mums.firebaseio.com");
+            var userid = $('#userid').val();
+            var pswrd = $('#pswrd').val(); 
+            ref.authWithPassword({
+                email    : userid,
+                password : pswrd
+            }, function(error, authData) {
+                if (error) {
+                    alert("Login Failed!", error);
+                } else {
+                    alert("Authenticated successfully for: " + userid);
+                    window.location.href = 'PatientList.html';
+                }
+            });
+        }
+
+    </script>
+    
+    
+    
+    
+</head>
+
+<body>
+	<h2 style="text-align:center">Simple Login Page</h2>
+	
+<div class="col-md-4"></div>
+<div id="LoginBox" class="col-md-4">
+	<form name="login">
+
+		Username<input type="text" id="userid"/></br>
+		Password<input type="password" id="pswrd"/></br>
+		
+		<input type="button" onclick="checkLogin()" value="Login"/>
+		<input type="reset" value="Cancel"/>
+        
+        <br>
+        <input type="button" onclick="window.location.href = 'createAccount.html'" value="Create Account"/>
+
+	</form>
+</div>
 
 </body>
 </html>
