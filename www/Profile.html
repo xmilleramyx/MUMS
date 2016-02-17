@@ -14,59 +14,72 @@
   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> 
   	<link rel="stylesheet" href="css/login.css">
 
-  	<script>/*credit to https://gist.github.com/anantn/4323949 -- Firebase: Detecting 
-  			if data exists. This snippet detects if a user ID is already taken*/
+    <script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+        
+    <script>
+        var myDataRef = new Firebase('https://mums.firebaseio.com/-KAbPmQRERC_vWbkdBgU');
+            
+        myDataRef.on('value', function(snapshot) {
+            var message = snapshot.val();
+            display(message.patient_fname, message.patient_lname, message.location, message.known_drug_allergies, message.medical_history);
+        });
+        
+        function display(patient_fname, patient_lname, location, known_drug_allergies, medical_history) {
+            
+            $( '#patientTitle' ).append(patient_fname + ' ' + patient_lname);
+            $( '#location' ).append(location);
+            $( '#known_drug_allergies' ).append(known_drug_allergies);
+            $( '#medical_history' ).append(medical_history);
+        };    
+        
+    //TEST DATA ADD       
+        function add(){
+            var pH = Math.floor((Math.random() * 10) + 1);
+            var nitrate = Math.floor((Math.random() * 10) + 1);
+            var ketones = "Negative";
+            var glucose = Math.floor((Math.random() * 10) + 1);
+            var timeStamp = "timeStamp";
+            
+            var testRef = myDataRef.child("tests");
+            testRef.push({timeStamp: timeStamp,
+                    pH: pH, 
+                    nitrate: nitrate,
+                    ketones: ketones,
+                    glucose: glucose
+            });   
+            
+        }   
+        
+        var dataLink = 'https://mums.firebaseio.com/-KAbPmQRERC_vWbkdBgU/tests';
+        var DateRef = new Firebase(dataLink);
+        var key;
+        DateRef.on('child_added', function(snapshot) {
+            var message = snapshot.val();
+            key = snapshot.key();
+            
+            var linkDate = dataLink + '/' + key;
+            $( '#dateDropdown').append(
+                '<li><a onclick=displayTable("'+ linkDate +'")>' + message.timeStamp + '</a></li>'
+            );
+            
+        });
 
-		function go() {
-		  var userId = prompt('Username?', 'Guest');
-		  checkIfUserExists(userId);
-		}
+        
+        function displayTable (specKey) {           
+            var ref = new Firebase(specKey);
+            ref.on('value', function(snapshot) {
+                var message = snapshot.val();
 
-		var USERS_LOCATION = 'https://SampleChat.firebaseIO-demo.com/users';
-
-		function userExistsCallback(userId, exists) {
-		  if (exists) {
-		    alert('user ' + userId + ' exists!');
-		  } else {
-		    alert('user ' + userId + ' does not exist!');
-		  }
-		}
-
-		// Tests to see if /users/<userId> has any data. 
-		function checkIfUserExists(userId) {
-		  var usersRef = new Firebase(USERS_LOCATION);
-		  usersRef.child(userId).once('value', function(snapshot) {
-		    var exists = (snapshot.val() !== null);
-		    userExistsCallback(userId, exists);
-		  });
-		}
-
-
-/*OR THIS CODE by lgomez in the comments
-					// The ideantifier in the collection.
-			var uid = 2;
-			// the data for the object being created/updated.
-			var user = {
-			    name: "Luis",
-			    twitter: "@luisgo"
-			};
-			// attempt to get the child in the collection by uid.
-			db.child('users').child(uid).once('value', function(snapshot){
-			    // if data exists
-			    if (snapshot.exists()) {
-			        // get the ref (in this case /users/2) and update its contents
-			        snapshot.ref().update(user);
-			    } else {
-			        // data does not exist so we wrap the data in an object with
-			        // a member named after the uid so we can pass it as an update
-			        // to the parent.
-			        var payload = {};
-			            payload[uid] = user;
-			        // get the ref's parent and call update on it.
-			        snapshot.ref().parent().update(payload);
-			    }
-			});*/
-	</script>
+                $( '#pH' ).text(message.pH);
+                $( '#nitrate' ).text(message.nitrate);
+                $( '#ketones' ).text(message.ketones);
+                $( '#glucose' ).text(message.glucose);
+            });    
+       
+        };
+      
+    </script>
 
 </head>
 
@@ -113,7 +126,7 @@
 		      	<a href="#about">
 		      		<span class="glyphicon glyphicon-camera" aria-hidden="true"></span> Start New Test</a>
 		      </li>
-		      <li><a href="#contact"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Back To Database</a>
+		      <li><a href="Dashboard.html"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Back To Database</a>
 		      </li>
 		    </ul>
 		  </div>
@@ -137,14 +150,9 @@
 			            <div id="main" class="row">
 			                
 			                <div id="profile" class="col-sm-3" style="margin-left:10px;">
-			                        <img class="img-responsive" style="margin-bottom:-30px;" name="photo" src="IMG_1978.png"><br>
+			                        <img class="img-responsive" style="margin-bottom:-30px; height:250px" name="photo" src="IMG_1978.png"><br>
 
 									<h3 id="patientTitle"></h3>
-
-									<script>
-									var patientName = "Jane Doe";/*this will pull from db*/
-									document.getElementById("patientTitle").innerHTML = patientName;
-									</script>
 
 								
 							</div><!--end profile(name and pic)-->
@@ -153,31 +161,12 @@
 			                      
 			                        <label for="location">Location:</label>
 			                        <p id="location"></p>
-			                        <script>
-										var patientLocation = "Santa Clara, CA";/*this will pull from db*/
-										document.getElementById("location").innerHTML = patientLocation;
-									</script>
-
-			                        <label for="allergies">Allergies:</label>
-			                        <p id="allergies"></p>
-			                        <script>
-										var patientAllergies = "none";/*this will pull from db*/
-										document.getElementById("allergies").innerHTML = patientAllergies;
-									</script>
-
-			                        <label for="ailments">Known Ailments:</label>
-			                        <p id="ailments"></p>
-			                        <script>
-										var patientAilments = "Diabetes";/*this will pull from db*/
-										document.getElementById("ailments").innerHTML = patientAilments;
-									</script>
-
-			                        <label for="children">Children:</label>
-			                        <p id="children"></p>
-			                        <script>
-										var patientOffspring = "Mimi (8), Joey (2)";/*this will pull from db*/
-										document.getElementById("children").innerHTML = patientOffspring;
-									</script>
+                                    
+                                    <label for="known_drug_allergies">Known Drug Allergies:</label>
+			                        <p id="known_drug_allergies"></p>
+                                    
+                                    <label for="medical_history">Medical History:</label>
+			                        <p id="medical_history"></p>
 
 			                    </div>  
 			                   
@@ -188,16 +177,12 @@
 			                     	<!--dropdown lists-->
 			                        <div style="margin-bottom: 10px;"class="dropdown">
 										<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-										    Most Recent Levels
+										    Select date
 										    <span class="caret"></span>
 										</button>
 											</br>
-										  	<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-										    <li><a href="#">Date</a></li><!--onclick generate new info-->
-										    <li><a href="#">Date2</a></li>
-										    <li><a href="#">Date3</a></li>
-										    <li role="separator" class="divider"></li>
-										    <li><a href="#">Separated link</a></li>
+										  	<ul id="dateDropdown" class="dropdown-menu" aria-labelledby="dropdownMenu1">
+<!--here-->
 										  </ul>
 
 									</div> 
@@ -207,22 +192,22 @@
 										    <tbody>
 										      <tr>
 										        <td>pH</td>
-										        <td id="pHResults">4.0-9.0pH</td>
+										        <td id="pH"></td>
 										       
 										      </tr>
 										      <tr>
 										        <td>Nitrites</td>
-										        <td id="nitriteResults">Positive/Negative</td>
+										        <td id="nitrate"></td>
 										    
 										      </tr>
 										      <tr>
 										        <td>Ketones</td>
-										        <td id="ketoneResults"> 0-5,000mg/d</td>
+										        <td id="ketones"></td>
 										       
 										      </tr>
 										      <tr>								
 										        <td>Glucose</td>
-										        <td id="glucoseResults">0-5,000mg/dL</td>
+										        <td id="glucose"></td>
 										   
 										      </tr>
 										    </tbody>
