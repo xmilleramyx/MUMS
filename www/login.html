@@ -1,0 +1,79 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  	<meta charset="UTF-8">
+	<title>MUMS Login</title>
+	<meta name=“viewport” content=“width=device-width, intitial-scale=1.0”>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> 	 
+  	<link rel="stylesheet" href="css/login.css">
+
+    <script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+    
+    
+    	<!--
+	<script language="javascript">
+	function check(form)/*function to check userid & password*/
+	{
+	 /*the following code checks whether the entered userid and password are matching*/
+	 if(form.userid.value == "MUMS" && form.pswrd.value == "babies")
+	  {
+	    window.open('PatientList.html')
+	    /*opens the target page while Id & password matches*/
+	  }
+	 else
+	 {
+	   alert("Error Password or Username")/*displays error message*/
+	  }
+	}
+	</script>
+    -->
+
+    <script>
+        
+        function checkLogin(){
+            var ref = new Firebase("https://mums.firebaseio.com");
+            var userid = $('#userid').val();
+            var pswrd = $('#pswrd').val(); 
+            ref.authWithPassword({
+                email    : userid,
+                password : pswrd
+            }, function(error, authData) {
+                if (error) {
+                    alert("Login Failed!", error);
+                } else {
+                    alert("Authenticated successfully for: " + userid);
+                    window.location.href = 'Dashboard.html';
+                }
+            });
+        }
+
+    </script>
+    
+    
+    
+    
+</head>
+
+<body>
+	<h2 style="text-align:center">Login Page</h2>
+	
+<div class="col-md-4"></div>
+<div id="LoginBox" class="col-md-4">
+	<form name="login">
+
+		Username<input type="text" id="userid"/></br>
+		Password<input type="password" id="pswrd"/></br>
+		
+		<input type="button" onclick="checkLogin()" value="Login"/>
+		<input type="reset" value="Cancel"/>
+        
+        <br>
+        <input type="button" onclick="window.location.href = 'createAccount.html'" value="Create Account"/>
+
+	</form>
+</div>
+
+</body>
+</html>

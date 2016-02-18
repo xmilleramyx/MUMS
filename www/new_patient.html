@@ -1,0 +1,88 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  	<meta charset="UTF-8">
+	<title>PatientList</title>
+	<meta name=“viewport” content=“width=device-width, intitial-scale=1.0”>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> 	 
+  	<link rel="stylesheet" href="css/login.css">
+
+    <script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+  	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	
+	<link rel="stylesheet" type="text/css" href="bootstrap.css">
+	<link rel="javascript" type="text/javascript" href="bootstrap.min.js">
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> 
+  	<link rel="stylesheet" href="css/login.css">
+    
+    <!--FIREBASE-->
+    <script>
+        var myDataRef = new Firebase('https://mums.firebaseio.com/');
+      
+        function add(){
+            var patient_fname = $('#patient_fname').val();
+            var patient_lname = $('#patient_lname').val();
+            var location = $('#location').val();
+            var known_drug_allergies = $('#known_drug_allergies').val();
+            var medical_history = $('#medical_history').val();
+            myDataRef.push({patient_fname: patient_fname, 
+                            patient_lname: patient_lname,
+                            location: location,
+                            known_drug_allergies: known_drug_allergies,
+                            medical_history: medical_history
+                            });
+            window.location.href='Dashboard.html'
+        }
+      
+    
+    
+    </script>
+    
+    
+    
+</head>
+
+<body>
+	
+    	<!--Horizontal Nav Bar at Top, credit to http://www.bootply.com/98314-->
+		<nav class="navbar navbar-default" role="navigation">
+		  <div class="navbar-header">
+		    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		      <span class="icon-bar"></span>
+		      <span class="icon-bar"></span>
+		      <span class="icon-bar"></span>
+		    </button>    
+		  </div>
+		  <a class="navbar-brand" href="#">MUMS</a>
+		  <div class="navbar-collapse collapse">
+		    
+		    <ul class="nav navbar-nav navbar-right">
+            
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account Settings <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="login.html">Log Out</a></li>
+                  <li><a href="#">Delete Account</a></li>
+                </ul>
+              </li> 
+            </ul>
+              
+		  </div>
+		</nav>
+	<!--end nav bar-->
+    
+<br>
+    
+    <input type='text' id='patient_fname' placeholder='First Name'>
+    <input type='text' id='patient_lname' placeholder='Last Name'>
+    <input type='text' id='location' placeholder='Location'>
+    <input type='text' id='known_drug_allergies' placeholder='Known Drug Allergies'>
+    <input type='text' id='medical_history' placeholder='Medical History'>
+    <input type='submit' onclick='add()'>
+    
+        
+    
+</body>
+</html>
