@@ -36,16 +36,16 @@
     //TEST DATA ADD       
         function add(){
             var pH = Math.floor((Math.random() * 10) + 1);
-            var nitrate = Math.floor((Math.random() * 10) + 1);
-            var ketones = "Negative";
+            var nitrite = "Negative";
+            var ketone = Math.floor((Math.random() * 10) + 1);
             var glucose = Math.floor((Math.random() * 10) + 1);
-            var timeStamp = "timeStamp";
+            var timeStamp = Firebase.ServerValue.TIMESTAMP;
             
             var testRef = myDataRef.child("tests");
             testRef.push({timeStamp: timeStamp,
                     pH: pH, 
-                    nitrate: nitrate,
-                    ketones: ketones,
+                    nitrite: nitrite,
+                    ketone: ketone,
                     glucose: glucose
             });   
             
@@ -60,23 +60,79 @@
             
             var linkDate = dataLink + '/' + key;
             $( '#dateDropdown').append(
-                '<li><a onclick=displayTable("'+ linkDate +'")>' + message.timeStamp + '</a></li>'
+                '<li><a onclick=overviewTable("'+ linkDate +'")>' + message.timeStamp + '</a></li>'
+            );
+            
+            $( '#dateDropdown2').append(
+                '<li><a onclick=resultsTable("'+ linkDate +'")>' + message.timeStamp + '</a></li>'
             );
             
         });
 
         
-        function displayTable (specKey) {           
+        function overviewTable (specKey) {           
             var ref = new Firebase(specKey);
             ref.on('value', function(snapshot) {
                 var message = snapshot.val();
 
+                $( '#tableTitle').text("Test: " + message.timeStamp);
+                
                 $( '#pH' ).text(message.pH);
-                $( '#nitrate' ).text(message.nitrate);
-                $( '#ketones' ).text(message.ketones);
+                $( '#nitrite' ).text(message.nitrite);
+                $( '#ketone' ).text(message.ketone);
                 $( '#glucose' ).text(message.glucose);
             });    
        
+        };
+        
+        function resultsTable (specKey) {           
+            
+            var ref = new Firebase(specKey);
+            ref.on('value', function(snapshot) {
+                var message = snapshot.val();
+
+                $( '#tableTitle2').text("Test: " + message.timeStamp);
+                
+                checkColor(1, 5, 8, message.pH, pH2, pH_pos1, pH_pos2, pH_pos3);
+                //FIX positive/negative color coding  
+                checkColor("Negative", "Positive", null, message.nitrite, nitrite2, nitrite_pos1, nitrite_pos2, nitrite_pos3);      
+                checkColor(1, 5, 8, message.ketone, ketone2, ketone_pos1, ketone_pos2, ketone_pos3);
+                checkColor(1, 5, 8, message.glucose, glucose2, glucose_pos1, glucose_pos2, glucose_pos3);
+            });    
+        };
+        
+        function checkColor(check1, check2, check3, actualValue, td1, td2, td3, td4) {         
+            $( '#' + td1.id).text(actualValue);
+            
+            //Set Negative
+            if(actualValue <= check1){
+                $( '#' + td1.id).css("background-color", "lime");
+                $( '#' + td2.id).css("background-color", "white");  
+                $( '#' + td3.id).css("background-color", "white");  
+                $( '#' + td4.id).css("background-color", "white");
+            }
+            //Set Positive 1
+            else if(actualValue > check1 && actualValue <= check2){
+                $( '#' + td1.id).css("background-color", "yellow");
+                $( '#' + td2.id).css("background-color", "yellow");
+                $( '#' + td3.id).css("background-color", "white");  
+                $( '#' + td4.id).css("background-color", "white");
+            }
+            //Set Positive 2
+            else if(actualValue > check2 && actualValue <= check3){
+                $( '#' + td1.id).css("background-color", "orange");
+                $( '#' + td2.id).css("background-color", "orange");  
+                $( '#' + td3.id).css("background-color", "orange");
+                $( '#' + td4.id).css("background-color", "white");
+
+            }
+            //Set Positive 3
+            else if(actualValue > check3){
+                $( '#' + td1.id).css("background-color", "red");
+                $( '#' + td2.id).css("background-color", "red");  
+                $( '#' + td3.id).css("background-color", "red");  
+                $( '#' + td4.id).css("background-color", "red"); 
+            } 
         };
       
     </script>
@@ -187,8 +243,8 @@
 
 									</div> 
 									<!--end dropdown-->  
-
-					                    <table class="table table-striped">
+                                        <h4 id="tableTitle"></h4>
+					                    <table id="overviewTable" class="table table-striped">
 										    <tbody>
 										      <tr>
 										        <td>pH</td>
@@ -196,13 +252,13 @@
 										       
 										      </tr>
 										      <tr>
-										        <td>Nitrites</td>
-										        <td id="nitrate"></td>
+										        <td>Nitrite</td>
+										        <td id="nitrite"></td>
 										    
 										      </tr>
 										      <tr>
-										        <td>Ketones</td>
-										        <td id="ketones"></td>
+										        <td>Ketone</td>
+										        <td id="ketone"></td>
 										       
 										      </tr>
 										      <tr>								
@@ -238,7 +294,7 @@
 
 <div id="results" class="tab-pane fade">
 		    
-
+<!--
 		<div class="container">
 			  <h2>Colored Progress Bars</h2>
 			  <p>The contextual classes colors the progress bars:</p> 
@@ -263,7 +319,7 @@
 			    </div>
 			</div>
 
-<!--progress bar that updates with javascript-->
+    
 		<div class="progress">
 		    <div class="progress-bar progress-bar-info" id="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
 		    progress    
@@ -287,9 +343,79 @@
 
 <!--end dynamic progress bar-->
 
-		</div><!--end container-->
+<!--progress bar that updates with javascript-->
+  
+		<!--end container-->
 
+    
+			                <div id="allResults" class="col-sm-5">
+			                     	<!--dropdown lists-->
+			                        <div style="margin-bottom: 10px;"class="dropdown">
+										<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+										    Select date
+										    <span class="caret"></span>
+										</button>
+											</br>
+										  	<ul id="dateDropdown2" class="dropdown-menu" aria-labelledby="dropdownMenu1">
+<!--here-->
+										  </ul>
 
+									</div> 
+									<!--end dropdown-->  
+
+                                    <div>
+                                        <h4 id="tableTitle2"></h4>
+                                        
+					                    <table class="table">
+										    <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>Negative</th>
+                                                    <th>Positive 1</th>
+                                                    <th>Positive 2</th>
+                                                    <th>Positive 3</th>
+                                                </tr>
+                                            </thead>                    
+                                            <tbody>
+										      <tr>
+										        <td>pH</td>
+										        <td id="pH2"></td>
+                                                <td id="pH_pos1"></td>
+										        <td id="pH_pos2"></td>
+                                                <td id="pH_pos3"></td>
+										      </tr>
+										      <tr>
+										        <td>Nitrite</td>
+										        <td id="nitrite2"></td>
+										        <td id="nitrite_pos1"></td>
+										        <td id="nitrite_pos2"></td>
+                                                <td id="nitrite_pos3"></td>
+										      </tr>
+										      <tr>
+										        <td>Ketone</td>
+										        <td id="ketone2"></td>
+										        <td id="ketone_pos1"></td>
+										        <td id="ketone_pos2"></td>
+                                                <td id="ketone_pos3"></td>
+										      </tr>
+										      <tr>								
+										        <td>Glucose</td>
+										        <td id="glucose2"></td>
+										        <td id="glucose_pos1"></td>
+										        <td id="glucose_pos2"></td>
+                                                <td id="glucose_pos3"></td>
+										      </tr>
+										    </tbody>
+										</table>
+		                       
+                                    </div> 
+                                    <!--end results table--> 
+			               			 </div>   
+    
+    
+    
+    
+    
 </div><!--end results tab-->
 
 
