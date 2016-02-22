@@ -21,32 +21,32 @@
         var myDataRef = new Firebase('https://mums.firebaseio.com/');
       
         myDataRef.on('child_added', function(snapshot) {
-        var message = snapshot.val();
-        displayTable(message.patient_fname, message.patient_lname, message.location, message.known_drug_allergies, message.medical_history);
+            var message = snapshot.val();
+            var key = snapshot.key();
+            displayTable(key, message.patient_fname, message.patient_lname, message.location, message.known_drug_allergies, message.medical_history);
         });
         
-        function displayTable(patient_fname, patient_lname, location, known_drug_allergies, medical_history) {
+        function displayTable(key, patient_fname, patient_lname, location, known_drug_allergies, medical_history) {
+            var name = patient_fname + " " + patient_lname;
             $('#patient_table tr:first').after(
                 '<tr><td>' + patient_fname + 
                 '</td><td>' + patient_lname + 
                 '</td><td>' + location +
                 '</td><td>' + known_drug_allergies +
                 '</td><td>' + medical_history +
-                '</td><td><a href="Profile.html">View</a> | <a href="#">Test</a> | <a href="#">Delete</a>' +
+                '</td><td><a href="Profile.html">View</a> | <a href="#">Test</a> | <a href="#" onclick="deletePatient(' + "'" + key + "', '" +   name + "'" + ')">Delete</a>' +
                 '</td></tr>');
         };
-     
-        /* FIGURE OUT FILTERING
-        var $rows = $('#patient_table tr');
-        $('#search').keyup(function() {
-            var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
-            $rows.show().filter(function() {
-                var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
-                return !~text.indexOf(val);
-            }).hide();
-        });
-        */
 
+        function deletePatient(path, name) {
+            if(confirm("Are you sure you want to delete all information for \n" + name + "?")==true){
+                fullPath = "https://mums.firebaseio.com/" + path;
+                var patientRef = new Firebase(fullPath);
+                patientRef.remove();
+                location.reload();
+            }
+        }
+        
 	</script>
 
 </head>
