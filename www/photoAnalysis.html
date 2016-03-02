@@ -33,7 +33,6 @@
     }
 
     // Called when a photo is successfully retrieved
-    //
     function onPhotoDataSuccess(imageData) {
       // Uncomment to view the base64-encoded image data
       // console.log(imageData);
@@ -53,7 +52,6 @@
     }
 
     // Called when a photo is successfully retrieved
-    //
     function onPhotoURISuccess(imageURI) {
       // Uncomment to view the image file URI
       // console.log(imageURI);
@@ -63,12 +61,10 @@
       var largeImage = document.getElementById('largeImage');
 
       // Unhide image elements
-      //
       largeImage.style.display = 'block';
 
       // Show the captured photo
       // The inline CSS rules are used to resize the image
-      //
       largeImage.src = imageURI;
     }
 
@@ -79,39 +75,73 @@
       navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50,
         destinationType: destinationType.DATA_URL });
     }
-
-    // A button will call this function
-    //
-    function capturePhotoEdit() {
-      // Take picture using device camera, allow edit, and retrieve image as base64-encoded string
-      navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 20, allowEdit: true,
-        destinationType: destinationType.DATA_URL });
-    }
-
-    // A button will call this function
-    //
-    function getPhoto(source) {
-      // Retrieve image file location from specified source
-      navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50,
-        destinationType: destinationType.FILE_URI,
-        sourceType: source });
-    }
-
     // Called if something bad happens.
     //
     function onFail(message) {
       alert('Failed because: ' + message);
     }
 
+
+/*
+https://www.npmjs.com/package/image-clipper#clippertofilepath-callback
+clipper.crop(x, y, width, height)
+Crops the resultant image to the given width and height at the given x and y position.
+
+    x: the x axis of the coordinate for the rectangle starting point
+    y: the y axis of the coordinate for the rectangle starting point
+    width: the rectangle's width
+    height: the rectangle's height*/
+
+    var Clipper = require('image-clipper');
+     
+    Clipper('beach.jpg', function() {
+        this.crop(20, 20, 100, 10)
+        .resize(50, 50)
+        .quality(80)
+        .toFile('result.jpg', function() {
+           console.log('saved!');
+       });
+    });
+
     </script>
+
+
+
   </head>
+  
   <body>
-    <button onclick="capturePhoto();">Capture Photo</button> <br>
-    <button onclick="capturePhotoEdit();">Capture Editable Photo</button> <br>
-    <button onclick="getPhoto(pictureSource.PHOTOLIBRARY);">From Photo Library</button><br>
-    <button onclick="getPhoto(pictureSource.SAVEDPHOTOALBUM);">From Photo Album</button><br>
-    <img style="display:none;width:60px;height:60px;" id="smallImage" src="" />
-    <img style="display:none;" id="largeImage" src="" />
+
+
+  <!--Horizontal Nav Bar at Top, credit to http://www.bootply.com/98314-->
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>    
+      </div>
+      <a class="navbar-brand" href="#">MUMS</a>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="Dashboard.html"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Back To Database</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  <!--end nav bar-->
+
+  <div id="spacer" class="col-md-2"></div>
+  <div class="col-md-6">
+
+    <button onclick="capturePhoto();">Capture Photo</button> </br></br>
+
+
+    <img style="display:none;width:600px;" id="smallImage" src="" />
+    
+  </div><!--md-4-->
+  <div id="spacer" class="col-md-4"></div>
+
   </body>
 </html>
 
