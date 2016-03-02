@@ -1,0 +1,109 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  	<meta charset="UTF-8">
+	<title>Test Setup</title>
+	<meta name=“viewport” content=“width=device-width, intitial-scale=1.0”>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	
+	<link rel="stylesheet" type="text/css" href="bootstrap.css">
+	<link rel="javascript" type="text/javascript" href="bootstrap.min.js">
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> 
+  	<link rel="stylesheet" href="css/login.css">
+
+    <script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+    
+    <script>
+        var str = location.search;
+        var res = str.slice(5);
+        var myDataRef = new Firebase('https://mums.firebaseio.com/' + res);
+        
+        function getTimestamp(){
+            var date = new Date();
+            currentDate = date.getDate();  
+            month = date.getMonth() + 1; 
+            year = date.getFullYear();
+            hour = date.getHours();
+            min = date.getMinutes();
+            sec = date.getSeconds();
+            return (month + "/" + currentDate + "/" + year + "  " + hour + ":" + min + ":" + sec);
+        }
+        
+        var timeStamp = 0;
+        var pH = 0;
+        var nitrite = 0;
+        var ketone = 0;
+        var glucose = 0;
+        
+        function calculate(){  
+            timeStamp = getTimestamp();
+            
+            //random level values
+            pH = Math.floor((Math.random() * 10) + 1);
+            nitrite = "Negative";
+            ketone = Math.floor((Math.random() * 10) + 1);
+            glucose = Math.floor((Math.random() * 10) + 1);
+            
+            $("#calculatedResults").append(
+                "<h5>pH: </h5>" + pH +
+                "<br><h5>Nitrite: </h5>" + nitrite +
+                "<br><h5>Ketone: </h5>" + ketone +                          
+                "<br><h5>Glucose: </h5>" + glucose                     
+            );
+        }   
+        
+        function add(){            
+            var testRef = myDataRef.child("tests");
+            testRef.push({timeStamp: timeStamp,
+                    pH: pH, 
+                    nitrite: nitrite,
+                    ketone: ketone,
+                    glucose: glucose
+            });   
+        }
+        
+    </script>
+
+</head>
+
+<body>
+    
+	<!--Horizontal Nav Bar at Top, credit to http://www.bootply.com/98314-->
+		<nav class="navbar navbar-default" role="navigation">
+		  <div class="navbar-header">
+		    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		      <span class="icon-bar"></span>
+		      <span class="icon-bar"></span>
+		      <span class="icon-bar"></span>
+		    </button>    
+		  </div>
+		  <a class="navbar-brand" href="#">MUMS</a>
+		  <div class="navbar-collapse collapse">
+		    <ul class="nav navbar-nav navbar-right">
+		      <li>
+		      	<a href="#">
+		      		<span class="glyphicon glyphicon-camera" aria-hidden="true"></span> View Profile</a>
+		      </li>
+		      <li><a href="Dashboard.html"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> View Database</a>
+		      </li>
+		    </ul>
+		  </div>
+		</nav>
+	<!--end nav bar-->
+
+    <img id="strip" src="img/testImage.jpg" alt="Test Strip" width="500px">
+    <br>
+    <button type="button" class="btn btn-default" onclick="calculate()">Calculate Results</button>
+    <button type="button" class="btn btn-default" onclick="add()">Save Results to Database</button>
+    
+    <div id="calculatedResults" style="background:lightgrey; padding: 20px">
+        RESULTS:
+    </div>
+
+
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  	<meta charset="UTF-8">
+	<title>Test Setup</title>
+	<meta name=“viewport” content=“width=device-width, intitial-scale=1.0”>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	
+	<link rel="stylesheet" type="text/css" href="bootstrap.css">
+	<link rel="javascript" type="text/javascript" href="bootstrap.min.js">
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> 
+  	<link rel="stylesheet" href="css/login.css">
+
+    <script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+    
+    <script>
+        var str = location.search;
+        var res = str.slice(5);
+        var myDataRef = new Firebase('https://mums.firebaseio.com/' + res);
+    </script>
+
+</head>
+
+<body>
+    
+	<!--Horizontal Nav Bar at Top, credit to http://www.bootply.com/98314-->
+		<nav class="navbar navbar-default" role="navigation">
+		  <div class="navbar-header">
+		    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		      <span class="icon-bar"></span>
+		      <span class="icon-bar"></span>
+		      <span class="icon-bar"></span>
+		    </button>    
+		  </div>
+		  <a class="navbar-brand" href="Dashboard.html">MUMS</a>
+		  <div class="navbar-collapse collapse">
+		    <ul class="nav navbar-nav navbar-right">
+		      <li>
+		      	<a href="#"><span class="glyphicon glyphicon-camera" aria-hidden="true"></span> View Profile</a>
+		      </li>
+		      <li><a href="Dashboard.html"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> View Database</a>
+		      </li>
+		    </ul>
+		  </div>
+		</nav>
+	<!--end nav bar-->
+    
+    <div id="instructions" style="background:lightgrey">
+        Instructions
+    </div>
+
+    <button type="button" class="btn btn-success" onclick="window.location.href = 'testResults.html'">Start Test</button>
+
+
+</body>
+</html>
