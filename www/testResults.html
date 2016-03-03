@@ -66,6 +66,79 @@
             });   
         }
         
+        
+        
+        ///////////////////FAKE STRIP GENERATOR
+        function init() {        
+
+            function rgbToHex(r, g, b) {
+                if (r > 255 || g > 255 || b > 255)
+                    throw "Invalid color component";
+                return ((r << 16) | (g << 8) | b).toString(16);
+            }
+
+            // set up some squares
+            var example = document.getElementById('example');
+            var context = example.getContext('2d');
+
+            //fake strip generation
+            var x_pos = 0, y_pos = 0;
+            for(var i=0; i<100; i++){
+                context.fillStyle = '#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6);
+                context.fillRect(x_pos, 0, 10, 50);
+                x_pos += 10;
+            }   
+   
+            //rgb functions
+            function avgRed(p) {
+                sum = 0, count = 0;
+                for(var i=0; i<p.length; i+=4){
+                    sum += p[i];
+                    count ++;
+                }
+                return (Math.round(sum/count));
+            }
+    
+            function avgGreen(p) {
+                sum = 0, count = 0;
+                for(var i=1; i<p.length; i+=4){
+                    sum += p[i];
+                    count ++;
+                }
+                return (Math.round(sum/count));
+            }
+    
+            function avgBlue(p) {
+                sum = 0, count = 0;
+                for(var i=2; i<p.length; i+=4){
+                    sum += p[i];
+                    count ++;
+                }
+                return (Math.round(sum/count));
+            }
+
+            function calc_hex(x_pos) {
+                var p = context.getImageData(x_pos, 0, 50, 50).data;
+                var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
+                context.fillStyle = "rgb(" + avgRed(p) + ", " + avgGreen(p) + ", " + avgBlue(p) + ")";
+                context.fillRect(x_pos, 50, 50, 50);
+                context.fillText(hex, x_pos, 110);
+            }
+
+            //calc functions based on square position
+            calc_hex(100); //pH = 3rd square
+            calc_hex(200); //glucose = 5th square
+            calc_hex(300); //nitrite = 7th square
+            calc_hex(450); //ketone = 10th square
+        }
+
+        //load all HTML before javascript
+        document.addEventListener("DOMContentLoaded", init, false);    
+        
+        
+        
+        
+        
     </script>
 
 </head>
@@ -95,7 +168,9 @@
 		</nav>
 	<!--end nav bar-->
 
-    <img id="strip" src="img/testImage.jpg" alt="Test Strip" width="500px">
+    <!--<img id="strip" src="img/testImage.jpg" alt="Test Strip" width="500px">-->
+    
+    <canvas id="example" width="550" height="200"></canvas>
     <br>
     <button type="button" class="btn btn-default" onclick="calculate()">Calculate Results</button>
     <button type="button" class="btn btn-default" onclick="add()">Save Results to Database</button>

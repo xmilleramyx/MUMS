@@ -1,0 +1,125 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  	<meta charset="UTF-8">
+	<title>Test Setup</title>
+	<meta name=“viewport” content=“width=device-width, intitial-scale=1.0”>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	
+	<link rel="javascript" type="text/javascript" href="bootstrap.min.js">
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> 
+  	<link rel="stylesheet" href="css/login.css">
+
+    <script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+    
+    <script>
+
+function init() {        
+
+function rgbToHex(r, g, b) {
+  if (r > 255 || g > 255 || b > 255)
+    throw "Invalid color component";
+  return ((r << 16) | (g << 8) | b).toString(16);
+}
+
+// set up some squares
+var example = document.getElementById('example');
+var context = example.getContext('2d');
+
+//fake rectangles
+var x_pos = 0, y_pos = 0;
+for(var i=0; i<100; i++){
+    context.fillStyle = '#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6);
+    context.fillRect(x_pos, 0, 10, 50);
+    x_pos += 10;
+}   
+
+    
+//rgb functions
+function avgRed(p) {
+    sum = 0, count = 0;
+    for(var i=0; i<p.length; i+=4){
+        sum += p[i];
+        count ++;
+    }
+    return (Math.round(sum/count));
+}
+    
+function avgGreen(p) {
+    sum = 0, count = 0;
+    for(var i=1; i<p.length; i+=4){
+        sum += p[i];
+        count ++;
+    }
+    return (Math.round(sum/count));
+}
+    
+function avgBlue(p) {
+    sum = 0, count = 0;
+    for(var i=2; i<p.length; i+=4){
+        sum += p[i];
+        count ++;
+    }
+    return (Math.round(sum/count));
+}
+
+function calc_pH() {
+    var p = context.getImageData(75, 0, 50, 50).data;
+    var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
+    context.fillStyle = "rgb(" + avgRed(p) + ", " + avgGreen(p) + ", " + avgBlue(p) + ")";
+    context.fillRect(75, 50, 50, 50);
+    context.fillText(hex, 75, 110);
+}
+
+function calc_glucose() {
+    var p = context.getImageData(175, 0, 50, 50).data;
+    var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
+    context.fillStyle = "rgb(" + avgRed(p) + ", " + avgGreen(p) + ", " + avgBlue(p) + ")";
+    context.fillRect(175, 50, 50, 50);
+    context.fillText(hex, 175, 110);
+}
+    
+function calc_nitrite() {
+    var p = context.getImageData(275, 0, 50, 50).data;
+    var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
+    context.fillStyle = "rgb(" + avgRed(p) + ", " + avgGreen(p) + ", " + avgBlue(p) + ")";
+    context.fillRect(275, 50, 50, 50);
+    context.fillText(hex, 275, 110);
+}
+    
+function calc_ketone() {
+    var p = context.getImageData(425, 0, 50, 50).data;
+    var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
+    context.fillStyle = "rgb(" + avgRed(p) + ", " + avgGreen(p) + ", " + avgBlue(p) + ")";
+    context.fillRect(425, 50, 50, 50);
+    context.fillText(hex, 425, 110);
+}
+    
+//calc functions based on square position
+calc_pH(); //3rd square
+calc_glucose(); //5th square
+calc_nitrite(); //7th square
+calc_ketone(); //10th square
+
+}
+
+//load all HTML before javascript
+document.addEventListener("DOMContentLoaded", init, false);    
+        
+        </script>
+    
+    </head>
+    
+    <body>
+    
+    <canvas id="example" width="550" height="200"></canvas>
+<div id="status"></div>
+    
+    </body>
+    </html>
+
+
