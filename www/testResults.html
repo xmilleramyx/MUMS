@@ -9,7 +9,6 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	
-	<link rel="stylesheet" type="text/css" href="bootstrap.css">
 	<link rel="javascript" type="text/javascript" href="bootstrap.min.js">
   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> 
   	<link rel="stylesheet" href="css/login.css">
@@ -17,10 +16,32 @@
     <script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
     
+    <style>
+        .results {
+            background: white;
+            border-radius: 5px; 
+            padding: 10px;
+            margin-bottom: 15px;
+            height: 40px;
+        }
+        
+        .result_value {
+            height: 42px;
+            padding: 10px;
+            position: relative;
+            left: 10px;
+        }
+    
+    </style>
+    
     <script>
         var str = location.search;
         var res = str.slice(5);
         var myDataRef = new Firebase('https://mums.firebaseio.com/' + res);
+        
+        function profile_href() {
+            window.location.href = 'Profile.html?key=' + res;  
+        }
         
         function getTimestamp(){
             var date = new Date();
@@ -34,53 +55,57 @@
         }
         
         var timeStamp = 0;
-        var pH = 0;
-        var nitrite = 0;
-        var ketone = 0;
-        var glucose = 0;
+        
+        var glucose_hex = 0;
+        var ketone_hex = 0;
+        var nitrite_hex = 0;
+        var pH_hex = 0;
         
         function calculate(){  
             timeStamp = getTimestamp();
             
-            //random level values
-            pH = Math.floor((Math.random() * 10) + 1);
-            nitrite = "Negative";
-            ketone = Math.floor((Math.random() * 10) + 1);
-            glucose = Math.floor((Math.random() * 10) + 1);
-            
-            $("#calculatedResults").append(
-                "<h5>pH: </h5>" + pH +
-                "<br><h5>Nitrite: </h5>" + nitrite +
-                "<br><h5>Ketone: </h5>" + ketone +                          
-                "<br><h5>Glucose: </h5>" + glucose                     
-            );
+            $("#glucose_result").text("");
+            $("#glucose_result").append(glucose_hex);
+            $("#ketone_result").text("");
+            $("#ketone_result").append(ketone_hex);
+            $("#nitrite_result").text("");
+            $("#nitrite_result").append(nitrite_hex);
+            $("#pH_result").text("");
+            $("#pH_result").append(pH_hex);
+            $(".result_value").css("background-color", "#f2f2f2");
         }   
         
         function add(){            
             var testRef = myDataRef.child("tests");
             testRef.push({timeStamp: timeStamp,
-                    pH: pH, 
-                    nitrite: nitrite,
-                    ketone: ketone,
-                    glucose: glucose
+                    pH: pH_hex, 
+                    nitrite: nitrite_hex,
+                    ketone: ketone_hex,
+                    glucose: glucose_hex
             });   
         }
-        
-        
         
         ///////////////////FAKE STRIP GENERATOR
         function init() {        
 
+            var example = document.getElementById('example');
+            var context = example.getContext('2d');            
+
+            base_image = new Image();
+            base_image.src = 'img/test.jpg';
+            base_image.onload = function(){
+                context.drawImage(base_image, 0, 0, 550, 50);
+                var testP = context.getImageData(0, 0, 50, 50).data;
+                alert(testP[0]);
+            }
+            
+            
             function rgbToHex(r, g, b) {
                 if (r > 255 || g > 255 || b > 255)
                     throw "Invalid color component";
                 return ((r << 16) | (g << 8) | b).toString(16);
             }
-
-            // set up some squares
-            var example = document.getElementById('example');
-            var context = example.getContext('2d');
-
+/*
             //fake strip generation
             var x_pos = 0, y_pos = 0;
             for(var i=0; i<100; i++){
@@ -88,57 +113,37 @@
                 context.fillRect(x_pos, 0, 10, 50);
                 x_pos += 10;
             }   
-   
+*/
             //rgb functions
-            function avgRed(p) {
+            function avgRGB(p, x) {
                 sum = 0, count = 0;
-                for(var i=0; i<p.length; i+=4){
+                for(var i=x; i<p.length; i+=4){
                     sum += p[i];
                     count ++;
                 }
+                alert(sum + "   avg: " + sum/count);
                 return (Math.round(sum/count));
             }
     
-            function avgGreen(p) {
-                sum = 0, count = 0;
-                for(var i=1; i<p.length; i+=4){
-                    sum += p[i];
-                    count ++;
-                }
-                return (Math.round(sum/count));
-            }
-    
-            function avgBlue(p) {
-                sum = 0, count = 0;
-                for(var i=2; i<p.length; i+=4){
-                    sum += p[i];
-                    count ++;
-                }
-                return (Math.round(sum/count));
-            }
-
             function calc_hex(x_pos) {
                 var p = context.getImageData(x_pos, 0, 50, 50).data;
-                var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
-                context.fillStyle = "rgb(" + avgRed(p) + ", " + avgGreen(p) + ", " + avgBlue(p) + ")";
-                context.fillRect(x_pos, 50, 50, 50);
+                var hex = ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
+                context.fillStyle = "rgb(" + avgRGB(p, 0) + ", " + avgRGB(p, 1) + ", " + avgRGB(p, 2) + ")";
+                context.fillRect(x_pos, 100, 50, 50);
                 context.fillText(hex, x_pos, 110);
+                return hex;
             }
-
+ 
             //calc functions based on square position
-            calc_hex(100); //pH = 3rd square
-            calc_hex(200); //glucose = 5th square
-            calc_hex(300); //nitrite = 7th square
-            calc_hex(450); //ketone = 10th square
+            glucose_hex = calc_hex(0); //glucose = 1st square
+            ketone_hex = calc_hex(100); //ketone = 3rd square
+            nitrite_hex = calc_hex(250); //nitrite = 6th square
+            pH_hex = calc_hex(400); //pH = 9th square
+            
         }
 
         //load all HTML before javascript
         document.addEventListener("DOMContentLoaded", init, false);    
-        
-        
-        
-        
-        
     </script>
 
 </head>
@@ -158,7 +163,7 @@
 		  <div class="navbar-collapse collapse">
 		    <ul class="nav navbar-nav navbar-right">
 		      <li>
-		      	<a href="#">
+		      	<a onclick="profile_href()">
 		      		<span class="glyphicon glyphicon-camera" aria-hidden="true"></span> View Profile</a>
 		      </li>
 		      <li><a href="Dashboard.html"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> View Database</a>
@@ -167,16 +172,34 @@
 		  </div>
 		</nav>
 	<!--end nav bar-->
-
-    <!--<img id="strip" src="img/testImage.jpg" alt="Test Strip" width="500px">-->
     
-    <canvas id="example" width="550" height="200"></canvas>
+    <canvas id="example" width="550" height="300" src='img/testImage.jpg'></canvas>
     <br>
     <button type="button" class="btn btn-default" onclick="calculate()">Calculate Results</button>
     <button type="button" class="btn btn-default" onclick="add()">Save Results to Database</button>
+    <button type="button" class="btn btn-default" onclick="init(lol())">LOL</button>
     
-    <div id="calculatedResults" style="background:lightgrey; padding: 20px">
-        RESULTS:
+    <br>
+    <br>
+    
+    <div id="calculatedResults" style="background: #e6e6e6; padding: 20px">
+        <h4 id="resultsTitle">Results:</h4>
+        <div class="results">
+            <b>Glucose       </b>
+            <span id="glucose_result" class="result_value"></span>
+        </div>
+        <div id="ketone" class="results">
+            <b>Ketone       </b>
+            <span id="ketone_result" class="result_value"></span>
+        </div>
+        <div id="nitrite" class="results">
+            <b>Nitrite       </b>
+            <span id="nitrite_result" class="result_value"></span>
+        </div>
+        <div id="pH" class="results">
+            <b>pH       </b>
+            <span id="pH_result" class="result_value"></span>
+        </div>
     </div>
 
 
