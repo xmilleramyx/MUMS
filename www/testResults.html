@@ -9,7 +9,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	
-	<link rel="javascript" type="text/javascript" href="bootstrap.min.js">
+	<link rel="javascript" type="text/javascript" href="css/bootstrap.min.js">
   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> 
   	<link rel="stylesheet" href="css/login.css">
 
@@ -61,19 +61,6 @@
         var nitrite_hex = 0;
         var pH_hex = 0;
         
-        function calculate(){  
-            timeStamp = getTimestamp();
-            
-            $("#glucose_result").text("");
-            $("#glucose_result").append(glucose_hex);
-            $("#ketone_result").text("");
-            $("#ketone_result").append(ketone_hex);
-            $("#nitrite_result").text("");
-            $("#nitrite_result").append(nitrite_hex);
-            $("#pH_result").text("");
-            $("#pH_result").append(pH_hex);
-            $(".result_value").css("background-color", "#f2f2f2");
-        }   
         
         function add(){            
             var testRef = myDataRef.child("tests");
@@ -82,8 +69,10 @@
                     nitrite: nitrite_hex,
                     ketone: ketone_hex,
                     glucose: glucose_hex
-            });   
+            });  
+            alert("Saved results from: " + timeStamp);
         }
+        
         
         ///////////////////FAKE STRIP GENERATOR
         function init() {        
@@ -92,28 +81,23 @@
             var context = example.getContext('2d');            
 
             base_image = new Image();
-            base_image.src = 'img/test.jpg';
+            base_image.src = 'img/test.png';
             base_image.onload = function(){
-                context.drawImage(base_image, 0, 0, 550, 50);
-                var testP = context.getImageData(0, 0, 50, 50).data;
-                alert(testP[0]);
+                context.drawImage(base_image, 0, 0);
             }
+        }
             
-            
+ function calcResult(){
+ var example = document.getElementById('example');
+ var context = example.getContext('2d');
+ 
+ 
             function rgbToHex(r, g, b) {
                 if (r > 255 || g > 255 || b > 255)
                     throw "Invalid color component";
                 return ((r << 16) | (g << 8) | b).toString(16);
             }
-/*
-            //fake strip generation
-            var x_pos = 0, y_pos = 0;
-            for(var i=0; i<100; i++){
-                context.fillStyle = '#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6);
-                context.fillRect(x_pos, 0, 10, 50);
-                x_pos += 10;
-            }   
-*/
+
             //rgb functions
             function avgRGB(p, x) {
                 sum = 0, count = 0;
@@ -121,29 +105,51 @@
                     sum += p[i];
                     count ++;
                 }
-                alert(sum + "   avg: " + sum/count);
                 return (Math.round(sum/count));
             }
     
-            function calc_hex(x_pos) {
-                var p = context.getImageData(x_pos, 0, 50, 50).data;
-                var hex = ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
-                context.fillStyle = "rgb(" + avgRGB(p, 0) + ", " + avgRGB(p, 1) + ", " + avgRGB(p, 2) + ")";
-                context.fillRect(x_pos, 100, 50, 50);
-                context.fillText(hex, x_pos, 110);
-                return hex;
+            function calc_hex(x_pos, marker) {
+                var p = context.getImageData(x_pos, 2, 40, 39).data;
+                //var hex = ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
+                var rgbText = "rgb(" + avgRGB(p, 0) + ", " + avgRGB(p, 1) + ", " + avgRGB(p, 2) + ")";
+                context.font = "12px Arial"
+                context.fillText(marker, x_pos, 55);
+                context.strokeStyle="gray";
+                context.strokeRect(x_pos, 2, 40, 39);
+                return rgbText;
             }
  
-            //calc functions based on square position
-            glucose_hex = calc_hex(0); //glucose = 1st square
-            ketone_hex = calc_hex(100); //ketone = 3rd square
-            nitrite_hex = calc_hex(250); //nitrite = 6th square
-            pH_hex = calc_hex(400); //pH = 9th square
-            
-        }
+ //calc functions based on square position
+ glucose_hex = calc_hex(5, "Glucose"); //glucose = 1st square
+ ketone_hex = calc_hex(135, "Ketone"); //ketone = 3rd square
+ nitrite_hex = calc_hex(328, "Nitrite"); //nitrite = 6th square
+ pH_hex = calc_hex(524, "pH"); //pH = 9th square
+ 
+ 
+ //display the values
+ timeStamp = getTimestamp();
+ 
+  $(".result_value").css("background-color", "blue");
+ $("#glucose_result").text("");
+ $("#glucose_result").append(glucose_hex);
+ //$("#glucose_result").css("background-color", "#" + glucose_hex);
+ $("#glucose_result").css("background-color", glucose_hex);
+ $("#ketone_result").text("");
+ $("#ketone_result").append(ketone_hex);
+ $("#ketone_result").css("background-color", ketone_hex);
+ $("#nitrite_result").text("");
+ $("#nitrite_result").append(nitrite_hex);
+ $("#nitrite_result").css("background-color", nitrite_hex);
+ $("#pH_result").text("");
+ $("#pH_result").append(pH_hex);
+ $("#pH_result").css("background-color", pH_hex);
+
+ 
+ }
+
 
         //load all HTML before javascript
-        document.addEventListener("DOMContentLoaded", init, false);    
+        document.addEventListener("DOMContentLoaded", init, false);
     </script>
 
 </head>
@@ -173,11 +179,11 @@
 		</nav>
 	<!--end nav bar-->
     
-    <canvas id="example" width="550" height="300" src='img/testImage.jpg'></canvas>
+    <canvas id="example" width="750" height="100"></canvas>
     <br>
-    <button type="button" class="btn btn-default" onclick="calculate()">Calculate Results</button>
+    <button type="button" class="btn btn-default" onclick="calcResult()">Calculate Results</button>
     <button type="button" class="btn btn-default" onclick="add()">Save Results to Database</button>
-    <button type="button" class="btn btn-default" onclick="init(lol())">LOL</button>
+    
     
     <br>
     <br>
@@ -205,3 +211,15 @@
 
 </body>
 </html>
+
+
+
+<!--
+//fake strip generation
+var x_pos = 0, y_pos = 0;
+for(var i=0; i<100; i++){
+context.fillStyle = '#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6);
+context.fillRect(x_pos, 0, 10, 50);
+x_pos += 10;
+}
+-->
