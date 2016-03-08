@@ -48,7 +48,7 @@
         var dataLink = 'https://mums.firebaseio.com/' + res + '/tests';
         var DateRef = new Firebase(dataLink);
         var key;
-        DateRef.on('child_added', function(snapshot) {
+        DateRef.orderByChild("timeRef").on('child_added', function(snapshot) {
             var message = snapshot.val();
             key = snapshot.key();
             
@@ -60,7 +60,6 @@
             $( '#dateDropdown2').append(
                 '<li><a onclick=resultsTable("'+ linkDate +'")>' + message.timeStamp + '</a></li>'
             );
-
         });
    
         function getTimestamp(){
@@ -73,26 +72,6 @@
             sec = date.getSeconds();
             return (month + "/" + currentDate + "/" + year + "  " + hour + ":" + min + ":" + sec);
         }
-        
-        function add(){
-            
-            var timeStamp = getTimestamp();
-            
-            //random level values
-            var pH = Math.floor((Math.random() * 10) + 1);
-            var nitrite = "Negative";
-            var ketone = Math.floor((Math.random() * 10) + 1);
-            var glucose = Math.floor((Math.random() * 10) + 1);
-            
-            var testRef = myDataRef.child("tests");
-            testRef.push({timeStamp: timeStamp,
-                    pH: pH, 
-                    nitrite: nitrite,
-                    ketone: ketone,
-                    glucose: glucose
-            });   
-            
-        }   
 
         function overviewTable (specKey) {           
             var ref = new Firebase(specKey);
