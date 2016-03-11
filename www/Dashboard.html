@@ -36,7 +36,6 @@
                 '</td><td><a href="Profile.html?key=' + key + '">View</a> | <a href="testSetUp.html?key=' + key + '">Test</a> | <a href="#" onclick="deletePatient(' + "'" + key + "', '" +   name + "'" + ')">Delete</a>' +
                 '</td></tr>');
         };
-
         function deletePatient(path, name) {
             if(confirm("Are you sure you want to delete all information for \n" + name + "?")==true){
                 fullPath = "https://mums.firebaseio.com/" + path;

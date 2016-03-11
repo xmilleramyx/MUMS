@@ -1,0 +1,139 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  	<meta charset="UTF-8">
+	<title>DashboardTEST</title>
+	<meta name=“viewport” content=“width=device-width, intitial-scale=1.0”>
+	
+    <script type="text/javascript" src="js/code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="../DataTables-1.10.11/media/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css">
+    
+
+    <script rel="javascript" type="text/javascript" href="js/bootstrap.min.js"></script>
+	
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> 
+  	
+    <link rel="stylesheet" href="css/login.css">
+    <script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
+
+    
+  	<script>
+    
+        function makeData(){
+            
+            myDataRef.on('child_added', function(snapshot) {
+                        //loop that adds each patient's info to the list
+                        var addSet;
+                        var message = snapshot.val();
+                        var key = snapshot.key();
+                        
+                        //variables created by firebase snapshot
+                       
+                       // addSet = [key, message.patient_fname, message.patient_lname, message.location, message.known_drug_allergies, message.medical_history];
+                        addSet = ["name", "position", "office", "ext.", "start", "salary"];
+
+
+                        //concatonates individuals' info, addSet, to overall list, dataSet
+                        dataSet = dataSet.concat(addSet); 
+                                
+            });
+        };
+
+        
+        function deletePatient(path, name) {
+            if(confirm("Are you sure you want to delete all information for \n" + name + "?")==true){
+                fullPath = "https://mums.firebaseio.com/" + path;
+                var patientRef = new Firebase(fullPath);
+                patientRef.remove();
+                location.reload();
+            }
+        };
+
+        function makeTable(){
+            $('#patient_table').DataTable( {
+                    data: dataSet,
+                    columns: [
+                        { title: "Name" },
+                        { title: "Position" },
+                        { title: "Office" },
+                        { title: "Extn." },
+                        { title: "Start date" },
+                        { title: "Salary" }
+                    ]
+                } );  
+        };   
+    
+	</script>
+
+</head>
+
+<body>
+
+	
+	<!--Horizontal Nav Bar at Top, credit to http://www.bootply.com/98314-->
+		<nav class="navbar navbar-default" role="navigation">
+		  <div class="navbar-header">
+		    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		      <span class="icon-bar"></span>
+		      <span class="icon-bar"></span>
+		      <span class="icon-bar"></span>
+		    </button>    
+		  </div>
+		  <a class="navbar-brand" href="#">MUMS</a>
+		  <div class="navbar-collapse collapse">
+		    
+		    <ul class="nav navbar-nav navbar-right">
+            
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account Settings <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="login.html">Log Out</a></li>
+                  <li><a href="#">Delete Account</a></li>
+                </ul>
+              </li> 
+            </ul>
+              
+		  </div>
+		</nav>
+	<!--end nav bar-->
+
+<!--search function-->    
+    
+    <button type="button" class="btn btn-default" onclick="window.location.href='new_patient.html'">Add New Patient</button>
+    <br>
+    <button type="button" class="btn btn-default" id="createTableButton" onclick="makeTable()">Create Table</button>
+    <br>
+     <button type="button" class="btn btn-default" onclick="alert(dataSet)">Show dataset</button>
+    <br>
+
+    
+<script>
+        var myDataRef = new Firebase('https://mums.firebaseio.com/'); 
+
+       var dataSet = [];
+       makeData();
+     
+      /*var dataSet = [
+            ["name", "position", "office", "ext.", "start", "salary"],
+            ["name", "position", "office", "ext.", "start", "salary"],
+            ["name", "position", "office", "ext.", "start", "salary"],
+            ["name", "position", "office", "ext.", "start", "salary"],
+            ["name", "position", "office", "ext.", "start", "salary"],
+            ["name", "position", "office", "ext.", "start", "salary"],
+            ["name", "position", "office", "ext.", "start", "salary"]
+            ];*/
+       
+</script>
+
+
+    <!--table-->
+    <table id="patient_table" class="display" width="100%">
+  </table>
+    <!--end table-->
+
+
+</body>
+</html>
+</html>
