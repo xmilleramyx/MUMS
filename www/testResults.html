@@ -54,23 +54,42 @@
             return (month + "/" + currentDate + "/" + year + "  " + hour + ":" + min + ":" + sec);
         }
         
-        var timeStamp = 0;
+        function makeTimeRef(){
+            var date = new Date();
+            currentDate = 100 - date.getDate();  
+            month = 100 - date.getMonth() + 1; 
+            year = 100 - date.getFullYear();
+            hour = 100 - date.getHours();
+            min = 100 - date.getMinutes();
+            sec = 100 - date.getSeconds();
+            return (month + "/" + currentDate + "/" + year + "  " + hour + ":" + min + ":" + sec);
+        }
         
-        var glucose_hex = 0;
-        var ketone_hex = 0;
-        var nitrite_hex = 0;
-        var pH_hex = 0;
+        var timeStamp = getTimestamp();
+        var timeRef = makeTimeRef();
+        var glucose_hex = 1;
+        var ketone_hex = 2;
+        var nitrite_hex = 3;
+        var pH_hex = 4;
         
         
         function add(){            
             var testRef = myDataRef.child("tests");
-            testRef.push({timeStamp: timeStamp,
+            testRef.push({timeRef: timeRef,
+                    timeStamp: timeStamp,
                     pH: pH_hex, 
                     nitrite: nitrite_hex,
                     ketone: ketone_hex,
                     glucose: glucose_hex
             });  
             alert("Saved results from: " + timeStamp);
+            myDataRef.child("lastTestRef").set({timeRef: timeRef,
+                    timeStamp: timeStamp,
+                    pH: pH_hex, 
+                    nitrite: nitrite_hex,
+                    ketone: ketone_hex,
+                    glucose: glucose_hex
+            });  
         }
         
         
@@ -87,10 +106,9 @@
             }
         }
             
- function calcResult(){
- var example = document.getElementById('example');
- var context = example.getContext('2d');
- 
+        function calcResult(){
+            var example = document.getElementById('example');
+            var context = example.getContext('2d');
  
             function rgbToHex(r, g, b) {
                 if (r > 255 || g > 255 || b > 255)
@@ -119,34 +137,30 @@
                 return rgbText;
             }
  
- //calc functions based on square position
- glucose_hex = calc_hex(5, "Glucose"); //glucose = 1st square
- ketone_hex = calc_hex(135, "Ketone"); //ketone = 3rd square
- nitrite_hex = calc_hex(328, "Nitrite"); //nitrite = 6th square
- pH_hex = calc_hex(524, "pH"); //pH = 9th square
+            //calc functions based on square position
+            glucose_hex = calc_hex(5, "Glucose"); //glucose = 1st square
+            ketone_hex = calc_hex(135, "Ketone"); //ketone = 3rd square
+            nitrite_hex = calc_hex(328, "Nitrite"); //nitrite = 6th square
+            pH_hex = calc_hex(524, "pH"); //pH = 9th square 
  
+            //display the values
+            timeStamp = getTimestamp();
  
- //display the values
- timeStamp = getTimestamp();
- 
-  $(".result_value").css("background-color", "blue");
- $("#glucose_result").text("");
- $("#glucose_result").append(glucose_hex);
- //$("#glucose_result").css("background-color", "#" + glucose_hex);
- $("#glucose_result").css("background-color", glucose_hex);
- $("#ketone_result").text("");
- $("#ketone_result").append(ketone_hex);
- $("#ketone_result").css("background-color", ketone_hex);
- $("#nitrite_result").text("");
- $("#nitrite_result").append(nitrite_hex);
- $("#nitrite_result").css("background-color", nitrite_hex);
- $("#pH_result").text("");
- $("#pH_result").append(pH_hex);
- $("#pH_result").css("background-color", pH_hex);
-
- 
- }
-
+            $(".result_value").css("background-color", "blue");
+            $("#glucose_result").text("");
+            $("#glucose_result").append(glucose_hex);
+            //$("#glucose_result").css("background-color", "#" + glucose_hex);
+            $("#glucose_result").css("background-color", glucose_hex);
+            $("#ketone_result").text("");
+            $("#ketone_result").append(ketone_hex);
+            $("#ketone_result").css("background-color", ketone_hex);
+            $("#nitrite_result").text("");
+            $("#nitrite_result").append(nitrite_hex);
+            $("#nitrite_result").css("background-color", nitrite_hex);
+            $("#pH_result").text("");
+            $("#pH_result").append(pH_hex);
+            $("#pH_result").css("background-color", pH_hex);
+        }
 
         //load all HTML before javascript
         document.addEventListener("DOMContentLoaded", init, false);
