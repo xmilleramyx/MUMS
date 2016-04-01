@@ -33,6 +33,22 @@
             padding: 10px;
             margin-bottom: 15px;
         }    
+        .liltable{
+            width: 450px; 
+            float: left;
+            border: 20px solid white;
+        }
+        #results_list{
+            position: fixed; 
+            float: left;
+        }
+        #display_space{
+            position: relative;
+            left: 190px;
+            width: 1000px;
+        }
+        
+        
     </style>
     
     <script>
@@ -117,8 +133,8 @@
             var message = snapshot.val();
             key = snapshot.key();
             
-            $( '#dateDropdown2').append(
-                '<li><a onclick=resultsTable("'+ key +'")>' + message.timeStamp + '</a></li>'
+            $( '#results_list').append(
+                '<button type="button" class="list-group-item" id="button' + key + '" onclick=resultsTable("'+ key +'")> ' + message.timeStamp + '</button>'
             );
 
         });
@@ -146,32 +162,23 @@
                 $( '#glucose' ).text(testMessage.glucose);
             });
             
-            var noteRefTest = myDataRef.child("notes");
-            myDataRef.orderByChild("timeStamp").limitToLast(1).on("child_added", function(snapshot) {
-                var noteMessage = snapshot.val();
-                $('#secondaryTitle').text("");
-                $('#secondaryTitle').text("Most recent note (" + noteMessage.timeStamp + ")");
-                $('#secondaryNote').text("");
-                $('#secondaryNote').text(noteMessage.note);
-            });
         };
         
         function resultsTable (key) {           
             var tableRef = DateRef.child(key);
             tableRef.on('value', function(snapshot) {
                 var message = snapshot.val();
-
-                $( '#tableTitle2').text("Results for: " + message.timeStamp);
                 
-                $( '#pH2').text(message.pH);
-                $( '#nitrite2').text(message.nitrite);
-                $( '#ketone2').text(message.ketone);
-                $( '#glucose2').text(message.glucose);
+                var checkColor = $('#button' + key).css("background-color");
+                if(checkColor == "rgb(255, 255, 255)"){
+                    $( '#button' + key ).css("background-color","rgb(211, 211, 211)");
             
-                addSlider('#pH_slider', message.pH);
-                addSlider('#nitrite_slider', message.nitrite);
-                addSlider('#ketone_slider', message.ketone);
-                addSlider('#glucose_slider', message.glucose);
+                    $( '#display_space' ).append('<div id="table' + key + '" class="liltable"><b>' + message.timeStamp + '</b><table class="table table-striped"><tbody><tr><td>pH</td><td>' + message.pH + '</td></tr><tr><td>Nitrite</td><td>' + message.nitrite + '</td></tr><tr><td>Ketone</td><td>' + message.ketone + '</td></tr><tr><td>Glucose</td><td>' + message.glucose + '</td></tr></tbody></table></div>');
+                }
+                else if(checkColor == "rgb(211, 211, 211)"){
+                    $( '#button' + key ).css("background-color","rgb(255, 255, 255)");
+                    $('#table' + key).remove();
+                }
             });    
         };
 
@@ -204,15 +211,6 @@
         $("#" + key).remove();
         loadOverview();
     }    
-        
-    function addSlider(name, value_input){
-        $(name).slider({
-            value: value_input,
-            min: 0,
-            max: 10,
-            step: 1,
-        });
-    } 
         
     </script>
 
@@ -316,19 +314,6 @@
 			 
 			                <div id="spacer" class="col-sm-1" ></div>
 			                <div id="recentLevels" class="col-sm-5">
-			                     	<!--
-			                        <div style="margin-bottom: 10px;"class="dropdown">
-										<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-										    Select date
-										    <span class="caret"></span>
-										</button>
-											</br>
-										  	<ul id="dateDropdown" class="dropdown-menu" aria-labelledby="dropdownMenu1">
-
-										  </ul>
-
-									</div> 
-									-->  
                                 
                                         <b id="tableTitle"></b>
 					                    <table id="overviewTable" class="table table-striped">
@@ -360,12 +345,10 @@
 			               			 <div id="spacer" class="col-sm-1"></div>
                                     
 			                
-			            </div><!--end main-->
+			            </div>
 
-						<div id="secondary" class="note">
-                            <h4 id="secondaryTitle"></h4>
-                            <div id="secondaryNote">No notes to display</div>
-						</div><!--end secondary-->
+
+                    <!--end secondary-->
 			            
 			</div><!--end container div-->
 
@@ -382,66 +365,19 @@
 
     
 			                <div id="allResults" class="col-sm-5">
-			                     	<!--dropdown lists-->
-			                        <div style="margin-bottom: 10px;"class="dropdown">
-										<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-										    Select date
-										    <span class="caret"></span>
-										</button>
-											</br>
-										  	<ul id="dateDropdown2" class="dropdown-menu" aria-labelledby="dropdownMenu1">
+    
+    
+			                  
 
-										  </ul>
-
-									</div> 
-									<!--end dropdown-->  
-
-                                    <div>
-                                        <h4 id="tableTitle2"></h4>
-                                        
-					                    <table class="table">
-										    <thead>
-                                                <tr>
-                                                    <th>Biological Marker</th>
-                                                    <th>Measurement</th>
-                                                </tr>
-                                            </thead>                    
-                                            <tbody>
-										      <tr>
-										        <td>pH</td>
-                                                <td id="pH2"></td>
-										      </tr>
-										      <tr>
-										        <td>Nitrite</td>
-										        <td id="nitrite2"></td>
-										      </tr>
-										      <tr>
-										        <td>Ketone</td>
-										        <td id="ketone2"></td>
-										      </tr>
-										      <tr>								
-										        <td>Glucose</td>
-										        <td id="glucose2"></td>
-										      </tr>
-										    </tbody>
-										</table>
-		                       
-                                    </div> 
-                                    <!--end results table--> 
-    
-    <div id="pH_slider"></div>
-    <br>
-    <div id="nitrite_slider"></div>
-    <br>
-    <div id="ketone_slider"></div>
-    <br>
-    <div id="glucose_slider"></div>
-    
-    
-			                 </div>   
-    
-    
-    
+                            <div id="results_list" class="list-group">
+                                <!--generate list items here-->
+                            </div>
+        
+                            <div id="display_space">
+                                <!--generate selected items here-->
+                            </div>
+                            </div>  
+                            
     
     
 </div><!--end results tab-->
