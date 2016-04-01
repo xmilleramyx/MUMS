@@ -25,10 +25,13 @@
             
             myDataRef.on('child_added', function(snapshot) {
                         //loop that adds each patient's info to the list
-                        var addSet;
+                        //var addSet;
+
                         var message = snapshot.val();
                         var key = snapshot.key();
                         
+
+
                         //variables created by firebase snapshot
                        
                        // addSet = [key, message.patient_fname, message.patient_lname, message.location, message.known_drug_allergies, message.medical_history];
@@ -39,6 +42,7 @@
                         dataSet = dataSet.concat(addSet); 
                                 
             });
+        
         };
 
         
@@ -110,9 +114,9 @@
 
     
 <script>
-        var myDataRef = new Firebase('https://mums.firebaseio.com/'); 
+       var myDataRef = new Firebase('https://mums.firebaseio.com/'); 
 
-       var dataSet = [];
+       var dataSet = new Array();
        makeData();
      
       /*var dataSet = [
