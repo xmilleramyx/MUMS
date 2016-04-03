@@ -36,7 +36,10 @@
         .liltable{
             width: 450px; 
             float: left;
-            border: 20px solid white;
+            padding: 20px 20px 0px 20px;
+            border: 1px solid lightgrey;
+            border-radius: 5px; 
+            margin: 0px 10px 20px 10px;
         }
         #results_list{
             position: fixed; 
@@ -44,8 +47,20 @@
         }
         #display_space{
             position: relative;
-            left: 190px;
-            width: 1000px;
+            left: 200px;
+            width: 1200px;
+        }
+        .list-group-item{
+            width: 100%;       
+        }
+        .list-group-item:focus {
+            outline: none;
+        }
+        #patientInfo{
+            padding: 20px 20px 0px 20px;
+            border: 1px solid lightgrey;
+            border-radius: 5px; 
+            margin: 0px 10px 20px 10px;    
         }
         
         
@@ -171,12 +186,14 @@
                 
                 var checkColor = $('#button' + key).css("background-color");
                 if(checkColor == "rgb(255, 255, 255)"){
-                    $( '#button' + key ).css("background-color","rgb(211, 211, 211)");
+                    $( '#button' + key ).css("background-color","rgb(128, 128, 128)");
+                    $( '#button' + key ).css("color","white");
             
                     $( '#display_space' ).append('<div id="table' + key + '" class="liltable"><b>' + message.timeStamp + '</b><table class="table table-striped"><tbody><tr><td>pH</td><td>' + message.pH + '</td></tr><tr><td>Nitrite</td><td>' + message.nitrite + '</td></tr><tr><td>Ketone</td><td>' + message.ketone + '</td></tr><tr><td>Glucose</td><td>' + message.glucose + '</td></tr></tbody></table></div>');
                 }
-                else if(checkColor == "rgb(211, 211, 211)"){
+                else if(checkColor == "rgb(128, 128, 128)"){
                     $( '#button' + key ).css("background-color","rgb(255, 255, 255)");
+                    $( '#button' + key ).css("color","black");
                     $('#table' + key).remove();
                 }
             });    
@@ -279,13 +296,10 @@
 			            
 			            <div id="main" class="row">
 			                
-			                <div id="profile" class="col-sm-3" style="margin-left:10px;">
-			                        <img class="img-responsive" style="margin-bottom:-30px; height:250px" name="photo" src="IMG_1978.png"><br>
+                            <div id="patientInfo">
+			                <img class="col-sm-2" style="height:200px" name="photo" src="IMG_1978.png">
 
-								
-							</div><!--end profile(name and pic)-->
-
-			                    <div id="patientInfo" class="col-sm-2">
+			                    <div class="col-sm-4">
 			                        
                                     <p>
 			                             <b>Name:</b>
@@ -309,11 +323,11 @@
                                     </div>
 
 			                    </div>  
-			                   
+			                 </div>   
 			            
 			 
 			                <div id="spacer" class="col-sm-1" ></div>
-			                <div id="recentLevels" class="col-sm-5">
+			                <div id="recentLevels" class="col-sm-4 liltable">
                                 
                                         <b id="tableTitle"></b>
 					                    <table id="overviewTable" class="table table-striped">
@@ -369,10 +383,11 @@
     
 			                  
 
-                            <div id="results_list" class="list-group">
+                            <div id="results_list" class="panel panel-default">
+                                <div class="panel-heading"><h5>Select the date(s) below<br>to view past results:</h5></div>
                                 <!--generate list items here-->
                             </div>
-        
+                                
                             <div id="display_space">
                                 <!--generate selected items here-->
                             </div>
