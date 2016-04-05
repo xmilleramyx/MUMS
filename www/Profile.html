@@ -8,23 +8,13 @@
 	<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>
   	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	
-	<link rel="stylesheet" type="text/css" href="bootstrap.css">
-	<link rel="javascript" type="text/javascript" href="bootstrap.min.js">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+	<link rel="javascript" type="text/javascript" href="js/bootstrap.min.js">
   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> 
   	<link rel="stylesheet" href="css/login.css">
-    
-    <!--slider links-->
-	<script type="text/javascript" src="js/jquery-ui.min.js"></script>
-	<link rel="stylesheet" href="js/jquery-ui.min.css" type="text/css" />
-    <script type="text/javascript" src="js/jquery-ui.js"></script>
-	<link rel="stylesheet" href="js/jquery-ui.css" type="text/css" />
 
     <script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
-    
-    
-    
-    
-    
+    <script src="js/Chart.min.js"></script>
     
     <style>
         .note{
@@ -33,22 +23,30 @@
             padding: 10px;
             margin-bottom: 15px;
         }    
-        .liltable{
-            width: 450px; 
+        .liltable{ 
+            float: left;
+            padding: 20px;
+            border: 1px solid lightgrey;
+            border-radius: 5px; 
+            height: 225px;
+        }
+        .liltable2{ 
+            width: 45%; 
             float: left;
             padding: 20px 20px 0px 20px;
             border: 1px solid lightgrey;
             border-radius: 5px; 
-            margin: 0px 10px 20px 10px;
+            margin: 0% 1% 2% 1%;
         }
         #results_list{
             position: fixed; 
+            left: 20px;
             float: left;
+            width: 200px;
         }
         #display_space{
             position: relative;
-            left: 200px;
-            width: 1200px;
+            left: 220px;
         }
         .list-group-item{
             width: 100%;       
@@ -56,7 +54,43 @@
         .list-group-item:focus {
             outline: none;
         }
-        
+        #patientInfo{
+            float: left;
+            padding: 20px;
+            border: 1px solid lightgrey;
+            border-radius: 5px; 
+            height: 225px;
+        }
+        #editButton{
+            position: relative;
+            float: right;
+            top: -60px;
+        }
+        #charts{
+            float: left;
+            padding: 20px;
+            border: 1px solid lightgrey;
+            border-radius: 5px; 
+            height: 225px; 
+            position: relative;
+            top: 20px;
+        }
+        #profpic{
+            float: left;
+            margin-right: 20px;
+            height: 100%;
+        }
+        #patientInfo p{
+            float: left;
+            position: relative;
+            top: -60px;
+            line-height: 300%;
+        }
+        #patientTitle{
+            position: relative;
+            top: -20px;
+            float: left;
+        }
         
         
     </style>
@@ -75,65 +109,63 @@
         function display(patient_fname, patient_lname, location, known_drug_allergies, medical_history) {
             
             $( '#patientTitle' ).text("");
-            $( '#patientTitle' ).append(patient_fname + ' ' + patient_lname);
+            $( '#patientTitle' ).append('<h3>' + patient_fname + ' ' + patient_lname + '</h3>');
             $( '#location' ).text("");
-            $( '#location' ).append(location);
+            $( '#location' ).append("   " + location);
             $( '#known_drug_allergies' ).text("");
-            $( '#known_drug_allergies' ).append(known_drug_allergies);
+            $( '#known_drug_allergies' ).append("   " + known_drug_allergies);
             $( '#medical_history' ).text("");
-            $( '#medical_history' ).append(medical_history);
+            $( '#medical_history' ).append("   " + medical_history);
         };        
         
         function editInfo(){
             $( '#editButton' ).text("");
             $( '#editButton' ).append('<button type="button" class="btn btn-success" onclick="updateInfo()">Update</button>  <button type="button" class="btn btn-default" onclick="cancelUpdate()">Cancel</button>');
             
+            $("#patientInfo p").css("line-height", "100%");
+            
             myDataRef.on('value', function(snapshot) {
                 var message = snapshot.val();
-                $( '#patientTitle' ).text("");
-                $( '#patientTitle' ).append("<textarea id='patient_fname_input' rows='1' cols='10'>" + message.patient_fname + "</textarea><textarea id='patient_lname_input' rows='1' cols='10'>" + message.patient_lname + "</textarea>");
                 $( '#location' ).text("");
-                $( '#location' ).append("<textarea id='location_input' rows='1' cols='20'>" + message.location + "</textarea>");
+                $( '#location' ).append("<textarea class='form-control' id='location_input' rows='1' cols='2' >" + message.location + "</textarea>");
                 $( '#known_drug_allergies' ).text("");
-                $( '#known_drug_allergies' ).append("<textarea id='known_drug_allergies_input' rows='1' cols='20'>" + message.known_drug_allergies + "</textarea>");
+                $( '#known_drug_allergies' ).append("<textarea class='form-control' id='known_drug_allergies_input' rows='1' cols='2' >" + message.known_drug_allergies + "</textarea>");
                 $( '#medical_history' ).text("");
-                $( '#medical_history' ).append("<textarea id='medical_history_input' rows='1' cols='20'>" + message.medical_history + "</textarea>"); 
-            });
+                $( '#medical_history' ).append("<textarea class='form-control' id='medical_history_input' rows='1' cols='2' >" + message.medical_history + "</textarea>"); 
+            });    
         }
         
         function updateInfo(){
             $( '#editButton' ).text("");
-            $( '#editButton' ).append('<button type="button" class="btn btn-default" onclick="editInfo()">Edit Information</button>');
+            $( '#editButton' ).append('<button type="button" class="btn btn-default" onclick="editInfo()">Edit</button>');
             
-            var patient_fname_input = $('#patient_fname_input').val();
-            var patient_lname_input = $('#patient_lname_input').val();
+            $("#patientInfo p").css("line-height", "300%");
+            
             var location_input = $('#location_input').val();
             var known_drug_allergies_input = $('#known_drug_allergies_input').val();
             var medical_history_input = $('#medical_history_input').val();
             
-            myDataRef.child("patient_fname").set(patient_fname_input);
-            myDataRef.child("patient_lname").set(patient_lname_input);
             myDataRef.child("location").set(location_input);
             myDataRef.child("known_drug_allergies").set(known_drug_allergies_input);
             myDataRef.child("medical_history").set(medical_history_input);
             
-            $( '#patientTitle' ).text(patient_fname_input + " " + patient_lname_input);
-            $( '#location' ).text(location_input);
-            $( '#known_drug_allergies' ).text(known_drug_allergies_input);
-            $( '#medical_history' ).text(medical_history_input);
+            $( '#location' ).text("   " + location_input);
+            $( '#known_drug_allergies' ).text("   " + known_drug_allergies_input);
+            $( '#medical_history' ).text("   " + medical_history_input);
         }
         
         function cancelUpdate(){
             $( '#editButton' ).text("");
-            $( '#editButton' ).append('<button type="button" class="btn btn-default" onclick="editInfo()">Edit Information</button>');
+            $( '#editButton' ).append('<button type="button" class="btn btn-default" onclick="editInfo()">Edit</button>');
+            
+            $("#patientInfo p").css("line-height", "300%");
             
             myDataRef.on('value', function(snapshot) {
                 var message = snapshot.val();
-        
-                $( '#patientTitle' ).text(message.patient_fname + " " + message.patient_lname);
-                $( '#location' ).text(message.location);
-                $( '#known_drug_allergies' ).text(message.known_drug_allergies);
-                $( '#medical_history' ).text(message.medical_history);
+
+                $( '#location' ).text("   " + message.location);
+                $( '#known_drug_allergies' ).text("   " + message.known_drug_allergies);
+                $( '#medical_history' ).text("   " + message.medical_history);
             });
         }
 
@@ -180,11 +212,11 @@
                 var message = snapshot.val();
                 
                 var checkColor = $('#button' + key).css("background-color");
-                if(checkColor == "rgb(255, 255, 255)"){
+                if(checkColor == "rgb(245, 245, 245)" || checkColor == "rgb(255, 255, 255)"){
                     $( '#button' + key ).css("background-color","rgb(128, 128, 128)");
                     $( '#button' + key ).css("color","white");
             
-                    $( '#display_space' ).append('<div id="table' + key + '" class="liltable"><b>' + message.timeStamp + '</b><table class="table table-striped"><tbody><tr><td>pH</td><td>' + message.pH + '</td></tr><tr><td>Nitrite</td><td>' + message.nitrite + '</td></tr><tr><td>Ketone</td><td>' + message.ketone + '</td></tr><tr><td>Glucose</td><td>' + message.glucose + '</td></tr></tbody></table></div>');
+                    $( '#display_space' ).append('<div id="table' + key + '" class="liltable2"><b>' + message.timeStamp + '</b><table class="table table-striped"><tbody><tr><td>pH</td><td>' + message.pH + '</td></tr><tr><td>Nitrite</td><td>' + message.nitrite + '</td></tr><tr><td>Ketone</td><td>' + message.ketone + '</td></tr><tr><td>Glucose</td><td>' + message.glucose + '</td></tr></tbody></table></div>');
                 }
                 else if(checkColor == "rgb(128, 128, 128)"){
                     $( '#button' + key ).css("background-color","rgb(255, 255, 255)");
@@ -222,7 +254,7 @@
         noteKeyRef.remove();
         $("#" + key).remove();
         loadOverview();
-    }    
+    }
         
     </script>
 
@@ -263,9 +295,8 @@
 		  <div class="navbar-collapse collapse">
 		    <ul class="nav navbar-nav navbar-right">
 		      <li>
-		      	<a href="photoAnalysis.html">
-		      		<span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
-		      	Start New Test</a>
+		      	<a href="testSetUp.html">
+		      		<span class="glyphicon glyphicon-camera" aria-hidden="true"></span> Start New Test</a>
 		      	
 		      </li>
 		      <li><a href="Dashboard.html"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Back To Database</a>
@@ -289,40 +320,19 @@
 			<div class="container">
 
 			            
-			            <div id="main" class="row">
-			                
-                            <div id="patientInfo">
-			                <img class="col-sm-2" style="height:200px" name="photo" src="IMG_1978.png">
-
-			                    <div class="col-sm-4">
-			                        
-                                    <p>
-			                             <b>Name:</b>
-			                             <span id="patientTitle"></span>
-                                    </p>
-                                    <p>
-			                             <b>Location:</b>
-			                             <span id="location"></span>
-                                    </p>
-                                    <p>
-			                             <b>Known Drug Allergies:</b>
-			                             <span id="known_drug_allergies"></span>
-                                    </p>
-                                    <p>
-			                             <b>Medical History:</b>
-			                             <span id="medical_history"></span>
-                                    </p>
+			          <div id="main">  
+                            <div id="patientInfo"  class="col-sm-6">
+                                <img id="profpic" src="img/default_profpic-01.png" alt="Default Profile Picture">
+                                <span id="patientTitle"></span>
+                                <p><br>Location:<b><span id="location"></span></b>
+                                <br>Known Drug Allergies:<b><span id="known_drug_allergies"></span></b>
+                                <br>Medical History:<b><span id="medical_history"></span></b></p>
+                                <div id="editButton"><button type="button" class="btn btn-default" onclick="editInfo()">Edit</button></div>
+			                 </div> 
                                 
-                                    <div id="editButton">
-                                        <button type="button" class="btn btn-default" onclick="editInfo()">Edit Information</button>
-                                    </div>
-
-			                    </div>  
-			                 </div>   
 			            
-			 
-			                <div id="spacer" class="col-sm-1" ></div>
-			                <div id="recentLevels" class="col-sm-4 liltable">
+			                 <div id="spacer" class="col-sm-1"></div>
+			                <div id="recentLevels" class="col-sm-5 liltable">
                                 
                                         <b id="tableTitle"></b>
 					                    <table id="overviewTable" class="table table-striped">
@@ -353,8 +363,15 @@
 			               			 </div><!--end results table-->
 			               			 <div id="spacer" class="col-sm-1"></div>
                                     
+                                    <div id="charts" class="col-sm-12">    
+                                        <canvas id="ketonesChart" width="200" height="200"></canvas>
+                                        <canvas id="nitritesChart" width="200" height="200"></canvas>
+                                        <canvas id="glucoseChart" width="200" height="200"></canvas>
+                                        <canvas id="pHChart" width="200" height="200"></canvas>
+                                    </div>
 			                
 			            </div>
+                
 
 
                     <!--end secondary-->
@@ -372,21 +389,14 @@
 
 <div id="results" class="tab-pane fade">
 
-    
-			                <div id="allResults" class="col-sm-5">
-    
-    
-			                  
-
-                            <div id="results_list" class="panel panel-default">
-                                <div class="panel-heading"><h5>Select the date(s) below<br>to view past results:</h5></div>
-                                <!--generate list items here-->
-                            </div>
+                                <div id="results_list" class="panel panel-default">
+                                    <div class="panel-heading"><h5>Select the date(s) below<br>to view past results:</h5></div>
+                                    <!--generate list items here-->
+                                </div>
                                 
-                            <div id="display_space">
-                                <!--generate selected items here-->
-                            </div>
-                            </div>  
+                                <div id="display_space" class="col-sm-9">
+                                    <!--generate selected items here-->
+                                </div> 
                             
     
     
@@ -407,6 +417,98 @@
 
 </div><!--end notes tab div-->
 
+<script>
+        /////////CHART STUFF////////////     
+var testx = "2/12/2016";
+  var testy = "7";
+
+  //ketones chart data
+      var ketonesData = {
+          
+          labels: [testx, testx, testx, "April", "May", "June", "July"],
+          datasets: [
+              {
+                  label: "Ketones",
+                  fillColor: "rgba(151,187,205,0.2)",
+                  strokeColor: "rgba(151,187,205,1)",
+                  pointColor: "rgba(151,187,205,1)",
+                  pointStrokeColor: "#fff",
+                  pointHighlightFill: "#fff",
+                  pointHighlightStroke: "rgba(151,187,205,1)",
+                  data: [6, 6.5, 7, 7.5, , testy, 8]
+              }              
+          ]
+      }
+
+  //Nitrites Chart Data
+      var nitritesData = {       
+          labels: [testx, testx, testx, "April", "May", "June", "July"],
+          datasets: [
+              {
+                  label: "Nitrites",
+                  fillColor: "rgba(220,220,220,0.5)",
+                  strokeColor: "rgba(220,220,220,0.8)",
+                  highlightFill: "rgba(220,220,220,0.75)",
+                  highlightStroke: "rgba(220,220,220,1)",
+                  data: [0, 0, 128, 0, 0, 0, 32]
+              }             
+          ]
+      }
+
+
+
+  //Glucose Chart Data
+      var glucoseData = {
+          
+          labels: [testx, testx, testx, "April", "May", "June", "July"],
+          datasets: [
+              {
+                  label: "Glucose",
+                  fillColor: "rgba(151,187,205,0.2)",
+                  strokeColor: "rgba(151,187,205,1)",
+                  pointColor: "rgba(151,187,205,1)",
+                  pointStrokeColor: "#fff",
+                  pointHighlightFill: "#fff",
+                  pointHighlightStroke: "rgba(151,187,205,1)",
+                  data: [0, 0, 5, 30, 60, 110, 0]
+              }              
+          ]
+      }
+
+  //pH Chart Data
+      var pHData = {
+          
+          labels: [testx, testx, testx, "April", "May", "June", "July"],
+          datasets: [
+              {
+                  label: "pH",
+                  fillColor: "rgba(151,187,205,0.2)",
+                  strokeColor: "rgba(151,187,205,1)",
+                  pointColor: "rgba(151,187,205,1)",
+                  pointStrokeColor: "#fff",
+                  pointHighlightFill: "#fff",
+                  pointHighlightStroke: "rgba(151,187,205,1)",
+                  data: [5, 6.5, 7, 7.5, , testy, 8.5]
+              }              
+          ]
+      }
+
+      
+      
+      // Get the context of the canvas elements we want to select
+      var Kctx = document.getElementById("ketonesChart").getContext("2d");
+      var Nctx = document.getElementById("nitritesChart").getContext("2d");
+      var Gctx = document.getElementById("glucoseChart").getContext("2d");
+      var Pctx = document.getElementById("pHChart").getContext("2d");
+      
+      //generate chart
+      var myKetonesChart = new Chart(Kctx).Line(ketonesData);
+      var myNitritesChart = new Chart(Nctx).Bar(nitritesData);
+      var myGlucoseChart = new Chart(Gctx).Line(glucoseData);
+      var mypHChart = new Chart(Pctx).Line(pHData);
+      
+    ////////END CHART STUFF////////  
+</script>
 
 
 </body>
