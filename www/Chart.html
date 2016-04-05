@@ -2,10 +2,11 @@
 
 <html lang="en">
 <head>
-  	<meta charset="UTF-8">
+  <meta charset="UTF-8">
 	<title>Charts</title>
 	<meta name=“viewport” content=“width=device-width, intitial-scale=1.0”>
 	
+<<<<<<< HEAD
     <script type="text/javascript" src="js/code.jquery.com/jquery-1.12.0.min.js"></script>
     <script rel="javascript" type="text/javascript" href="js/bootstrap.min.js"></script>
 	<script src="js/Chart.min.js"></script>
@@ -14,8 +15,15 @@
 
     <script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
     
+=======
+  <script type="text/javascript" src="js/code.jquery.com/jquery-1.12.0.min.js"></script>
+  <script rel="javascript" type="text/javascript" href="js/bootstrap.min.js"></script>
+>>>>>>> origin/master
 
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> 
 
+  <script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
+  <script src="js/Chart.min.js"></script>
 
 
 </head>
@@ -27,6 +35,7 @@
 <canvas id="pHChart" width="200" height="200"></canvas>
 
 <button id="updateData" onclick="updateChart()">Update Chart</button>
+<input type="file" accept="image/*">
 
   <script>
   var testx = "2/12/2016";
@@ -103,7 +112,7 @@
           ]
       }
 
-      // Get the context of the canvas elements we want to select
+      // Get the context (ctx) of the canvas elements we want to select
       var Kctx = document.getElementById("ketonesChart").getContext("2d");
       var Nctx = document.getElementById("nitritesChart").getContext("2d");
       var Gctx = document.getElementById("glucoseChart").getContext("2d");
