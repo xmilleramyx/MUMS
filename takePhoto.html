@@ -9,106 +9,77 @@
 	<meta name=“viewport” content=“width=device-width, intitial-scale=1.0”>
 	
   <script type="text/javascript" src="js/code.jquery.com/jquery-1.12.0.min.js"></script>
+  <script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
   <script rel="javascript" type="text/javascript" href="js/bootstrap.min.js"></script>
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> 
-
-  <script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
-  <script src="js/Chart.min.js"></script>
-
+  
+ 
 
 </head>
 <body>
 
-	<!--File upload (hidden)-->
-	<input type="file" id="fileElem" multiple accept="image/*" style="display:none" onchange="handleFiles(this.files)">
-	<!--link to select camera-->
-	<a href="#" id="fileSelect">Select image</a>
+
 	
+	<div id-"centeredContainer" class="col-md-6" style="height: 200px; width:200px; position: absolute; top:0; bottom: 0; left: 0; right: 0; margin: auto;">
+
 	<div id="imgHolder">
-	  <p>No files selected!</p>
+		<p>No files selected!</p>
 	</div>
 
-	<div>
-	  <canvas id="c5" width="700" height = "500" style="border:solid 1px #000000;"></canvas>
-	  <div>
-	    <button onclick="draw_strip();return true;">Full Image</button>
-	    <button onclick="draw_strip_crop();return true;">Capture Strip</button>
-	    <button onclick="Clear_image();return true;">Retake Image</button>
-	  </div> 
+		<!--File upload (hidden)-->
+		<input type="file" id="fileElem" accept="image/*" style="display:none" onchange="handleFiles(this.files)">
+		<!--link to select camera-->
+		<button class="btn btn-default" id="fileSelect" style="">Take Photo</button>
+		<input class="btn btn-default" id="sendPhoto" type="submit" style="display:none" value="Submit">
+
 	</div>
 
+
+
+	<!--<a href="showPhoto.html?selected=" + base64></a> -->
 	
-	<script>
-		window.URL = window.URL || window.webkitURL;
+<script>
+	window.URL = window.URL || window.webkitURL;
 
-		var fileSelect = document.getElementById("fileSelect"),
-		fileElem = document.getElementById("fileElem"),
-		imgHolder = document.getElementById("imgHolder");
+	var fileSelect = document.getElementById("fileSelect"),
+	fileElem = document.getElementById("fileElem"),
+	imgHolder = document.getElementById("imgHolder");
 
-		fileSelect.addEventListener("click", function(e) {
-				  if (fileElem) {fileElem.click();
-				  }
-
-				e.preventDefault(); // prevent navigation to "#"
-		}, false);
-
-		function handleFiles(files) {
-		  if (!files.length) {
-		    imgHolder.innerHTML = "<p>Strip Not Yet Tested</p>";
-		  } 
-		  else 
-		  {
-		    //clear empty message
-		    imgHolder.innerHTML = "";
-
-		    var imgCapture = document.createElement("img");
-		    imgCapture.src = window.URL.createObjectURL(files[0]);
-
-		    //img.height = 60;
-		    imgCapture.onload = function() {
-			        window.URL.revokeObjectURL(this.src);
+	fileSelect.addEventListener("click", function(e) {
+			  if (fileElem) {fileElem.click();
 			  }
-			imgHolder.appendChild(imgCapture);
-			var info = document.createElement("span");
-			info.innerHTML = files[0].name + ": " + files[0].size + " bytes";
-			imgHolder.appendChild(info);
-			return imgCapture;
-		  }
-		}
 
+			e.preventDefault(); // prevent navigation to "#"
+	}, false);
 
-	  var c5 = document.getElementById("c5");
-	  var c5_context = c5.getContext("2d");
-	  
-	  var strip = document.createElement("img");
-	  strip.src = 'test_strip_image.jpg';
-	
-
-
-	  //drawImage (img,x,y,width,height)
-	  function draw_strip() {
-	  c5_context.clearRect(1, 1, 700, 500);
-	  c5_context.drawImage(strip, 5, 5, 648, 484);
-	  }
-	  
-	  //drawImage (img, crop_x, crop_y, crop_width, crop_height, x, y, width, height), img is the image element. 
-
-	  //Crop_x and crop_y is where you start cropping your image. 
-	  //Crop_width and crop_height is the size you want to crop your image. 
-	  //x and y are the coordinates to place the image object. 
-	  //Width and height will be image size that you want, resize as you like it.
-
-	  //crop dimensions 1746 × 101, 
-	  function draw_strip_crop() {
-	  c5_context.clearRect(1, 1, 700, 500);
-	  c5_context.drawImage(strip, 102, 1136, 1746, 104, 10, 100, 436, 26);
-	  }
-	  
-	  function Clear_image() {
-	  c5_context.clearRect(1, 1, 700, 500);
+	function handleFiles(files) {
+	  if (!files.length) {
+	    imgHolder.innerHTML = "<p>Strip Not Yet Tested</p>";
 	  } 
-	</script>
+	  else 
+	  {
+	    //clear empty message
+	    imgHolder.innerHTML = "";
+	    $('#fileSelect').hide();
+	    $('#sendPhoto').toggle();
+
+	    var imgCapture = document.createElement("img");
+	    imgCapture.src = window.URL.createObjectURL(files[0]);
+
+	    //img.height = 60;
+	    imgCapture.onload = function() {
+		        window.URL.revokeObjectURL(this.src);
+		  }
+		imgHolder.appendChild(imgCapture);
+		//var info = document.createElement("span");
+		//info.innerHTML = files[0].name + ": " + files[0].size + " bytes";
+		//imgHolder.appendChild(info);
+		return imgCapture;
+	  }
+	}
+
+</script>
 
 
 

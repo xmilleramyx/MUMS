@@ -30,40 +30,39 @@
 	</div>
 
 
-
-
 <script>
 
-	  var c5 = document.getElementById("c5");
-	  var c5_context = c5.getContext("2d");
-	  
-	  var strip = document.createElement("img");
-	  strip.src = 'img/test_strip_image.jpg';
 	
+	var c5 = document.getElementById("c5");
+	var c5_context = c5.getContext("2d");
+
+	var strip = document.createElement("img");
+	//strip.src = 'img/test_strip_image.jpg';
+	//strip.src= "data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==" 
 
 
-	  //drawImage (img,x,y,width,height)
-	  function draw_strip() {
-	  c5_context.clearRect(1, 1, 700, 500);
-	  c5_context.drawImage(strip, 5, 5, 648, 484);
-	  }
-	  
-	  //drawImage (img, crop_x, crop_y, crop_width, crop_height, x, y, width, height), img is the image element. 
+	//drawImage (img,x,y,width,height)
+	function draw_strip() {
+		c5_context.clearRect(1, 1, 700, 500);
+		c5_context.drawImage(strip, 5, 5, 648, 484);
+	}
 
-	  //Crop_x and crop_y is where you start cropping your image. 
-	  //Crop_width and crop_height is the size you want to crop your image. 
-	  //x and y are the coordinates to place the image object. 
-	  //Width and height will be image size that you want, resize as you like it.
+	//drawImage (img, crop_x, crop_y, crop_width, crop_height, x, y, width, height), img is the image element. 
 
-	  //crop dimensions 1746 × 101, 
-	  function draw_strip_crop() {
-	  c5_context.clearRect(1, 1, 700, 500);
-	  c5_context.drawImage(strip, 102, 1136, 1746, 104, 10, 100, 436, 26);
-	  }
-	  
-	  function Clear_image() {
-	  c5_context.clearRect(1, 1, 700, 500);
-	  } 
+	//Crop_x and crop_y is where you start cropping your image. 
+	//Crop_width and crop_height is the size you want to crop your image. 
+	//x and y are the coordinates to place the image object. 
+	//Width and height will be image size that you want, resize as you like it.
+
+	//crop dimensions 1746 × 101, 
+	function draw_strip_crop() {
+		c5_context.clearRect(1, 1, 700, 500);
+		c5_context.drawImage(strip, 102, 1136, 1746, 104, 10, 100, 436, 26);
+	}
+
+	function Clear_image() {
+		c5_context.clearRect(1, 1, 700, 500);
+	} 
 	</script>
 
 
