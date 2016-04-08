@@ -21,6 +21,21 @@
     
   	<script>
     
+            var myDataRef = new Firebase('https://mums.firebaseio.com/'); 
+
+       var dataSet = new Array();
+       makeData();
+     
+      /*var dataSet = [
+            ["name", "position", "office", "ext.", "start", "salary"],
+            ["name", "position", "office", "ext.", "start", "salary"],
+            ["name", "position", "office", "ext.", "start", "salary"],
+            ["name", "position", "office", "ext.", "start", "salary"],
+            ["name", "position", "office", "ext.", "start", "salary"],
+            ["name", "position", "office", "ext.", "start", "salary"],
+            ["name", "position", "office", "ext.", "start", "salary"]
+            ];*/
+        
         function makeData(){
             
             myDataRef.on('child_added', function(snapshot) {
@@ -111,25 +126,6 @@
     <br>
      <button type="button" class="btn btn-default" onclick="alert(dataSet)">Show dataset</button>
     <br>
-
-    
-<script>
-       var myDataRef = new Firebase('https://mums.firebaseio.com/'); 
-
-       var dataSet = new Array();
-       makeData();
-     
-      /*var dataSet = [
-            ["name", "position", "office", "ext.", "start", "salary"],
-            ["name", "position", "office", "ext.", "start", "salary"],
-            ["name", "position", "office", "ext.", "start", "salary"],
-            ["name", "position", "office", "ext.", "start", "salary"],
-            ["name", "position", "office", "ext.", "start", "salary"],
-            ["name", "position", "office", "ext.", "start", "salary"],
-            ["name", "position", "office", "ext.", "start", "salary"]
-            ];*/
-       
-</script>
 
 
     <!--table-->

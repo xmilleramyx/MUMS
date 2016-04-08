@@ -15,6 +15,7 @@
 
     <script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+    <script src='js/testResults.js'></script>
     
     <style>
         .results {
@@ -109,12 +110,6 @@
         function calcResult(){
             var example = document.getElementById('example');
             var context = example.getContext('2d');
- 
-            function rgbToHex(r, g, b) {
-                if (r > 255 || g > 255 || b > 255)
-                    throw "Invalid color component";
-                return ((r << 16) | (g << 8) | b).toString(16);
-            }
 
             //rgb functions
             function avgRGB(p, x) {
@@ -128,12 +123,12 @@
     
             function calc_hex(x_pos, marker) {
                 var p = context.getImageData(x_pos, 2, 40, 39).data;
-                //var hex = ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
                 var rgbText = "rgb(" + avgRGB(p, 0) + ", " + avgRGB(p, 1) + ", " + avgRGB(p, 2) + ")";
                 context.font = "12px Arial"
                 context.fillText(marker, x_pos, 55);
                 context.strokeStyle="gray";
                 context.strokeRect(x_pos, 2, 40, 39);
+                var rgb2hsv(r, g, b);
                 return rgbText;
             }
  
@@ -168,7 +163,7 @@
 
 </head>
 
-<body>
+<body onload="input()">
     
 	<!--Horizontal Nav Bar at Top, credit to http://www.bootply.com/98314-->
 		<nav class="navbar navbar-default" role="navigation">
@@ -225,15 +220,3 @@
 
 </body>
 </html>
-
-
-
-<!--
-//fake strip generation
-var x_pos = 0, y_pos = 0;
-for(var i=0; i<100; i++){
-context.fillStyle = '#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6);
-context.fillRect(x_pos, 0, 10, 50);
-x_pos += 10;
-}
--->

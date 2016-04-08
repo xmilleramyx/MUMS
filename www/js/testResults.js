@@ -1,18 +1,3 @@
-<!doctype html>
-
-<html lang="en">
-<head>
-  	<meta charset="UTF-8">
-	<title>TEST</title>
-	<meta name=“viewport” content=“width=device-width, intitial-scale=1.0”>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> 	 
-  	<link rel="stylesheet" href="css/login.css">
-
-    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
-
-
-    <script>
-
 var rVal = 0, gVal = 0, bVal = 0; 
  var computedH = 0;
  var computedS = 0;
@@ -59,20 +44,6 @@ function rgb2hsv (r,g,b) {
  computedH = 60*(h - d/(maxRGB - minRGB));
  computedS = (maxRGB - minRGB)/maxRGB;
  computedV = maxRGB;
-return("H:" + computedH + " / S:"  + computedS +  " / V:"  + computedV);
+ return("HSV( " + computedH + " , "  + computedS +  " , "  + computedV);
 }
 
-    </script>
-    
-    
-    
-    
-</head>
-
-<body onload="input()">
-	<h2 style="text-align:center">HSV Test</h2>
-	
-
-
-</body>
-</html>
