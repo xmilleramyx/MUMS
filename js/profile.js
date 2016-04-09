@@ -103,8 +103,8 @@ var str = location.search;
                 $( '#nitrite' ).text(testMessage.nitrite);
                 $( '#ketone' ).text(testMessage.ketone);
                 $( '#glucose' ).text(testMessage.glucose);
+                
             });
-            
         };
         
         function resultsTable (key) {           
@@ -156,3 +156,33 @@ var str = location.search;
         $("#" + key).remove();
         loadOverview();
     }
+
+////CHARTS
+     
+var billubrinX = [];
+var billubrinY = [6,7,8,9,8,6];
+var glucoseX = [];
+var glucoseY = [];
+var pHX = [];
+var pHY = [];
+
+function loadCharts(){
+    var chartRef = myDataRef.child("tests");
+        chartRef.on('child_added', function(snapshot) {
+            var chartValues = snapshot.val();
+            billubrinX.push(chartValues.timeStamp);
+            glucoseX.push(chartValues.timeStamp);
+            glucoseY.push(chartValues.glucose);
+            //console.log(glucoseY);
+            pHX.push(chartValues.timeStamp);
+            pHY.push(chartValues.pH);
+
+            //console.log("before:"+billubrinX);
+        });
+            //mybillubrinChart.update();
+            //console.log("after:" + billubrinX);
+        
+}
+
+
+

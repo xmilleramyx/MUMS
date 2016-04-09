@@ -55,6 +55,10 @@
         .list-group-item:focus {
             outline: none;
         }
+        .chartAlign{
+            float:left;
+            padding-right: 5px;
+        }
         #patientInfo{
             float: left;
             padding: 20px;
@@ -69,10 +73,10 @@
         }
         #charts{
             float: left;
-            padding: 20px;
+            padding: 10px;
             border: 1px solid lightgrey;
             border-radius: 5px; 
-            height: 225px; 
+            height: 250px; 
             position: relative;
             top: 20px;
         }
@@ -98,7 +102,7 @@
                 
 </head>
 
-<body onload="loadOverview()">
+<body onload="loadOverview(); loadCharts();">
 	<!--enabling tabs-->	
 	<script language="javascript">
 		$('#myTabs a').click(function (e) {
@@ -153,12 +157,10 @@
 	<!--end tab header-->
 
 	<div class="tab-content">
-		  <div id="home" class="tab-pane fade in active">
-		  
+		<div id="home" class="tab-pane fade in active"> 
 			<div class="container">
-
 			            
-			          <div id="main">  
+			        <div id="main">  
                             <div id="patientInfo"  class="col-sm-6">
                                 <img id="profpic" src="img/default_profpic-01.png" alt="Default Profile Picture">
                                 <span id="patientTitle"></span>
@@ -169,7 +171,7 @@
 			                 </div> 
                                 
 			            
-			                 <div id="spacer" class="col-sm-1"></div>
+			                <div id="spacer" class="col-sm-1"></div>
 			                <div id="recentLevels" class="col-sm-5 liltable">
                                 
                                         <b id="tableTitle"></b>
@@ -198,47 +200,61 @@
 										    </tbody>
 										</table>
 		                       
-			               			 </div><!--end results table-->
-			               			 <div id="spacer" class="col-sm-1"></div>
+			               	</div><!--end results table-->
+			               	<div id="spacer" class="col-sm-1"></div>
                                     
-                                    <div id="charts" class="col-sm-12">    
-                                        <canvas id="ketonesChart" width="200" height="200"></canvas>
-                                        <canvas id="nitritesChart" width="200" height="200"></canvas>
-                                        <canvas id="glucoseChart" width="200" height="200"></canvas>
-                                        <canvas id="pHChart" width="200" height="200"></canvas>
-                                    </div>
+                            <div id="charts" class="col-sm-12">  
+                                
+
+                                
+                                <div class="chartAlign">
+                                <p>Ketones</p>
+                                <canvas id="ketonesChart" width="175%" height="200"></canvas>
+                                </div>
+                            
+                                <div class="chartAlign">
+                                <p>Billubrin</p>
+                                <canvas id="billubrinChart" width="175" height="200"></canvas>
+                                </div>
+
+                                <div class="chartAlign">
+                                <p>Glucose</p>
+                                <canvas id="glucoseChart" width="175" height="200"></canvas>
+                                </div>
+
+                                <div class="chartAlign">
+                                <p>pH</p>
+                                <canvas id="pHChart" width="175" height="200"></canvas>
+                                </div>
+
+                                <div class="chartAlign">
+                                <p>Proteins</p>
+                                <canvas id="ProteinsChart" width="175" height="200"></canvas>
+                                </div>
+
+                                <button class="btn btn-default" onclick="createTables()">Create Tables</button?
+                            </div>
 			                
-			            </div>
-                
-
-
-                    <!--end secondary-->
+			        </div><!--end main-->
 			            
 			</div><!--end container div-->
-
-
-
-
-
 
 		 </div><!--end home tab-->
 
 
 
-<div id="results" class="tab-pane fade">
+    <div id="results" class="tab-pane fade">
 
-                                <div id="results_list" class="panel panel-default">
-                                    <div class="panel-heading"><h5>Select the date(s) below<br>to view past results:</h5></div>
-                                    <!--generate list items here-->
-                                </div>
-                                
-                                <div id="display_space" class="col-sm-9">
-                                    <!--generate selected items here-->
-                                </div> 
-                            
-    
-    
-</div><!--end results tab-->
+            <div id="results_list" class="panel panel-default">
+                <div class="panel-heading"><h5>Select the date(s) below<br>to view past results:</h5></div>
+                <!--generate list items here-->
+            </div>
+            
+            <div id="display_space" class="col-sm-9">
+                <!--generate selected items here-->
+            </div> 
+                        
+    </div><!--end results tab-->
 
 
 
