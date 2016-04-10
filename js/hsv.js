@@ -1,25 +1,38 @@
+/************* VARIABLES AND EQUATIONS SETUP *************/
+    
+//GLUCOSE
 var glucose_cVal = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0];
+function glucose_equationH(x){ return (-0.4313 * (x * x)) + (11.813 * x) + 55.449; }
+function glucose_equationS(x){ return (0.3803 * (x * x)) + (-5.9182 * x) + 42.864; }
+function glucose_equationV(x){ return (0.2773 * (x * x)) + (-4.3803 * x) + 77.361; }
+
+//BILLRUBIN
+var billrubin_cVal = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0];
+function billrubin_equationH(x){ return (1 * (x * x)) + (2 * x) + 3; }
+function billrubin_equationS(x){ return (1 * (x * x)) + (2 * x) + 3; }
+function billrubin_equationV(x){ return (1 * (x * x)) + (2 * x) + 3; }
+
+//KETONE
 var ketone_cVal = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0];
+function ketone_equationH(x){ return (1 * (x * x)) + (2 * x) + 3; }
+function ketone_equationS(x){ return (1 * (x * x)) + (2 * x) + 3; }
+function ketone_equationV(x){ return (1 * (x * x)) + (2 * x) + 3; }
 
-function glucose_equationH(x){
-    //y = Ax^2 + Bx + c 
-    //Fake y = 3x^2 + 2x + 1
-    return (-0.4313 * (x * x)) + (11.813 * x) + 55.449;
-}
+//PH
+var pH_cVal = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0];
+function pH_equationH(x){ return (1 * (x * x)) + (2 * x) + 3; }
+function pH_equationS(x){ return (1 * (x * x)) + (2 * x) + 3; }
+function pH_equationV(x){ return (1 * (x * x)) + (2 * x) + 3; }
 
-function glucose_equationS(x){
-    //y = Ax^2 + Bx + c 
-    //Fake y = 4x^2 + 3x + 2
-    return (0.3803 * (x * x)) - (5.9182 * x) + 42.864;
-}
+//PROTEIN
+var protein_cVal = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 2.0, 3.0, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 20, 25, 30, 31, 32];
+function protein_equationH(x){ return (-0.4313 * (x * x)) + (11.813 * x) + 55.449; }
+function protein_equationS(x){ return (0.3803 * (x * x)) + (-5.9182 * x) + 42.864; }
+function protein_equationV(x){ return (0.2773 * (x * x)) + (-4.3803 * x) + 77.361; }
 
-function glucose_equationV(x){
-    //y = Ax^2 + Bx + c 
-    //Fake y = 5x^2 + 4x + 3
-    return (0.2773 * (x * x)) - (4.3803 * x) + 77.361;
-}
 
-//MATRIX EQUATION - eventually, make general equation for all concentrations with arrays for c values
+/************* CONCERNTRATION ALGORITHM *************/
+
 function findConcentration(Ha, Sa, Va, equationH, equationS, equationV, c_array){
     //find expected values
     var min = 10000000000.0;
