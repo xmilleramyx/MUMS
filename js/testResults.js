@@ -31,24 +31,26 @@
         
         var timeStamp = getTimestamp();
         var timeRef = makeTimeRef();
-        var glucose_hsv, ketone_hsv, nitrite_hsv, pH_hsv;
+        var glucose_hsv, billrubin_hsv, ketone_hsv, pH_hsv, protein_hsv;
         
         
         function add(){            
             var testRef = myDataRef.child("tests");
             testRef.push({timeRef: timeRef,
                     timeStamp: timeStamp,
+                    protein: protein_hsv,
                     pH: pH_hsv, 
-                    nitrite: nitrite_hsv,
                     ketone: ketone_hsv,
+                    billrubin: billrubin_hsv,
                     glucose: glucose_hsv
             });  
             alert("Saved results from: " + timeStamp);
             myDataRef.child("lastTestRef").set({timeRef: timeRef,
                     timeStamp: timeStamp,
+                    protein: protein_hsv,
                     pH: pH_hsv, 
-                    nitrite: nitrite_hsv,
                     ketone: ketone_hsv,
+                    billrubin: billrubin_hsv,
                     glucose: glucose_hsv
             });  
         }
@@ -83,21 +85,22 @@
  
             
             function calc_hsv(x_pos, marker) {
-                var p = context.getImageData(x_pos, 2, 40, 39).data;
+                var p = context.getImageData(x_pos, 2, 30, 29).data;
                 //var rgbText = "rgb(" + avgRGB(p, 0) + ", " + avgRGB(p, 1) + ", " + avgRGB(p, 2) + ")";
                 context.font = "12px Arial";
                 context.fillText(marker, x_pos, 55);
                 context.strokeStyle="gray";
-                context.strokeRect(x_pos, 2, 40, 39);
+                context.strokeRect(x_pos, 2, 30, 29);
                 var hsvText = rgb2hsv(avgRGB(p, 0), avgRGB(p, 1), avgRGB(p, 2));
                 return hsvText;
             }
  
             //calc functions based on square position
             glucose_hsv = calc_hsv(5, "Glucose"); //glucose = 1st square
+            billrubin_hsv = calc_hsv(60, "Billrubin"); //glucose = 2nd square
             ketone_hsv = calc_hsv(135, "Ketone"); //ketone = 3rd square
-            nitrite_hsv = calc_hsv(328, "Nitrite"); //nitrite = 6th square
-            pH_hsv = calc_hsv(524, "pH"); //pH = 9th square 
+            pH_hsv = calc_hsv(328, "pH"); //nitrite = 6th square
+            protein_hsv = calc_hsv(380, "Protein"); //pH = 9th square 
  
             //display the values
             timeStamp = getTimestamp();
@@ -105,22 +108,25 @@
             $("#glucose_result").text("");
             $("#glucose_result").append(glucose_hsv);
             //$("#glucose_result").css("background-color", glucose_hsv);
+            $("#billrubin_result").text("");
+            $("#billrubin_result").append(billrubin_hsv);
+            //$("#ketone_result").css("background-color", ketone_hsv);
             $("#ketone_result").text("");
             $("#ketone_result").append(ketone_hsv);
             //$("#ketone_result").css("background-color", ketone_hsv);
-            $("#nitrite_result").text("");
-            $("#nitrite_result").append(nitrite_hsv);
-            //$("#nitrite_result").css("background-color", nitrite_hsv);
             $("#pH_result").text("");
             $("#pH_result").append(pH_hsv);
             //$("#pH_result").css("background-color", pH_hsv);
+            $("#protein_result").text("");
+            $("#protein_result").append(protein_hsv);
+            //$("#ketone_result").css("background-color", ketone_hsv);
         }
 
         //load all HTML before javascript
         document.addEventListener("DOMContentLoaded", init, false);
 
         
-
+//convert RGB to HSV
 function rgb2hsv (r,g,b) {
  //remove spaces from input RGB values, convert to int
  var r = parseInt( (''+r).replace(/\s/g,''),10 ); 
@@ -154,4 +160,5 @@ function rgb2hsv (r,g,b) {
  computedV = maxRGB;
  return("HSV( " + computedH + " , "  + computedS +  " , "  + computedV + " )");
 }
+
 
