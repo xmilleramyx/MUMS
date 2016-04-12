@@ -10,11 +10,10 @@
   	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	
 	<link rel="javascript" type="text/javascript" href="css/bootstrap.min.js">
-  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> 
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
   	<link rel="stylesheet" href="css/login.css">
 
     <script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
-    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
     <script src='js/testResults.js'></script>
     
     <style>
@@ -63,8 +62,38 @@
 		  </div>
 		</nav>
 	<!--end nav bar-->
-    
+    <div id="my_photo_booth">
+        <div id="my_camera"></div>
+
+
+        <script type="text/javascript" src="cam/webcam.js"></script>
+
+        <script language="JavaScript">
+            Webcam.set({
+                width: 640,
+                height: 480,
+                image_format: 'jpeg',
+                jpeg_quality: 90,
+
+                // flip horizontal (mirror mode)
+                flip_horiz: true
+            });
+            Webcam.attach( '#my_camera' );
+        </script>
+
+        <form>
+            <div id="pre_take_buttons">
+                <input type=button value="Take Pic" onClick="preview_snapshot()">
+            </div>
+        </form>
+    </div>
+    <div id="results" style="display:none">
+    </div>
     <canvas id="example" width="750" height="100"></canvas>
+    <div id= "reload" style="display:none">
+        <input type=button value="Retake"  onClick="location.reload();">
+    </div>
+   <!--<canvas id="example" width="750" height="100"></canvas>-->
     <br>
     <button type="button" class="btn btn-default" onclick="calcResult()">Calculate Results</button>
     <button type="button" class="btn btn-default" onclick="add()">Save Results to Database</button>
@@ -97,6 +126,27 @@
         </div>
     </div>
 
+    <script language="JavaScript">
 
+        function preview_snapshot() {
+            var test;
+            Webcam.snap( function(data_uri) {
+                test = data_uri;
+                document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
+                Webcam.reset();
+                document.getElementById('my_photo_booth').style.display = 'none';
+                document.getElementById('reload').style.display = '';
+            });
+            var image = new Image(),
+                    canvas = document.getElementById('example'),
+                    ctx = canvas.getContext('2d');
+            image.src = test;
+
+            image.onload = function(){
+                ctx.drawImage(image,0,300,750,100,0,0,750,100);
+            }
+        }
+    </script>
 </body>
+
 </html>

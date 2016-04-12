@@ -57,7 +57,7 @@ function add(){
 /************* RGB AVERAGING + CONVERSION TO HSV *************/
 
 //Load cropped strip image
-function init() {        
+/*function init() {
     var example = document.getElementById('example');
     var context = example.getContext('2d');            
     base_image = new Image();
@@ -65,7 +65,7 @@ function init() {
     base_image.onload = function(){
         context.drawImage(base_image, 0, 0);
     }
-}
+}*/
             
 //Calculate average RGB
 function calcResult(){
@@ -121,7 +121,7 @@ function calcResult(){
 }
 
 //load all HTML before javascript
-document.addEventListener("DOMContentLoaded", init, false);
+//document.addEventListener("DOMContentLoaded", init, false);
         
 //Convert RGB to HSV
 function rgb2hsv (marker, r, g, b) {

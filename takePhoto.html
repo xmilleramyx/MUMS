@@ -4,79 +4,79 @@
 
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+	<meta charset="UTF-8">
 	<title>Take Photo</title>
 	<meta name=“viewport” content=“width=device-width, intitial-scale=1.0”>
-	
-  <script type="text/javascript" src="js/code.jquery.com/jquery-1.12.0.min.js"></script>
-  <script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
-  <script rel="javascript" type="text/javascript" href="js/bootstrap.min.js"></script>
 
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> 
-  
- 
+	<script type="text/javascript" src="js/code.jquery.com/jquery-1.12.0.min.js"></script>
+	<script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
+	<script rel="javascript" type="text/javascript" href="js/bootstrap.min.js"></script>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+
 
 </head>
 <body>
 
 
-	
-	<div id-"centeredContainer" class="col-md-6" style="height: 200px; width:200px; position: absolute; top:0; bottom: 0; left: 0; right: 0; margin: auto;">
 
-	<div id="imgHolder">
-		<p>No files selected!</p>
-	</div>
+<div id-"centeredContainer" class="col-md-6" style="height: 200px; width:200px; position: absolute; top:0; bottom: 0; left: 0; right: 0; margin: auto;">
 
-		<!--File upload (hidden)-->
-		<input type="file" id="fileElem" accept="image/*" style="display:none" onchange="handleFiles(this.files)">
-		<!--link to select camera-->
-		<button class="btn btn-default" id="fileSelect" style="">Take Photo</button>
-		<input class="btn btn-default" id="sendPhoto" type="submit" style="display:none" value="Submit">
+<div id="imgHolder">
+	<p>No files selected!</p>
+</div>
 
-	</div>
+<!--File upload (hidden)-->
+<input type="file" id="fileElem" accept="image/*" style="display:none" onchange="handleFiles(this.files)">
+<!--link to select camera-->
+<button class="btn btn-default" id="fileSelect" style="">Take Photo</button>
+<input class="btn btn-default" id="sendPhoto" type="submit" style="display:none" value="Submit">
+
+</div>
 
 
 
-	<!--<a href="showPhoto.html?selected=" + base64></a> -->
-	
+<!--<a href="showPhoto.html?selected=" + base64></a> -->
+
 <script>
 	window.URL = window.URL || window.webkitURL;
 
 	var fileSelect = document.getElementById("fileSelect"),
-	fileElem = document.getElementById("fileElem"),
-	imgHolder = document.getElementById("imgHolder");
+			fileElem = document.getElementById("fileElem"),
+			imgHolder = document.getElementById("imgHolder");
 
 	fileSelect.addEventListener("click", function(e) {
-			  if (fileElem) {fileElem.click();
-			  }
+		if (fileElem) {fileElem.click();
+		}
 
-			e.preventDefault(); // prevent navigation to "#"
+		e.preventDefault(); // prevent navigation to "#"
 	}, false);
 
 	function handleFiles(files) {
-	  if (!files.length) {
-	    imgHolder.innerHTML = "<p>Strip Not Yet Tested</p>";
-	  } 
-	  else 
-	  {
-	    //clear empty message
-	    imgHolder.innerHTML = "";
-	    $('#fileSelect').hide();
-	    $('#sendPhoto').toggle();
+		if (!files.length) {
+			imgHolder.innerHTML = "<p>Strip Not Yet Tested</p>";
+		}
+		else
+		{
+			//clear empty message
+			imgHolder.innerHTML = "";
+			$('#fileSelect').hide();
+			$('#sendPhoto').toggle();
 
-	    var imgCapture = document.createElement("img");
-	    imgCapture.src = window.URL.createObjectURL(files[0]);
+			var imgCapture = document.createElement("img");
+			imgCapture.src = window.URL.createObjectURL(files[0]);
 
-	    //img.height = 60;
-	    imgCapture.onload = function() {
-		        window.URL.revokeObjectURL(this.src);
-		  }
-		imgHolder.appendChild(imgCapture);
-		//var info = document.createElement("span");
-		//info.innerHTML = files[0].name + ": " + files[0].size + " bytes";
-		//imgHolder.appendChild(info);
-		return imgCapture;
-	  }
+			//img.height = 60;
+			imgCapture.onload = function() {
+				window.URL.revokeObjectURL(this.src);
+			}
+			imgHolder.appendChild(imgCapture);
+			//var info = document.createElement("span");
+			//info.innerHTML = files[0].name + ": " + files[0].size + " bytes";
+			//imgHolder.appendChild(info);
+			return imgCapture;
+		}
 	}
 
 </script>
