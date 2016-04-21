@@ -123,6 +123,7 @@
             {
                 imgHolder.innerHTML = "";
                 $('#fileSelect').hide();
+                $('#reload').show();
                 $('#sendPhoto').toggle();
                 var imgCapture = document.createElement("img");
                 imgCapture.src = window.URL.createObjectURL(files[0]);
@@ -143,7 +144,8 @@
                             ctx = canvas.getContext('2d');
                     image.src = base64data;
                     image.onload = function(){
-                        ctx.drawImage(image,0,300,750,100,0,0,750,100);
+                        //context.drawImage(img,sx,sy,swidth,sheight,x,y,width,height);
+                        ctx.drawImage(image,110,1108,1944,180,0,0,648,60);
                     }
                 };
 

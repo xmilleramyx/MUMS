@@ -17,6 +17,14 @@
   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> 
   	<link rel="stylesheet" href="css/login.css">
     
+    <style>
+        #profpic{
+            float: left;
+            margin-right: 20px;
+            width: 15%;
+        }
+    </style>
+    
     <!--FIREBASE-->
     <script>
         var myDataRef = new Firebase('https://mums.firebaseio.com/');
@@ -37,6 +45,8 @@
         }
       
     
+       
+        
     
     </script>
     
@@ -75,6 +85,22 @@
     
 <br>
     
+    <div id="imgHolder">
+    </div>
+    <input type="file" id="fileElem" accept="image/*" style="display:none" onchange="handleFiles(this.files)">
+    <!--<button class="btn btn-default" id="fileSelect" style="">Take Photo</button>-->
+    <img id="profpic" src="img/default_profpic-01.png" alt="Default Profile Picture">
+    <canvas id="example" width="193.6" height="259.2"></canvas>
+    <div id= "reload" style="display:none">
+        <input type=button value="Retake"  onClick="location.reload();">
+    </div>
+    <br>
+    <button type="button" class="btn btn-default" onclick="calcResult()">Calculate Results</button>
+    <button type="button" class="btn btn-default" onclick="add()">Save Results to Database</button>
+    <br>
+    <br>
+    <br>
+    
     <input type='text' id='patient_fname' placeholder='First Name'>
     <input type='text' id='patient_lname' placeholder='Last Name'>
     <input type='text' id='location' placeholder='Location'>
@@ -82,6 +108,51 @@
     <input type='text' id='medical_history' placeholder='Medical History'>
     <input type='submit' onclick='add()'>
     
+    <script>
+         //IMAGE PART
+        window.URL = window.URL || window.webkitURL;
+
+        var fileSelect = document.getElementById("profpic"),
+                fileElem = document.getElementById("fileElem"),
+                imgHolder = document.getElementById("imgHolder");
+
+        fileSelect.addEventListener("click", function(e) {
+            if (fileElem) {fileElem.click();
+            }
+            e.preventDefault(); // prevent navigation to "#"
+        }, false);
+
+        function handleFiles(files) {
+            if (!files.length) {
+                imgHolder.innerHTML = "<p>Photo Not Yet Taken</p>";
+            }
+            else
+            {
+                imgHolder.innerHTML = "";
+                $('#fileSelect').hide();
+                $('#sendPhoto').toggle();
+                var imgCapture = document.createElement("img");
+                imgCapture.src = window.URL.createObjectURL(files[0]);
+                //img.height = 60;
+                imgCapture.onload = function() {
+                    window.URL.revokeObjectURL(this.src);
+                }
+                //imgHolder.appendChild(imgCapture);
+                //console.log(imgCapture.src);
+                var reader = new window.FileReader();
+                reader.readAsDataURL(files[0]);
+                reader.onloadend = function()
+                {
+                    var base64data = reader.result;
+                    //for Profile.html - instead of base64data, this will be "img/[uniqueID].png"
+                    $('#profpic').attr("src", base64data);
+                    
+                };
+                return imgCapture;
+            }
+        }
+    
+    </script>
         
     
 </body>

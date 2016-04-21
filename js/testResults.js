@@ -154,7 +154,11 @@ function rgb2hsv (marker, r, g, b) {
     computedH = 60*(h - d/(maxRGB - minRGB));
     computedS = (maxRGB - minRGB)/maxRGB;
     computedV = maxRGB;
-    
+    computedH = Number(Math.round(computedH+'e6')+'e-6');
+    computedS = Number(Math.round(computedS+'e6')+'e-6');
+    computedV = Number(Math.round(computedV+'e6')+'e-6');
+    answer = "<b>H</b> " + computedH + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>S</b> " + computedS + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>V</b> " + computedV;
+/* ADD EQUATIONS BACK IN  
     answer = "lol u lose";
     switch(marker) {
     case "glucose":
@@ -175,7 +179,7 @@ function rgb2hsv (marker, r, g, b) {
     default:
         alert("marker not loaded");
     }
-    
+*/ 
     console.log(answer);
     return(answer);
 }
