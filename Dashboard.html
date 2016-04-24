@@ -26,10 +26,12 @@
                 //loop that adds each patient's info to the list
                 var message = snapshot.val();
                 var key = snapshot.key();
-                
+                var profilelink = "Profile.html?key="+key;
                 var addSet = [message.patient_fname, message.patient_lname, message.location, message.known_drug_allergies, message.medical_history, 
 
-                    '<a href="Profile.html?key=' + key + '">View</a> | <a href="testSetUp.html?key=' + key + '">Test</a> | <a href="#" onclick="deletePatient(' + "'" + key + "', '" +  name + "'" + ')">Delete</a>'
+                '<a href="Profile.html?key=' + key + '">View</a> | <a href="testSetUp.html?key=' + key + '">Test</a> | <a href="#" onclick="deletePatient(' + "'" + key + "', '" +  name + "'" + ')">Delete</a>'
+
+
                 ];
 
                 //pushes each profile dataset into data for table

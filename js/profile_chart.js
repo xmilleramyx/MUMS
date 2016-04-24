@@ -172,6 +172,38 @@ function loadCharts(){
             //console.log("after:" + billubrinX);
         
 }
+//in progress
+function changeDate(longDate){
+
+    //arr[0]=month/day/year, arr[1] = hour:min:sec
+    var arr = longDate.split(" ");
+
+    //date[0]=month, date[1]=day date[2]=year
+    var date = arr[0].split("/");
+    var monthKey = ["null", "January", "February", "March", "April", "May", "June", "July", "August", "September", "November", "December"];
+    var month = monthKey[date[0]];
+    var year = date[2];
+
+    //time[0]=hour, time[1]=min, time[2]=sec
+    var time = arr[1].split(":");
+    
+    /*
+    console.log(arr[0]);
+    console.log(arr[1]);
+    console.log(date[0]);
+    console.log(date[1]);
+    console.log(date[2]);
+    console.log("hour:"+time[0]);
+    console.log("min:"+time[1]);
+    console.log("sec:"+time[2]);
+    console.log(month+" "+year);
+    */
+
+    return(month+" "+year);
+}
+
+
+
 
 var testx = "2/12/2016";
 var testy = "7";
