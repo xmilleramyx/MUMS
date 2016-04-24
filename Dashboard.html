@@ -3,39 +3,46 @@
 <html lang="en">
 <head>
   	<meta charset="UTF-8">
-	<title>Dashboard</title>
+	<title>DashboardTEST</title>
 	<meta name=“viewport” content=“width=device-width, intitial-scale=1.0”>
 	
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-  	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="DataTables-1.10.11/media/js/jquery.dataTables.min.js"></script>
+    <script rel="javascript" type="text/javascript" href="js/bootstrap.min.js"></script>
 	
-	<link rel="javascript" type="text/javascript" href="bootstrap.min.js">
+    <link rel="stylesheet" href="DataTables-1.10.11/media/css/jquery.dataTables.min.css">
   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> 
-  	<link rel="stylesheet" href="css/login.css">
-
-    <script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
-    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+  	<link rel="stylesheet" href="css/style.css">
     
+    <script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
+  
   	<script>
-        var myDataRef = new Firebase('https://mums.firebaseio.com/');
-      
-        myDataRef.on('child_added', function(snapshot) {
-            var message = snapshot.val();
-            var key = snapshot.key();
-            displayTable(key, message.patient_fname, message.patient_lname, message.location, message.known_drug_allergies, message.medical_history);
-        });
+    
+    var myDataRef = new Firebase('https://mums.firebaseio.com/'); 
+
+       var dataSet = [];
+       makeData();
+    
         
-        function displayTable(key, patient_fname, patient_lname, location, known_drug_allergies, medical_history) {
-            var name = patient_fname + " " + patient_lname;
-            $('#patient_table tr:first').after(
-                '<tr><td>' + patient_fname + 
-                '</td><td>' + patient_lname + 
-                '</td><td>' + location +
-                '</td><td>' + known_drug_allergies +
-                '</td><td>' + medical_history +
-                '</td><td><a href="Profile.html?key=' + key + '">View</a> | <a href="testSetUp.html?key=' + key + '">Test</a> | <a href="#" onclick="deletePatient(' + "'" + key + "', '" +   name + "'" + ')">Delete</a>' +
-                '</td></tr>');
+        function makeData(){
+            
+            myDataRef.on('child_added', function(snapshot) {
+                        //loop that adds each patient's info to the list
+                        var message = snapshot.val();
+                        var key = snapshot.key();
+                        
+                        var addSet = [message.patient_fname, message.patient_lname, message.location, message.known_drug_allergies, message.medical_history, 
+
+                            '<a href="Profile.html?key=' + key + '">View</a> | <a href="testSetUp.html?key=' + key + '">Test</a> | <a href="#" onclick="deletePatient(' + "'" + key + "', '" +  name + "'" + ')">Delete</a>'
+                        ];
+
+                        //pushes each profile dataset into data for table
+                        dataSet.push(addSet);                                
+            });
+        
         };
+
+        
         function deletePatient(path, name) {
             if(confirm("Are you sure you want to delete all information for \n" + name + "?")==true){
                 fullPath = "https://mums.firebaseio.com/" + path;
@@ -43,8 +50,23 @@
                 patientRef.remove();
                 location.reload();
             }
-        }
-        
+        };
+
+        function makeTable(){
+            $('#patient_table').DataTable( {
+                    data: dataSet,
+                    columns: [
+                        
+                        { title: "First" },
+                        { title: "Last" },
+                        { title: "Location" },
+                        { title: "Allergies" },
+                        { title: "Medical History" }, 
+                        { title: "Edit"}
+                        ]
+                } );  
+        };   
+    
 	</script>
 
 </head>
@@ -80,26 +102,15 @@
 	<!--end nav bar-->
 
 <!--search function-->    
-    <input type="text" id="search" placeholder="Type to search">
+    
     <button type="button" class="btn btn-default" onclick="window.location.href='new_patient.html'">Add New Patient</button>
-    <br>
-    
-    
-    <!--table-->
-    <table id="patient_table" class="table table-striped">
-    <thead>
-      <tr>
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Location</th>
-        <th>Known Drug Allergies</th>
-        <th>Medical History</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
 
-    </tbody>
+    <button type="button" class="btn btn-default" id="createTableButton" onclick="makeTable()">Create Table</button>
+    <br>
+
+
+    <!--table-->
+    <table id="patient_table" class="display" width="100%">
   </table>
     <!--end table-->
 

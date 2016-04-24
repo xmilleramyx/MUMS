@@ -1,0 +1,109 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  	<meta charset="UTF-8">
+	<title>Dashboard</title>
+	<meta name=“viewport” content=“width=device-width, intitial-scale=1.0”>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	
+	<link rel="javascript" type="text/javascript" href="bootstrap.min.js">
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> 
+  	<link rel="stylesheet" href="css/login.css">
+
+    <script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+    
+  	<script>
+        var myDataRef = new Firebase('https://mums.firebaseio.com/');
+      
+        myDataRef.on('child_added', function(snapshot) {
+            var message = snapshot.val();
+            var key = snapshot.key();
+            displayTable(key, message.patient_fname, message.patient_lname, message.location, message.known_drug_allergies, message.medical_history);
+        });
+        
+        function displayTable(key, patient_fname, patient_lname, location, known_drug_allergies, medical_history) {
+            var name = patient_fname + " " + patient_lname;
+            $('#patient_table tr:first').after(
+                '<tr><td>' + patient_fname + 
+                '</td><td>' + patient_lname + 
+                '</td><td>' + location +
+                '</td><td>' + known_drug_allergies +
+                '</td><td>' + medical_history +
+                '</td><td><a href="Profile.html?key=' + key + '">View</a> | <a href="testSetUp.html?key=' + key + '">Test</a> | <a href="#" onclick="deletePatient(' + "'" + key + "', '" +   name + "'" + ')">Delete</a>' +
+                '</td></tr>');
+        };
+        function deletePatient(path, name) {
+            if(confirm("Are you sure you want to delete all information for \n" + name + "?")==true){
+                fullPath = "https://mums.firebaseio.com/" + path;
+                var patientRef = new Firebase(fullPath);
+                patientRef.remove();
+                location.reload();
+            }
+        }
+        
+	</script>
+
+</head>
+
+<body>
+
+	
+	<!--Horizontal Nav Bar at Top, credit to http://www.bootply.com/98314-->
+		<nav class="navbar navbar-default" role="navigation">
+		  <div class="navbar-header">
+		    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		      <span class="icon-bar"></span>
+		      <span class="icon-bar"></span>
+		      <span class="icon-bar"></span>
+		    </button>    
+		  </div>
+		  <a class="navbar-brand" href="#">MUMS</a>
+		  <div class="navbar-collapse collapse">
+		    
+		    <ul class="nav navbar-nav navbar-right">
+            
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account Settings <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="login.html">Log Out</a></li>
+                  <li><a href="#">Delete Account</a></li>
+                </ul>
+              </li> 
+            </ul>
+              
+		  </div>
+		</nav>
+	<!--end nav bar-->
+
+<!--search function-->    
+    <input type="text" id="search" placeholder="Type to search">
+    <button type="button" class="btn btn-default" onclick="window.location.href='new_patient.html'">Add New Patient</button>
+    <br>
+    
+    
+    <!--table-->
+    <table id="patient_table" class="table table-striped">
+    <thead>
+      <tr>
+        <th>Firstname</th>
+        <th>Lastname</th>
+        <th>Location</th>
+        <th>Known Drug Allergies</th>
+        <th>Medical History</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+  </table>
+    <!--end table-->
+
+
+</body>
+</html>
+</html>
