@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
   	<meta charset="UTF-8">
-	<title>DashboardTEST</title>
+	<title>Dashboard</title>
 	<meta name=“viewport” content=“width=device-width, intitial-scale=1.0”>
 	
     <script type="text/javascript" src="js/code.jquery.com/jquery-1.12.0.min.js"></script>
@@ -20,29 +20,23 @@
     
     var myDataRef = new Firebase('https://mums.firebaseio.com/'); 
 
-       var dataSet = [];
-       makeData();
-    
-        
-        function makeData(){
+    var dataSet = [];
             
-            myDataRef.on('child_added', function(snapshot) {
-                        //loop that adds each patient's info to the list
-                        var message = snapshot.val();
-                        var key = snapshot.key();
-                        
-                        var addSet = [message.patient_fname, message.patient_lname, message.location, message.known_drug_allergies, message.medical_history, 
+    myDataRef.on('child_added', function(snapshot) {
+                //loop that adds each patient's info to the list
+                var message = snapshot.val();
+                var key = snapshot.key();
+                
+                var addSet = [message.patient_fname, message.patient_lname, message.location, message.known_drug_allergies, message.medical_history, 
 
-                            '<a href="Profile.html?key=' + key + '">View</a> | <a href="testSetUp.html?key=' + key + '">Test</a> | <a href="#" onclick="deletePatient(' + "'" + key + "', '" +  name + "'" + ')">Delete</a>'
-                        ];
+                    '<a href="Profile.html?key=' + key + '">View</a> | <a href="testSetUp.html?key=' + key + '">Test</a> | <a href="#" onclick="deletePatient(' + "'" + key + "', '" +  name + "'" + ')">Delete</a>'
+                ];
 
-                        //pushes each profile dataset into data for table
-                        dataSet.push(addSet);                                
-            });
+                //pushes each profile dataset into data for table
+                dataSet.push(addSet);                                
+    });
         
-        };
-
-        
+               
         function deletePatient(path, name) {
             if(confirm("Are you sure you want to delete all information for \n" + name + "?")==true){
                 fullPath = "https://mums.firebaseio.com/" + path;
@@ -108,10 +102,8 @@
     <button type="button" class="btn btn-default" id="createTableButton" onclick="makeTable()">Create Table</button>
     <br>
 
-
     <!--table-->
-    <table id="patient_table" class="display" width="100%">
-  </table>
+    <table id="patient_table" class="display" width="100%"></table>
     <!--end table-->
 
 
