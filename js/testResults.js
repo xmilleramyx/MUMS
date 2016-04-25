@@ -81,12 +81,12 @@ function calcResult(){
     }      
 
     function calc_hsv(marker, x_pos) {
-        var p = context.getImageData(x_pos, 7, 35, 34).data;
+        var p = context.getImageData(x_pos, 20, 30, 20).data;
         //var rgbText = "rgb(" + avgRGB(p, 0) + ", " + avgRGB(p, 1) + ", " + avgRGB(p, 2) + ")";
         context.font = "12px Arial";
-        context.fillText(marker, x_pos, 55);
+        context.fillText(marker, x_pos, 80);
         context.strokeStyle="gray";
-        context.strokeRect(x_pos, 7, 35, 34);
+        context.strokeRect(x_pos, 20, 30, 20);
         //var hsvText = rgb2hsv(avgRGB(p, 0), avgRGB(p, 1), avgRGB(p, 2));
         console.log("bio marker: " + marker);
         var hsvText = rgb2hsv(marker, avgRGB(p, 0), avgRGB(p, 1), avgRGB(p, 2));
@@ -95,11 +95,11 @@ function calcResult(){
     }
     
     //Call calculate functions based on square position
-    glucose_hsv = calc_hsv("glucose", 10); //glucose = 1st square
-    billrubin_hsv = calc_hsv("billrubin", 68); //glucose = 2nd square
-    ketone_hsv = calc_hsv("ketone", 140); //ketone = 3rd square
-    pH_hsv = calc_hsv("pH", 328); //nitrite = 6th square
-    protein_hsv = calc_hsv("protein", 393); //pH = 9th square 
+    glucose_hsv = calc_hsv("glucose", 535); //10th square
+    billrubin_hsv = calc_hsv("billrubin", 478); //9th square
+    ketone_hsv = calc_hsv("ketone", 419); //8th square
+    pH_hsv = calc_hsv("pH", 240); //5th square
+    protein_hsv = calc_hsv("protein", 182); //4th square 
  
     //Display the values in the table
     timeStamp = getTimestamp();
