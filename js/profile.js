@@ -4,11 +4,12 @@ var str = location.search;
         
         myDataRef.on('value', function(snapshot) {
             var message = snapshot.val();
-            display(message.patient_fname, message.patient_lname, message.location, message.known_drug_allergies, message.medical_history);
+            display(message.patient_fname, message.patient_lname, message.location, message.known_drug_allergies, message.medical_history, message.prof_img);
         });
         
-        function display(patient_fname, patient_lname, location, known_drug_allergies, medical_history) {
+        function display(patient_fname, patient_lname, location, known_drug_allergies, medical_history, prof_img) {
             
+            $('#profpic').attr("src", prof_img);
             $( '#patientTitle' ).text("");
             $( '#patientTitle' ).append('<h3>' + patient_fname + ' ' + patient_lname + '</h3>');
             $( '#location' ).text("");
@@ -24,7 +25,7 @@ var str = location.search;
             $( '#editButton' ).append('<button type="button" class="btn btn-success" onclick="updateInfo()">Update</button>  <button type="button" class="btn btn-default" onclick="cancelUpdate()">Cancel</button>');
             
             $("#patientInfo p").css("line-height", "100%");
-            
+            $('#profpic').attr("src", "img/take_new_profpic.png");
             myDataRef.on('value', function(snapshot) {
                 var message = snapshot.val();
                 $( '#location' ).text("");
@@ -98,11 +99,16 @@ var str = location.search;
             var lastTestRef = myDataRef.child("lastTestRef");
             lastTestRef.on('value', function(snapshot) {
                 var testMessage = snapshot.val();
-                $( '#tableTitle').text("Results for: " + testMessage.timeStamp);
-                $( '#pH' ).text(testMessage.pH);
-                $( '#nitrite' ).text(testMessage.nitrite);
-                $( '#ketone' ).text(testMessage.ketone);
-                $( '#glucose' ).text(testMessage.glucose);
+                if(testMessage.timeStamp != null){
+                    $( '#tableTitle').text("Results for: " + testMessage.timeStamp);
+                    $( '#pH' ).text(testMessage.pH);
+                    $( '#nitrite' ).text(testMessage.nitrite);
+                    $( '#ketone' ).text(testMessage.ketone);
+                    $( '#glucose' ).text(testMessage.glucose);
+                }
+                else {
+                    alert("it's null");
+                }
                 
             });
         };
@@ -157,6 +163,48 @@ var str = location.search;
         loadOverview();
     }
 
+    //IMAGE PART
+        window.URL = window.URL || window.webkitURL;
+
+        var fileSelect = document.getElementById("profpic"),
+                fileElem = document.getElementById("fileElem"),
+                imgHolder = document.getElementById("imgHolder");
+
+        fileSelect.addEventListener("click", function(e) {
+            if (fileElem) {fileElem.click();
+            }
+            e.preventDefault(); // prevent navigation to "#"
+        }, false);
+
+        function handleFiles(files) {
+            if (!files.length) {
+                imgHolder.innerHTML = "<p>Photo Not Yet Taken</p>";
+            }
+            else
+            {
+                imgHolder.innerHTML = "";
+                $('#fileSelect').hide();
+                $('#sendPhoto').toggle();
+                var imgCapture = document.createElement("img");
+                imgCapture.src = window.URL.createObjectURL(files[0]);
+                //img.height = 60;
+                imgCapture.onload = function() {
+                    window.URL.revokeObjectURL(this.src);
+                }
+                //imgHolder.appendChild(imgCapture);
+                //console.log(imgCapture.src);
+                var reader = new window.FileReader();
+                reader.readAsDataURL(files[0]);
+                reader.onloadend = function()
+                {
+                    base64data = reader.result;
+                    //for Profile.html - instead of base64data, this will be a variable when calling it back
+                    $('#profpic').attr("src", base64data);
+                    
+                };
+                return imgCapture;
+            }
+        }
 
 
 

@@ -6,16 +6,12 @@
 	<title>PatientList</title>
 	<meta name=“viewport” content=“width=device-width, intitial-scale=1.0”>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> 	 
-  	<link rel="stylesheet" href="css/login.css">
-
     <script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
   	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	
-	<link rel="stylesheet" type="text/css" href="bootstrap.css">
 	<link rel="javascript" type="text/javascript" href="bootstrap.min.js">
   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> 
-  	<link rel="stylesheet" href="css/login.css">
     
     <style>
         #profpic{
@@ -26,30 +22,6 @@
     </style>
     
     <!--FIREBASE-->
-    <script>
-        var myDataRef = new Firebase('https://mums.firebaseio.com/');
-      
-        function add(){
-            var patient_fname = $('#patient_fname').val();
-            var patient_lname = $('#patient_lname').val();
-            var location = $('#location').val();
-            var known_drug_allergies = $('#known_drug_allergies').val();
-            var medical_history = $('#medical_history').val();
-            myDataRef.push({patient_fname: patient_fname, 
-                            patient_lname: patient_lname,
-                            location: location,
-                            known_drug_allergies: known_drug_allergies,
-                            medical_history: medical_history
-                            });
-            window.location.href='Dashboard.html'
-        }
-      
-    
-       
-        
-    
-    </script>
-    
     
     
 </head>
@@ -85,18 +57,12 @@
     
 <br>
     
-    <div id="imgHolder">
-    </div>
+    <div id="imgHolder"></div>
     <input type="file" id="fileElem" accept="image/*" style="display:none" onchange="handleFiles(this.files)">
-    <!--<button class="btn btn-default" id="fileSelect" style="">Take Photo</button>-->
-    <img id="profpic" src="img/default_profpic-01.png" alt="Default Profile Picture">
-    <canvas id="example" width="193.6" height="259.2"></canvas>
-    <div id= "reload" style="display:none">
-        <input type=button value="Retake"  onClick="location.reload();">
-    </div>
+    <img id="profpic" src="img/take_new_profpic.png" style="cursor: pointer" alt="Default Profile Picture">
     <br>
-    <button type="button" class="btn btn-default" onclick="calcResult()">Calculate Results</button>
-    <button type="button" class="btn btn-default" onclick="add()">Save Results to Database</button>
+    <div id="retake_text" style="display:none">Tap Photo to Retake</div>
+    <br>
     <br>
     <br>
     <br>
@@ -106,10 +72,31 @@
     <input type='text' id='location' placeholder='Location'>
     <input type='text' id='known_drug_allergies' placeholder='Known Drug Allergies'>
     <input type='text' id='medical_history' placeholder='Medical History'>
-    <input type='submit' onclick='add()'>
+    <button type="button" class="btn btn-success" onclick="add()">Add Note</button>
     
     <script>
-         //IMAGE PART
+        var myDataRef = new Firebase('https://mums.firebaseio.com/');
+        var base64data;
+      
+        function add(){
+            var patient_fname = $('#patient_fname').val();
+            var patient_lname = $('#patient_lname').val();
+            var location = $('#location').val();
+            var known_drug_allergies = $('#known_drug_allergies').val();
+            var medical_history = $('#medical_history').val();
+            myDataRef.push({patient_fname: patient_fname, 
+                            patient_lname: patient_lname,
+                            location: location,
+                            known_drug_allergies: known_drug_allergies,
+                            medical_history: medical_history,
+                            prof_img: base64data
+                            });
+            alert("added patient");
+            //window.location.href='Dashboard.html';
+        }
+      
+    
+       //IMAGE PART
         window.URL = window.URL || window.webkitURL;
 
         var fileSelect = document.getElementById("profpic"),
@@ -123,11 +110,6 @@
         }, false);
 
         function handleFiles(files) {
-            if (!files.length) {
-                imgHolder.innerHTML = "<p>Photo Not Yet Taken</p>";
-            }
-            else
-            {
                 imgHolder.innerHTML = "";
                 $('#fileSelect').hide();
                 $('#sendPhoto').toggle();
@@ -143,13 +125,13 @@
                 reader.readAsDataURL(files[0]);
                 reader.onloadend = function()
                 {
-                    var base64data = reader.result;
-                    //for Profile.html - instead of base64data, this will be "img/[uniqueID].png"
+                    base64data = reader.result;
+                    //for Profile.html - instead of base64data, this will be a variable when calling it back
                     $('#profpic').attr("src", base64data);
                     
                 };
+                $('#retake_text').show();
                 return imgCapture;
-            }
         }
     
     </script>
