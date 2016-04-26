@@ -1,15 +1,5 @@
 ////CHARTS
      
-var billubrinX = [];
-var billubrinY = [6,7,8,9,8,6];
-var glucoseX = [];
-var glucoseY = [];
-var ketoneX = [];
-var ketoneY = [];
-var pHX = [];
-var pHY = [];
-var proteinX = [];
-var proteinY = [];
 
 Chart.defaults.global = {
     // Boolean - Whether to animate the chart
@@ -144,7 +134,16 @@ Chart.defaults.global = {
 }
 
 
-
+var billubrinX = [];
+var billubrinY = [6,7,8,9,8,6];
+var glucoseX = [];
+var glucoseY = [];
+var ketoneX = [];
+var ketoneY = [];
+var pHX = [];
+var pHY = [];
+var proteinX = [];
+var proteinY = [];
 
 function loadCharts(){
     var chartRef = myDataRef.child("tests");

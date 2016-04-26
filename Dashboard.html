@@ -8,14 +8,17 @@
 	
     <script type="text/javascript" src="js/code.jquery.com/jquery-1.12.0.min.js"></script>
     <script src="DataTables-1.10.11/media/js/jquery.dataTables.min.js"></script>
+    
     <script rel="javascript" type="text/javascript" href="js/bootstrap.min.js"></script>
 	
     <link rel="stylesheet" href="DataTables-1.10.11/media/css/jquery.dataTables.min.css">
+  
   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> 
   	<link rel="stylesheet" href="css/style.css">
     
     <script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
   
+
   	<script>
     
     var myDataRef = new Firebase('https://mums.firebaseio.com/'); 
@@ -26,18 +29,27 @@
                 //loop that adds each patient's info to the list
                 var message = snapshot.val();
                 var key = snapshot.key();
-                var profilelink = "Profile.html?key="+key;
-                var addSet = [message.patient_fname, message.patient_lname, message.location, message.known_drug_allergies, message.medical_history, 
+             
+                
+                var addSet = [message.patient_fname, message.patient_lname, message.location, message.known_drug_allergies, message.medical_history,
 
-                '<a href="Profile.html?key=' + key + '">View</a> | <a href="testSetUp.html?key=' + key + '">Test</a> | <a href="#" onclick="deletePatient(' + "'" + key + "', '" +  name + "'" + ')">Delete</a>'
+                '<a href="Profile.html?key=' + key + '">View</a> | <a href="testSetUp.html?key=' + key + '">Test</a> | <a href="#" onclick="deletePatient(' + "'" + key + "', '" +  name + "'" + ')">Delete</a>', 
 
-
+               // <button type=button onclick="toProfile(' + key + ')">Profile</button>
+                        
                 ];
+
+
 
                 //pushes each profile dataset into data for table
                 dataSet.push(addSet);                                
     });
-        
+       
+function toProfile(key){
+    alert(key);
+    //window.location.href='Profile.html?key=' + key;
+}
+
                
         function deletePatient(path, name) {
             if(confirm("Are you sure you want to delete all information for \n" + name + "?")==true){
@@ -59,8 +71,11 @@
                         { title: "Allergies" },
                         { title: "Medical History" }, 
                         { title: "Edit"}
+                        
                         ]
-                } );  
+                } ); 
+
+
         };   
     
 	</script>
