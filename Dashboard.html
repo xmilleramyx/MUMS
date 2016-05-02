@@ -116,14 +116,17 @@ function toProfile(key){
     
     <button type="button" class="btn btn-default" onclick="window.location.href='new_patient.html'">Add New Patient</button>
 
-    <button type="button" class="btn btn-default" id="createTableButton" onclick="makeTable()">Create Table</button>
+    <button type="button" class="btn btn-default" id="createTableButton" onclick="">Create Table</button>
     <br>
 
     <!--table-->
     <table id="patient_table" class="display" width="100%"></table>
     <!--end table-->
 
-
+<script>
+    setTimeout(makeTable , 2000 );
+</script>
 </body>
+
 </html>
 </html>

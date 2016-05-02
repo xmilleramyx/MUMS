@@ -314,7 +314,7 @@ function createTables(){
       var myKetonesChart = new Chart(Kctx).Line(ketonesData);
       var mypHChart = new Chart(Pctx).Line(pHData);
       var myProteinsChart = new Chart(Prctx).Line(ProteinData);
-      
+
     };
 
      
