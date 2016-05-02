@@ -29,7 +29,7 @@ function makeTimeRef(){
         
 var timeStamp = getTimestamp();
 var timeRef = makeTimeRef();
-var glucose_hsv, billrubin_hsv, ketone_hsv, pH_hsv, protein_hsv;
+var glucose_hsv, hemoglobin_hsv, nitrite_hsv, pH_hsv, protein_hsv;
         
         
 function add(){            
@@ -38,8 +38,8 @@ function add(){
         timeStamp: timeStamp,
         protein: protein_hsv,
         pH: pH_hsv, 
-        ketone: ketone_hsv,
-        billrubin: billrubin_hsv,
+        nitrite: nitrite_hsv,
+        hemoglobin: hemoglobin_hsv,
         glucose: glucose_hsv
     }); 
     alert("Saved results from: " + timeStamp);
@@ -47,8 +47,8 @@ function add(){
         timeStamp: timeStamp,
         protein: protein_hsv,
         pH: pH_hsv, 
-        ketone: ketone_hsv,
-        billrubin: billrubin_hsv,
+        nitrite: nitrite_hsv,
+        hemoglobin: hemoglobin_hsv,
         glucose: glucose_hsv
     });  
 }
@@ -80,13 +80,13 @@ function calcResult(){
     return (Math.round(sum/count));
     }      
 
-    function calc_hsv(marker, x_pos) {
-        var p = context.getImageData(x_pos, 20, 30, 20).data;
+    function calc_hsv(marker, x_pos, y_pos) {
+        var p = context.getImageData(x_pos, y_pos, 25, 25).data;
         //var rgbText = "rgb(" + avgRGB(p, 0) + ", " + avgRGB(p, 1) + ", " + avgRGB(p, 2) + ")";
         context.font = "12px Arial";
         context.fillText(marker, x_pos, 80);
         context.strokeStyle="gray";
-        context.strokeRect(x_pos, 20, 30, 20);
+        context.strokeRect(x_pos, y_pos, 25, 25);
         //var hsvText = rgb2hsv(avgRGB(p, 0), avgRGB(p, 1), avgRGB(p, 2));
         console.log("bio marker: " + marker);
         var hsvText = rgb2hsv(marker, avgRGB(p, 0), avgRGB(p, 1), avgRGB(p, 2));
@@ -95,22 +95,23 @@ function calcResult(){
     }
     
     //Call calculate functions based on square position
-    glucose_hsv = calc_hsv("glucose", 535); //10th square
-    billrubin_hsv = calc_hsv("billrubin", 478); //9th square
-    ketone_hsv = calc_hsv("ketone", 419); //8th square
-    pH_hsv = calc_hsv("pH", 240); //5th square
-    protein_hsv = calc_hsv("protein", 182); //4th square 
+    glucose_hsv = calc_hsv("glucose", 543, 13); //10th square
+    hemoglobin_hsv = calc_hsv("hemoglobin", 305, 14); //6th square
+    pH_hsv = calc_hsv("pH", 247, 15); //5th square
+    protein_hsv = calc_hsv("protein", 185, 15); //4th square 
+    nitrite_hsv = calc_hsv("nitrite", 65, 18); //2nd square
  
     //Display the values in the table
+    //nitrite and hemoglobin
     timeStamp = getTimestamp();
     $("#glucose_result").text("");
     $("#glucose_result").append(glucose_hsv);
     //$("#glucose_result").css("background-color", glucose_hsv);
-    $("#billrubin_result").text("");
-    $("#billrubin_result").append(billrubin_hsv);
+    $("#hemoglobin_result").text("");
+    $("#hemoglobin_result").append(hemoglobin_hsv);
     //$("#ketone_result").css("background-color", ketone_hsv);
-    $("#ketone_result").text("");
-    $("#ketone_result").append(ketone_hsv);
+    $("#nitrite_result").text("");
+    $("#nitrite_result").append(nitrite_hsv);
     //$("#ketone_result").css("background-color", ketone_hsv);
     $("#pH_result").text("");
     $("#pH_result").append(pH_hsv);
@@ -164,11 +165,11 @@ function rgb2hsv (marker, r, g, b) {
     case "glucose":
         var answer = findConcentration(computedH, computedS, computedV, glucose_equationH, glucose_equationS, glucose_equationV, glucose_cVal);
         break;
-    case "billrubin":
-        var answer = findConcentration(computedH, computedS, computedV, billrubin_equationH, billrubin_equationS, billrubin_equationV, billrubin_cVal);
+    case "hemoglobin":
+        var answer = findConcentration(computedH, computedS, computedV, hemoglobin_equationH, hemoglobin_equationS, hemoglobin_equationV, hemoglobin_cVal);
         break;
-    case "ketone":
-        var answer = findConcentration(computedH, computedS, computedV, ketone_equationH, ketone_equationS, ketone_equationV, ketone_cVal);
+    case "nitrite":
+        var answer = findConcentration(computedH, computedS, computedV, nitrite_equationH, nitrite_equationS, nitrite_equationV, nitrite_cVal);
         break;
     case "pH":
         var answer = findConcentration(computedH, computedS, computedV, pH_equationH, pH_equationS, pH_equationV, pH_cVal);
@@ -195,16 +196,16 @@ function glucose_equationS(x){ return (0.3803 * (x * x)) + (-5.9182 * x) + 42.86
 function glucose_equationV(x){ return (0.2773 * (x * x)) + (-4.3803 * x) + 77.361; }
 
 //BILLRUBIN
-var billrubin_cVal = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0];
-function billrubin_equationH(x){ return (1 * (x * x)) + (2 * x) + 3; }
-function billrubin_equationS(x){ return (1 * (x * x)) + (2 * x) + 3; }
-function billrubin_equationV(x){ return (1 * (x * x)) + (2 * x) + 3; }
+var hemoglobin_cVal = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0];
+function hemoglobin_equationH(x){ return (1 * (x * x)) + (2 * x) + 3; }
+function hemoglobin_equationS(x){ return (1 * (x * x)) + (2 * x) + 3; }
+function hemoglobin_equationV(x){ return (1 * (x * x)) + (2 * x) + 3; }
 
 //KETONE
-var ketone_cVal = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0];
-function ketone_equationH(x){ return (1 * (x * x)) + (2 * x) + 3; }
-function ketone_equationS(x){ return (1 * (x * x)) + (2 * x) + 3; }
-function ketone_equationV(x){ return (1 * (x * x)) + (2 * x) + 3; }
+var nitrite_cVal = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0];
+function nitrite_equationH(x){ return (1 * (x * x)) + (2 * x) + 3; }
+function nitrite_equationS(x){ return (1 * (x * x)) + (2 * x) + 3; }
+function nitrite_equationV(x){ return (1 * (x * x)) + (2 * x) + 3; }
 
 //PH
 var pH_cVal = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0];
