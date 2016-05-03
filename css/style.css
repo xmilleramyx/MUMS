@@ -1,3 +1,29 @@
+/*General Styles*/
+.topnav{
+    background-color: white;
+    height: 60px;
+}
+
+#navtitle1{
+    color: black;
+    font-size: 1.4em;
+}
+
+#navtitle2{
+    color: #22B573;
+    font-size: 1.4em;
+}
+
+span.glyphicon {
+    font-size: 1.4em;
+}
+
+.navbar-center {
+    text-align: center;
+    display:inline-block;
+    float: none;
+}
+
 /*Login Styles*/
 #LoginBox{
 	text-align: center;

@@ -98,16 +98,16 @@ var str = location.search;
             
             var lastTestRef = myDataRef.child("lastTestRef");
             lastTestRef.on('value', function(snapshot) {
-                var testMessage = snapshot.val();
-                if(testMessage.timeStamp != null){
-                    $( '#tableTitle').text("Results for: " + testMessage.timeStamp);
-                    $( '#pH' ).text(testMessage.pH);
-                    $( '#nitrite' ).text(testMessage.nitrite);
-                    $( '#ketone' ).text(testMessage.ketone);
-                    $( '#glucose' ).text(testMessage.glucose);
+                var message = snapshot.val();
+                if(message == "none"){                    
+                    $( '#overviewTable' ).text("");
+                    $( '#overviewTable' ).append("<div style='text-align:center; vertical-align:middle; font-weight:bold; position:relative; top:50px'>No tests saved for this patient.<br><a href='testSetUp.html'><span class='glyphicon glyphicon-camera' aria-hidden='true'></span> Start New Test</a></div>");
+                    $( '#charts' ).text("");
+                    $( '#charts' ).append("<div style='text-align:center; vertical-align:middle; font-weight:bold; position:relative; top:100px'>No tests saved for this patient.<br><a href='testSetUp.html'><span class='glyphicon glyphicon-camera' aria-hidden='true'></span> Start New Test</a></div>");
                 }
                 else {
-                    alert("it's null");
+                    $( '#overviewTable' ).text("");
+                    $( '#overviewTable' ).append('<b>Most recent test: ' + message.timeStamp + '</b><table class="table table-striped"><tbody><tr><td>pH</td><td>' + message.pH + '</td></tr><tr><td>Nitrite</td><td>' + message.nitrite + '</td></tr><tr><td>Ketone</td><td>' + message.ketone + '</td></tr><tr><td>Glucose</td><td>' + message.glucose + '</td></tr></tbody></table>');
                 }
                 
             });
