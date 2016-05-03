@@ -18,7 +18,7 @@
     <script src="js/Chart.min.js"></script>
     
     
- 
+
 </head>
 
 <body onload="loadOverview(); loadCharts();">
@@ -121,19 +121,18 @@
 		                       
 			               	</div><!--end results table-->
 			               	<div id="spacer" class="col-sm-1"></div>
-                                    
-                            <div id="charts" class="col-sm-12">  
-                                
-
-                                
+                            
+							
+							<div id="charts" class="col-sm-12"> 
+                           
                                 <div class="chartAlign">
                                 <p>Ketones</p>
-                                <canvas id="ketonesChart" width="150" height="200"></canvas>
+                                <canvas id="nitritesChart" width="150" height="200"></canvas>
                                 </div>
                             
                                 <div class="chartAlign">
                                 <p>Billubrin</p>
-                                <canvas id="billubrinChart" width="150" height="200"></canvas>
+                                <canvas id="hemoglobinChart" width="150" height="200"></canvas>
                                 </div>
 
                                 <div class="chartAlign">
@@ -149,10 +148,11 @@
                                 <div class="chartAlign">
                                 <p>Proteins</p>
                                 <canvas id="ProteinsChart" width="150" height="200"></canvas>
-                                </div>
+                            	</div>
 
-                               <button class="btn btn-default" onclick="createTables()">Create Tables</button>
-                            </div>
+
+
+                            </div><!--end charts-->
 			                
 			        </div><!--end main-->
 			            
@@ -192,7 +192,9 @@
 <script src="js/profile.js"></script>
 <script src="js/profile_chart.js"></script>
 <script>
-	setTimeout(createTables , 3000 );
+
+	setTimeout(createTables, 3000 );
+
 </script>
 
 

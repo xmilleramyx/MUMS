@@ -134,12 +134,12 @@ Chart.defaults.global = {
 }
 
 
-var billubrinX = [];
-var billubrinY = [6,7,8,9,8,6];
+var hemoglobinX = [];
+var hemoglobinY = [6,7,8,9,8,6];
 var glucoseX = [];
 var glucoseY = [];
-var ketoneX = [];
-var ketoneY = [];
+var nitriteX = [];
+var nitriteY = [];
 var pHX = [];
 var pHY = [];
 var proteinX = [];
@@ -149,15 +149,15 @@ function loadCharts(){
     var chartRef = myDataRef.child("tests");
         chartRef.on('child_added', function(snapshot) {
             var chartValues = snapshot.val();
-            //billubrin
-            billubrinX.push(chartValues.timeStamp);
-            billubrinY.push(chartValues.billubrin);
+            //hemoglobin
+            hemoglobinX.push(chartValues.timeStamp);
+            hemoglobinY.push(chartValues.hemoglobin);
             //glucose
             glucoseX.push(chartValues.timeStamp);
             glucoseY.push(chartValues.glucose);
             //ketone
-            ketoneX.push(chartValues.timeStamp);
-            ketoneY.push(chartValues.ketone);
+            nitriteX.push(chartValues.timeStamp);
+            nitriteY.push(chartValues.nitrite);
             //pH
             pHX.push(chartValues.timeStamp);
             pHY.push(chartValues.pH);
@@ -165,10 +165,10 @@ function loadCharts(){
             proteinX.push(chartValues.timeStamp);
             proteinY.push(chartValues.protein);
 
-            //console.log("before:"+billubrinX);
+            //console.log("before:"+hemoglobinX);
         });
-            //mybillubrinChart.update();
-            //console.log("after:" + billubrinX);
+            //myhemoglobinChart.update();
+            //console.log("after:" + hemoglobinX);
         
 }
 //in progress
@@ -207,7 +207,7 @@ function changeDate(longDate){
 var testx = "2/12/2016";
 var testy = "7";
 
-
+//proteins, nitrites, ph, hemoglobin, glucose
   //protein chart data
       var ProteinData = {
           
@@ -227,9 +227,9 @@ var testy = "7";
       }
 
   //ketones chart data
-      var ketonesData = {
+      var nitritesData = {
           
-          labels: ketoneX,
+          labels: nitriteX,
           datasets: [
               {
                   label: "Ketones",
@@ -239,16 +239,16 @@ var testy = "7";
                   pointStrokeColor: "#fff",
                   pointHighlightFill: "#fff",
                   pointHighlightStroke: "rgba(151,187,205,1)",
-                  data: ketoneY
+                  data: nitriteY
               }              
           ]
       }
 
-  //billubrin Chart Data
+  //hemoglobin Chart Data
 
-var billubrinData = {
+var hemoglobinData = {
             
-          labels: billubrinX,
+          labels: hemoglobinX,
           datasets: [
               {
                   label: "Billubrin",
@@ -256,7 +256,7 @@ var billubrinData = {
                   strokeColor: "rgba(220,220,220,0.8)",
                   highlightFill: "rgba(220,220,220,0.75)",
                   highlightStroke: "rgba(220,220,220,1)",
-                  data: billubrinY
+                  data: hemoglobinY
               }             
           ]
       }
@@ -299,23 +299,26 @@ var billubrinData = {
       }
 
 
+
+
 function createTables(){
 
       // Get the context of the canvas elements we want to select
-      var Bctx = document.getElementById("billubrinChart").getContext("2d");
+      var Hctx = document.getElementById("hemoglobinChart").getContext("2d");
       var Gctx = document.getElementById("glucoseChart").getContext("2d");
-      var Kctx = document.getElementById("ketonesChart").getContext("2d");
+      var Nctx = document.getElementById("nitritesChart").getContext("2d");
       var Pctx = document.getElementById("pHChart").getContext("2d");
       var Prctx = document.getElementById("ProteinsChart").getContext("2d");
 
       //generate chart
-      var mybillubrinChart = new Chart(Bctx).Bar(billubrinData);
+      var myHemoglobinChart = new Chart(Hctx).Bar(hemoglobinData);
       var myGlucoseChart = new Chart(Gctx).Line(glucoseData);
-      var myKetonesChart = new Chart(Kctx).Line(ketonesData);
+      var myNitritesChart = new Chart(Nctx).Line(nitritesData);
       var mypHChart = new Chart(Pctx).Line(pHData);
       var myProteinsChart = new Chart(Prctx).Line(ProteinData);
 
     };
+
 
      
     ////////END CHART STUFF////////  

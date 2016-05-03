@@ -33,14 +33,9 @@
                 
                 var addSet = [message.patient_fname, message.patient_lname, message.location, message.known_drug_allergies, message.medical_history,
 
-                '<a href="Profile.html?key=' + key + '">View</a> | <a href="testSetUp.html?key=' + key + '">Test</a> | <a href="#" onclick="deletePatient(' + "'" + key + "', '" +  name + "'" + ')">Delete</a>', 
-
-               // <button type=button onclick="toProfile(' + key + ')">Profile</button>
+                '<a href="Profile.html?key=' + key + '">View</a> | <a href="testSetUp.html?key=' + key + '">Test</a> | <a href="#" onclick="deletePatient(' + "'" + key + "', '" +  name + "'" + ')">Delete</a>'
                         
                 ];
-
-
-
                 //pushes each profile dataset into data for table
                 dataSet.push(addSet);                                
     });
@@ -60,7 +55,7 @@ function toProfile(key){
             }
         };
 
-        function makeTable(){
+        function makeTable(bar){
             $('#patient_table').DataTable( {
                     data: dataSet,
                     columns: [
@@ -74,9 +69,14 @@ function toProfile(key){
                         
                         ]
                 } ); 
+            
 
+        }; 
 
-        };   
+        function revealButton(){
+            $("#newPatientButton").show();
+            $("#loadBar").hide();
+        }  
     
 	</script>
 
@@ -113,18 +113,33 @@ function toProfile(key){
 	<!--end nav bar-->
 
 <!--search function-->    
-    
-    <button type="button" class="btn btn-default" onclick="window.location.href='new_patient.html'">Add New Patient</button>
-
-    <button type="button" class="btn btn-default" id="createTableButton" onclick="">Create Table</button>
+<div class="center">
+    <button type="button" style="display:none;" id="newPatientButton" class="btn btn-default" onclick="window.location.href='new_patient.html'">Add New Patient</button>
     <br>
-
+</div>
     <!--table-->
     <table id="patient_table" class="display" width="100%"></table>
     <!--end table-->
+    
+    <!--progress bar-->
+    <div class="center progress-container">
+        <div id="loadBar" class="progress progress-striped active">
+            <div class="progress-bar progress-bar-success" style="width:0%"></div>
+        </div>
+    </div>
+    <!--end progress bar-->
+    
 
 <script>
-    setTimeout(makeTable , 2000 );
+    $(".progress-bar").animate({        
+        width: "100%" 
+        }, 2000);
+    
+    //make table after 2 seconds for loading data
+    setTimeout(makeTable, 2000);
+
+    //hide load bar and show new patient button
+    setTimeout(revealButton, 2000);
 </script>
 </body>
 

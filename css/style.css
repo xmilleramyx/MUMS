@@ -1,8 +1,19 @@
+.center {
+    margin: auto;
+    width: 40%;
+    text-align: center;
+}
+
 /*Login Styles*/
 #LoginBox{
 	text-align: center;
 }
 
+/*Dashboard sryles*/
+.progress.active .progress-bar {
+    -webkit-transition: none !important;
+    transition: none !important;
+}
 
 /*Profile.html styles*/
 .note{
