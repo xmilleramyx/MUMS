@@ -47,18 +47,9 @@
 	<!--Horizontal Nav Bar at Top, credit to http://www.bootply.com/98314-->
 		<nav class="navbar navbar-default topnav" role="navigation">  
 		  <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-left">  
-                <li><button type="button" class="btn btn-default" style="position:relative; top:8px" onclick="window.location.href = 'Dashboard.html'"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;ALL PATIENTS</button></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-center">
-                <li id="navtitle1">TEST SETUP&nbsp;</li>
-                <li id="navtitle2"></li>
-            </ul>    
-		    <ul class="nav navbar-nav navbar-right">
-		      <li>
-                <button type="button" class="btn btn-default" style="position:relative; top:8px" onclick="profile_href()"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;VIEW PROFILE</button>  
-		      </li>
-		    </ul>
+            <button type="button" class="nav-left btn btn-default" style="position:relative; top:8px" onclick="window.location.href = 'Dashboard.html'"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;ALL PATIENTS</button>
+            <div class="nav-center"><span id="navtitle1">TEST SETUP&nbsp;</span><span id="navtitle2"></span></div>    
+            <button type="button" class="btn btn-default nav-right" style="position:relative; top:8px" onclick="profile_href()"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;VIEW PROFILE</button>  
 		  </div>
 		</nav>
 	<!--end nav bar-->

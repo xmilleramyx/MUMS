@@ -1,4 +1,9 @@
 /*General Styles*/
+
+body {
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif
+}
+
 .topnav{
     background-color: white;
     height: 60px;
@@ -6,22 +11,30 @@
 
 #navtitle1{
     color: black;
-    font-size: 1.4em;
+    font-size: 1.7em;
 }
 
 #navtitle2{
     color: #22B573;
-    font-size: 1.4em;
+    font-size: 1.7em;
 }
 
 span.glyphicon {
-    font-size: 1.4em;
+    font-size: 1.2em;
+}
+
+.navbar-left {
+    float: left;
+    position: relative;
 }
 
 .navbar-center {
     text-align: center;
-    display:inline-block;
-    float: none;
+    float: left;
+}
+
+.navbar-right {
+    float: right;
 }
 
 /*Login Styles*/

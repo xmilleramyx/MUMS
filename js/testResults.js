@@ -95,11 +95,27 @@ function calcResult(){
     }
     
     //Call calculate functions based on square position
-    glucose_hsv = calc_hsv("glucose", 543, 13); //10th square
+    // GROUP 1 
+        glucose_hsv = calc_hsv("glucose", 548, 15); //10th square
+    // GROUP 2 glucose_hsv = calc_hsv("glucose", 548, 20); //10th square
+    // GROUP 3 glucose_hsv = calc_hsv("glucose", 551, 25); //10th square
+    // GROUP 4 glucose_hsv = calc_hsv("glucose", 545, 30); //10th square
+    // GROUP 5 glucose_hsv = calc_hsv("glucose", 543, 12); //10th square
+    
     hemoglobin_hsv = calc_hsv("hemoglobin", 305, 14); //6th square
-    pH_hsv = calc_hsv("pH", 247, 15); //5th square
+    
+    //GROUP 1 
+        pH_hsv = calc_hsv("pH", 247, 15); //5th square
+    //GROUP 2 pH_hsv = calc_hsv("pH", 252, 31); //5th square
+    //GROUP 3 pH_hsv = calc_hsv("pH", 253, 20); //5th square
+    //GROUP 4 pH_hsv = calc_hsv("pH", 258, 28); //5th square
+    
     protein_hsv = calc_hsv("protein", 185, 15); //4th square 
-    nitrite_hsv = calc_hsv("nitrite", 65, 18); //2nd square
+    
+    // GROUP 1 
+        nitrite_hsv = calc_hsv("nitrite", 71, 28); //2nd square
+    // GROUP 2 nitrite_hsv = calc_hsv("nitrite", 68, 30); //2nd square
+    // GROUP 3 nitrite_hsv = calc_hsv("nitrite", 66, 25); //2nd square
  
     //Display the values in the table
     //nitrite and hemoglobin
@@ -109,7 +125,7 @@ function calcResult(){
     //$("#glucose_result").css("background-color", glucose_hsv);
     $("#hemoglobin_result").text("");
     $("#hemoglobin_result").append(hemoglobin_hsv);
-    //$("#ketone_result").css("background-color", ketone_hsv);
+    //$("#_result").css("background-color", ketone_hsv);
     $("#nitrite_result").text("");
     $("#nitrite_result").append(nitrite_hsv);
     //$("#ketone_result").css("background-color", ketone_hsv);
