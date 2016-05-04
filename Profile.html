@@ -67,6 +67,10 @@
 		</nav>
 	<!--end nav bar-->
 
+
+
+
+
 	<!--tab header-->
 	<ul id="mainTabs" style="margin-bottom:20px;" class="nav nav-tabs">
 	  <li class="active"><a data-toggle="tab" href="#home">Overview</a></li>
@@ -77,21 +81,92 @@
 
 	<div class="tab-content">
 		<div id="home" class="tab-pane fade in active"> 
+			
+
 			<div class="container">
 			            
-			        <div id="main">  
-                            <div id="patientInfo"  class="col-sm-6">
-                                <img id="profpic" alt="Default Profile Picture">
-                                <span id="patientTitle"></span>
-                                <p><br>Location:<b><span id="location"></span></b>
-                                <br>Known Drug Allergies:<b><span id="known_drug_allergies"></span></b>
-                                <br>Medical History:<b><span id="medical_history"></span></b></p>
-                                <div id="editButton"><button type="button" class="btn btn-default" onclick="editInfo()">Edit</button></div>
-			                 </div> 
+			       <div class="row">
+                    <div class="col-md-8">
+                        <div class="card">
+                             
+                            <div class="content">
+	                           
+                                <div class="author">
+                                    <img id="profpic" src="img/default_profpic.png"> 
+
+                                    <h5 id="patientTitle" class="title"></h5></br>
+                                </div>
                                 
-			            
-			                <div id="spacer" class="col-sm-1"></div>
-			                <div id="recentLevels" class="col-sm-5 liltable">
+                                <div id="details">
+	                                <h4>Location:</h4>
+									<p id="location"></p>
+	                            	
+	                                <h4>Known Allergies: </h4>
+									<p id="known_drug_allergies"></p>
+	                            	
+	                                <h4>Medical History: </h4>
+	                                <p id="medical_history"></p>
+                                </div>
+                            </div>                           
+                        </div>
+                    </div>
+
+                    <div id="recentLevels" class="col-md-4">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title">Most Recent Test</h4>
+                                <p class="category">Date: </p>
+                            </div>
+                            <div class="content">
+                           			<table id="overviewTable" class="table table-striped">
+									    <tbody>
+									      <tr>
+									        <td>pH</td>
+									        <td id="pH"></td>
+									       
+									      </tr>
+									      <tr>
+									        <td>Nitrite</td>
+									        <td id="nitrite"></td>
+									    
+									      </tr>
+									      <tr>
+									        <td>Ketone</td>
+									        <td id="ketone"></td>
+									       
+									      </tr>
+									      <tr>								
+									        <td>Glucose</td>
+									        <td id="glucose"></td>
+									   
+									      </tr>
+									    </tbody>
+									</table>
+		                                                       
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+                       
+	                    
+
+
+
+
+
+
+	                     <!--	<div id="patientInfo col-md-6">
+	                                <img id="profpic" alt="Default Profile Picture">
+	                                <span id="patientTitle"></span>
+	                                <p><br>Location:<b><span id="location"></span></b>
+	                                <br>Known Drug Allergies:<b><span id="known_drug_allergies"></span></b>
+	                                <br>Medical History:<b><span id="medical_history"></span></b></p>
+	                                <div id="editButton"><button type="button" class="btn btn-default" onclick="editInfo()">Edit</button></div>
+				        	</div>       
+                                
+			          
+			               
+			                <div id="recentLevels" class="col-md-6 liltable">
                                 
                                         <b id="tableTitle"></b>
 					                    <table id="overviewTable" class="table table-striped">
@@ -120,43 +195,52 @@
 										</table>
 		                       
 			               	</div><!--end results table-->
-			               	<div id="spacer" class="col-sm-1"></div>
-                            
+			              
 							
-							<div id="charts" class="col-sm-12"> 
+							<div id="charts" > 
                            
-                                <div class="chartAlign">
-                                <p>Ketones</p>
-                                <canvas id="nitritesChart" width="150" height="200"></canvas>
+                                <div class="chartSingles card">
+                                <p>Nitrites</p>
+                                <canvas id="nitritesChart" width="170" height="170"></canvas>
                                 </div>
                             
-                                <div class="chartAlign">
-                                <p>Billubrin</p>
-                                <canvas id="hemoglobinChart" width="150" height="200"></canvas>
+                                <div class="chartSingles card">
+                                <p>Hemoglobin</p>
+                                <canvas id="hemoglobinChart" width="170" height="170"></canvas>
                                 </div>
 
-                                <div class="chartAlign">
+                                <div class="chartSingles card">
                                 <p>Glucose</p>
-                                <canvas id="glucoseChart" width="150" height="200"></canvas>
+                                <canvas id="glucoseChart" width="170" height="170"></canvas>
                                 </div>
 
-                                <div class="chartAlign">
+                                <div class="chartSingles card">
                                 <p>pH</p>
-                                <canvas id="pHChart" width="150" height="200"></canvas>
+                                <canvas id="pHChart" width="170" height="170"></canvas>
                                 </div>
 
-                                <div class="chartAlign">
+                                <div class="chartSingles card">
                                 <p>Proteins</p>
-                                <canvas id="ProteinsChart" width="150" height="200"></canvas>
+                                <canvas id="ProteinsChart" width="170" height="170"></canvas>
                             	</div>
 
-
+                       
 
                             </div><!--end charts-->
-			                
-			        </div><!--end main-->
+		                
+			        
+
 			            
 			</div><!--end container div-->
+ 
+    <!--progress bar-->
+    <div class="center progress-container" style="padding-top:30px;">
+        <div id="loadBar" class="progress progress-striped active">
+            <div class="progress-bar progress-bar-success" style="width:0%"></div>
+        </div>
+    </div>
+    <!--end progress bar-->
+
 
 		 </div><!--end home tab-->
 
@@ -192,7 +276,23 @@
 <script src="js/profile.js"></script>
 <script src="js/profile_chart.js"></script>
 <script>
+	$("#charts").hide();
 
+    $(".progress-bar").animate({        
+    width: "100%" 
+    }, 2999);
+
+    function hideBar(){
+    	$("#loadBar").hide();
+    };
+
+    function showCharts(){
+    	$("#charts").show();
+    };
+
+
+	setTimeout(hideBar, 2999);
+	setTimeout(showCharts, 2999);
 	setTimeout(createTables, 3000 );
 
 </script>

@@ -133,9 +133,43 @@ Chart.defaults.global = {
     onAnimationComplete: function(){}
 }
 
+//IN PROGRESS
+function changeDate(longDate){
+    var newArray=[];
+    for (i=0; i<longDate.length; i++){
+
+        //arr[0]=month/day/year, arr[1] = hour:min:sec
+        var arr = longDate[i].split(" ");
+
+        //date[0]=month, date[1]=day date[2]=year
+        var date = arr[0].split("/");
+        var monthKey = ["null", "January", "February", "March", "April", "May", "June", "July", "August", "September", "November", "December"];
+        var month = monthKey[date[0]];
+        var year = date[2];
+
+        //time[0]=hour, time[1]=min, time[2]=sec
+        var time = arr[1].split(":");
+        
+        
+        console.log(arr[0]);
+        console.log(arr[1]);
+        console.log(date[0]);
+        console.log(date[1]);
+        console.log(date[2]);
+        console.log("hour:"+time[0]);
+        console.log("min:"+time[1]);
+        console.log("sec:"+time[2]);
+        console.log(month+" "+year);
+        
+
+        newArray.push(month+" "+year);
+        
+      };
+      return newArray;
+}
 
 var hemoglobinX = [];
-var hemoglobinY = [6,7,8,9,8,6];
+var hemoglobinY = [];
 var glucoseX = [];
 var glucoseY = [];
 var nitriteX = [];
@@ -149,6 +183,7 @@ function loadCharts(){
     var chartRef = myDataRef.child("tests");
         chartRef.on('child_added', function(snapshot) {
             var chartValues = snapshot.val();
+            
             //hemoglobin
             hemoglobinX.push(chartValues.timeStamp);
             hemoglobinY.push(chartValues.hemoglobin);
@@ -165,49 +200,24 @@ function loadCharts(){
             proteinX.push(chartValues.timeStamp);
             proteinY.push(chartValues.protein);
 
-            //console.log("before:"+hemoglobinX);
-        });
-            //myhemoglobinChart.update();
-            //console.log("after:" + hemoglobinX);
-        
-}
-//in progress
-function changeDate(longDate){
+        });  
 
-    //arr[0]=month/day/year, arr[1] = hour:min:sec
-    var arr = longDate.split(" ");
-
-    //date[0]=month, date[1]=day date[2]=year
-    var date = arr[0].split("/");
-    var monthKey = ["null", "January", "February", "March", "April", "May", "June", "July", "August", "September", "November", "December"];
-    var month = monthKey[date[0]];
-    var year = date[2];
-
-    //time[0]=hour, time[1]=min, time[2]=sec
-    var time = arr[1].split(":");
-    
-    /*
-    console.log(arr[0]);
-    console.log(arr[1]);
-    console.log(date[0]);
-    console.log(date[1]);
-    console.log(date[2]);
-    console.log("hour:"+time[0]);
-    console.log("min:"+time[1]);
-    console.log("sec:"+time[2]);
-    console.log(month+" "+year);
-    */
-
-    return(month+" "+year);
 }
 
 
+//IN PROGRESS
+
+  //convert dates before adding x values to charts
+  hemoglobinX = changeDate(hemoglobinX);
+  glucoseX = changeDate(glucoseX);
+  nitriteX = changeDate(nitriteX);
+  pHX = changeDate(pHX);
+  proteinX = changeDate(proteinX);
 
 
-var testx = "2/12/2016";
-var testy = "7";
 
-//proteins, nitrites, ph, hemoglobin, glucose
+
+
   //protein chart data
       var ProteinData = {
           
@@ -318,6 +328,7 @@ function createTables(){
       var myProteinsChart = new Chart(Prctx).Line(ProteinData);
 
     };
+
 
 
      

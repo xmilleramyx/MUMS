@@ -1,6 +1,6 @@
 .center {
     margin: auto;
-    width: 40%;
+    width: 50%;
     text-align: center;
 }
 
@@ -22,21 +22,7 @@
     padding: 10px;
     margin-bottom: 15px;
 }    
-.liltable{ 
-    float: left;
-    padding: 20px;
-    border: 1px solid lightgrey;
-    border-radius: 5px; 
-    height: 225px;
-}
-.liltable2{ 
-    width: 45%; 
-    float: left;
-    padding: 20px 20px 0px 20px;
-    border: 1px solid lightgrey;
-    border-radius: 5px; 
-    margin: 0% 1% 2% 1%;
-}
+
 #results_list{
     position: fixed; 
     left: 20px;
@@ -53,17 +39,7 @@
 .list-group-item:focus {
     outline: none;
 }
-.chartAlign{
-    float:left;
-    padding-right: 5px;
-}
-#patientInfo{
-    float: left;
-    padding: 20px;
-    border: 1px solid lightgrey;
-    border-radius: 5px; 
-    height: 225px;
-}
+
 #editButton{
     position: relative;
     float: right;
@@ -71,26 +47,73 @@
 }
 #charts{
     float: left;
-    padding: 10px;
-    border: 1px solid lightgrey;
-    border-radius: 5px; 
-    height: 250px; 
-    position: relative;
-    top: 20px;
 }
-#profpic{
-    float: left;
-    margin-right: 20px;
-    height: 100%;
+
+.chartSingles{
+    margin-top: 30px;
+    margin-right: 5px;
+    background-color: #F0F7FA;
+    width:183px;
+    height:200px;
+    float:left;
 }
-#patientInfo p{
-    float: left;
-    position: relative;
-    top: -60px;
-    line-height: 300%;
+
+
+/*new*/
+#details{
+    position: absolute;
+    top: 30px;
+    right: 0px;
+    left: 230px;
+    width: 350px;
 }
-#patientTitle{
-    position: relative;
-    top: -20px;
-    float: left;
+
+#profpic {
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+  border-radius: 50%;
+  margin-right: 5px;
 }
+
+.card {
+  border-radius: 4px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(63, 63, 68, 0.1);
+  background-color: #FFFFFF;
+  
+}
+
+.card .content {
+  padding: 0px 15px 10px 15px;
+  max-height: 310px;
+  position: relative;
+
+}
+
+.card .header {
+  padding: 15px 15px 0;
+}
+.card .title {
+  margin: auto;
+  color: #333333;
+  
+  padding-bottom: 5px;
+}
+
+
+
+.card .author {
+  font-size: 12px; 
+  text-transform: uppercase;
+  margin: auto;
+  padding-top:15px;
+}
+.card .author .title{
+    padding-top:15px;
+}
+
+.card h6 {
+  font-size: 12px;
+  margin: 0;
+}
+
