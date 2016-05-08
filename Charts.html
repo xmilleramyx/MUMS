@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+  	<meta charset="UTF-8">
+	<title>Charts</title>
+	<meta name=“viewport” content=“width=device-width, intitial-scale=1.0”>
+	
+	<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>
+  	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+	<link rel="javascript" type="text/javascript" href="js/bootstrap.min.js">
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> 
+  	<link rel="stylesheet" href="css/style.css">
+  	<link rel="stylesheet" href="css/sidebar.css">
+    
+
+    <script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
+    <script src="js/Chart.min.js"></script>
+
+    
+
+</head>
+
+<body onload="loadOverview(); loadCharts();">
+<script>
+  document.body.addEventListener('touchstart',function(){},false);
+</script>	
+	<!--Horizontal Nav Bar at Top, credit to http://www.bootply.com/98314-->
+		<nav class="navbar navbar-default" role="navigation">
+		  <div class="navbar-header">
+		    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		      <span class="icon-bar"></span>
+		      <span class="icon-bar"></span>
+		      <span class="icon-bar"></span>
+		    </button>    
+		  </div>
+		  <a class="navbar-brand" href="#">MUMS</a>
+		  <div class="navbar-collapse collapse">
+		    <ul class="nav navbar-nav navbar-right">
+		      <li>
+		      	<a href="testSetUp.html"><span class="glyphicon glyphicon-camera" aria-hidden="true"></span> Start New Test</a>
+		      	
+		      </li>
+		      <li><a href="Dashboard.html"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Back To Database</a>
+		      </li>
+		    </ul>
+		  </div>
+		</nav>
+	<!--end nav bar-->
+
+	<!--sidebar-->
+	<div class="area"></div>
+	<nav class="main-menu">
+	<ul>
+	  <li>
+	    <a href="Profile.html">
+	      <span class="glyphicon glyphicon-user nav-icon"></span> 
+	      <span class="nav-text">
+	                        Patient Dashboard
+	                    </span>
+	    </a>
+	  </li>
+	  <li>
+	    <a href="Charts.html">
+	      <span class="glyphicon glyphicon-signal nav-icon"></span> 
+	      <span class="nav-text">
+	                        Charts
+	                    </span>
+	    </a>
+
+	  </li>
+	  <li>
+	    <a href="#">
+	      <span class="glyphicon glyphicon-flash nav-icon"></span> 
+	      <span class="nav-text">
+	                        Forms
+	                    </span>
+	    </a>
+
+	  </li>
+	  <li>
+	    <a href="#">
+	      <span class="glyphicon glyphicon-open nav-icon"></span> 
+	      <span class="nav-text">
+	                        Pages
+	                    </span>
+	    </a>
+
+	  </li>
+	</ul>
+
+	<ul class="logout">
+	  <li>
+	    <a href="#">
+	      <span class="glyphicon glyphicon-off nav-icon"></span>
+	      <span class="nav-text">
+	                        Logout
+	                    </span>
+	    </a>
+	  </li>
+	</ul>
+	</nav>
+	<!--end sidebar-->
+
+
+<script>
+
+    function chartSelect(X,Y){
+    	
+       	selectedX = X;
+    	selectedY = Y;
+    	
+	
+	  //Selected Chart Data
+	    selectedData = {
+	          
+	          labels: selectedX,
+	          datasets: [
+	              {
+	                  label: "Selected",
+	                  fillColor: "rgba(151,187,205,0.2)",
+	                  strokeColor: "rgba(151,187,205,1)",
+	                  pointColor: "rgba(151,187,205,1)",
+	                  pointStrokeColor: "#fff",
+	                  pointHighlightFill: "#fff",
+	                  pointHighlightStroke: "rgba(151,187,205,1)",
+	                  data: selectedY
+	              }              
+	          ]
+	      }
+
+    	createTables();
+    }
+
+</script>
+		
+
+	<div class="container" >
+	               
+		<row id="charts"> 
+	   
+	        <div class="col-md-2 selectable">
+	        <p>Nitrites</p>
+	        <canvas id="nitriteChart" onClick="chartSelect(nitriteX,nitriteY);"></canvas>
+	        </div>
+	    
+	        <div class="col-md-2 selectable">
+	        <p>Hemoglobin</p>
+	        <canvas id="hemoglobinChart" onClick="chartSelect(hemoglobinX,hemoglobinY);"></canvas>
+	        </div>
+
+	        <div class="col-md-2 selectable">
+	        <p>Glucose</p>
+	        <canvas id="glucoseChart" onClick="chartSelect(glucoseX,glucoseY);"></canvas>
+	        </div>
+
+	        <div class="col-md-2 selectable" >
+	        <p>pH</p>
+	        <canvas id="pHChart" onClick="chartSelect(pHX,pHY);"></canvas>
+	        </div>		
+
+	       	<!--in-line style overrides right margin-->
+	        <div class="col-md-2 selectable" style="margin-right:0px;">
+	        <p>Proteins</p>
+	        <canvas id="proteinChart" onClick="chartSelect(proteinX,proteinY);"></canvas>
+	    	</div>
+
+	    	<div class="col-md-12 selected">
+	        <h4>Selected: </h4><p id="selectedChartName">Nitrites</p>
+	        <canvas id="selectedChart"></canvas>
+	    	</row>
+
+
+
+	    </div><!--end charts-->
+	            
+	</div><!--end container div-->
+ 
+    <!--progress bar-->
+    <div class="center progress-container" style="padding-top:30px;">
+        <div id="loadBar" class="progress progress-striped active">
+            <div class="progress-bar progress-bar-success" style="width:0%"></div>
+        </div>
+    </div>
+    <!--end progress bar-->
+
+
+<script src="js/profile.js"></script>
+<script src="js/profile_chart.js"></script>
+<script>
+	$("#charts").hide();
+
+    $(".progress-bar").animate({        
+    width: "100%" 
+    }, 2999);
+
+    function hideBar(){
+    	$("#loadBar").hide();
+    };
+
+    function showCharts(){
+    	$("#charts").show();
+    };
+
+
+	setTimeout(hideBar, 2999);
+	setTimeout(showCharts, 2999);
+	setTimeout(createTables, 3000 );
+
+</script>
+
+
+</body>
+</html>
