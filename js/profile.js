@@ -2,24 +2,48 @@ var str = location.search;
         var res = str.slice(5);
         var myDataRef = new Firebase('https://mums.firebaseio.com/' + res); 
         
+        function load_title(){
+            myDataRef.on('value', function(snapshot) {
+                var message = snapshot.val();
+                var name = message.patient_fname + " " + message.patient_lname;
+                $('#navtitle2').text("");
+                $('#navtitle2').append(name.toUpperCase());
+            });
+        }
+
         myDataRef.on('value', function(snapshot) {
             var message = snapshot.val();
-            display(message.patient_fname, message.patient_lname, message.location, message.known_drug_allergies, message.medical_history, message.prof_img);
-        });
-        
-        function display(patient_fname, patient_lname, location, known_drug_allergies, medical_history, prof_img) {
             
-            $('#profpic').attr("src", prof_img);
-            $( '#patientTitle' ).text("");
-            $( '#patientTitle' ).append('<h3>' + patient_fname + ' ' + patient_lname + '</h3>');
-            $( '#location' ).text("");
-            $( '#location' ).append("   " + location);
-            $( '#known_drug_allergies' ).text("");
-            $( '#known_drug_allergies' ).append("   " + known_drug_allergies);
-            $( '#medical_history' ).text("");
-            $( '#medical_history' ).append("   " + medical_history);
-        };        
+            //load name in nav header
+            var name = message.patient_fname + " " + message.patient_lname;
+                $('#navtitle2').text("");
+                $('#navtitle2').append(name.toUpperCase());
+            
+                $('#profpic').attr("src", message.prof_img);
+                $( '#patientTitle' ).text("");
+                $( '#patientTitle' ).append('<h3>' + message.patient_fname + ' ' + message.patient_lname + '</h3>');    
+                $( '#location' ).text("");
+                $( '#location' ).append("   " + message.location);
+                $( '#known_drug_allergies' ).text("");
+                $( '#known_drug_allergies' ).append("   " + message.known_drug_allergies);
+                $( '#medical_history' ).text("");
+                $( '#medical_history' ).append("   " + message.medical_history);
+            });        
         
+//Passing key to different Profile pages
+        function profile_href() {
+            window.location.href = 'Profile.html?key=' + res;  
+        }
+        function chart_href() {
+            window.location.href = 'profile_charts.html?key=' + res;  
+        }
+        function test_href() {
+            window.location.href = 'profile_results.html?key=' + res;  
+        }
+        function notes_href() {
+            window.location.href = 'profile_notes.html?key=' + res;  
+        }
+
         function editInfo(){
             $( '#editButton' ).text("");
             $( '#editButton' ).append('<button type="button" class="btn btn-success" onclick="updateInfo()">Update</button>  <button type="button" class="btn btn-default" onclick="cancelUpdate()">Cancel</button>');
@@ -101,9 +125,7 @@ var str = location.search;
                 var message = snapshot.val();
                 if(message == "none"){                    
                     $( '#overviewTable' ).text("");
-                    $( '#overviewTable' ).append("<div style='text-align:center; vertical-align:middle; font-weight:bold; position:relative; top:50px'>No tests saved for this patient.<br><a href='testSetUp.html'><span class='glyphicon glyphicon-camera' aria-hidden='true'></span> Start New Test</a></div>");
-                    $( '#charts' ).text("");
-                    $( '#charts' ).append("<div style='text-align:center; vertical-align:middle; font-weight:bold; position:relative; top:100px'>No tests saved for this patient.<br><a href='testSetUp.html'><span class='glyphicon glyphicon-camera' aria-hidden='true'></span> Start New Test</a></div>");
+                    $( '#overviewTable' ).append("<div style='text-align:center; vertical-align:middle; font-weight:bold; position:relative; top:50px'>No tests saved for this patient.<br><button type='button' onclick='test_href()'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span>&nbsp;&nbsp;NEW TEST</button> ");
                 }
                 else {
                     $( '#overviewTable' ).text("");
@@ -162,49 +184,6 @@ var str = location.search;
         $("#" + key).remove();
         loadOverview();
     }
-
-    //IMAGE PART
-        window.URL = window.URL || window.webkitURL;
-
-        var fileSelect = document.getElementById("profpic"),
-                fileElem = document.getElementById("fileElem"),
-                imgHolder = document.getElementById("imgHolder");
-
-        fileSelect.addEventListener("click", function(e) {
-            if (fileElem) {fileElem.click();
-            }
-            e.preventDefault(); // prevent navigation to "#"
-        }, false);
-
-        function handleFiles(files) {
-            if (!files.length) {
-                imgHolder.innerHTML = "<p>Photo Not Yet Taken</p>";
-            }
-            else
-            {
-                imgHolder.innerHTML = "";
-                $('#fileSelect').hide();
-                $('#sendPhoto').toggle();
-                var imgCapture = document.createElement("img");
-                imgCapture.src = window.URL.createObjectURL(files[0]);
-                //img.height = 60;
-                imgCapture.onload = function() {
-                    window.URL.revokeObjectURL(this.src);
-                }
-                //imgHolder.appendChild(imgCapture);
-                //console.log(imgCapture.src);
-                var reader = new window.FileReader();
-                reader.readAsDataURL(files[0]);
-                reader.onloadend = function()
-                {
-                    base64data = reader.result;
-                    //for Profile.html - instead of base64data, this will be a variable when calling it back
-                    $('#profpic').attr("src", base64data);
-                    
-                };
-                return imgCapture;
-            }
-        }
 
 
 

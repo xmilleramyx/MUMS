@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  	<meta charset="UTF-8">
+	<title>Profile</title>
+	<meta name=“viewport” content=“width=device-width, intitial-scale=1.0”>
+	
+	<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>
+  	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+	<link rel="javascript" type="text/javascript" href="js/bootstrap.min.js">
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> 
+  	<link rel="stylesheet" href="css/style.css">
+  	<link rel="stylesheet" href="css/sidebar.css">
+    
+
+    <script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
+
+<body onload="loadNotes();">
+    
+        <div class="header">  
+            <button type="button" class="button-left" onclick="window.location.href = 'Dashboard.html'"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>&nbsp;&nbsp;ALL PATIENTS</button>
+              
+            <div class="header-center"><span id="navtitle1">NOTES&nbsp;</span><span id="navtitle2"></span></div>   
+            
+            <button type="button" class="button-right" onclick="test_href()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;&nbsp;NEW TEST</button>  
+		  
+		</div>
+    
+    <br>
+    
+	<div id="notes" class="container">
+        <textarea class="form-control" rows="5" id="noteField" placeholder="Add a note..."></textarea>
+        <br>
+        <button type="button" class="btn btn-success" onclick="addNote()">Add Note</button>
+        <br>
+        <br>
+        <div id="pastNotes"></div>
+    </div>
+</body>
+
+<script src="js/profile.js"></script>
+</html>

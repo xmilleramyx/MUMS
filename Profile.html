@@ -21,181 +21,62 @@
     
 
 </head>
+    
+<style>
+    .bold{font-weight:bold; }
+    
+</style>
 
-<body onload="loadOverview(); loadCharts();">
-	<!--enabling tabs-->	
-	<script language="javascript">
-		$('#myTabs a').click(function (e) {
-		  e.preventDefault()
-		  $(this).tab('show')
-		})
+<body onload="loadOverview();">
 
-		$('#myTabs a[href="#profile"]').tab('show') // Select tab by name
-		$('#myTabs a:first').tab('show') // Select first tab
-		$('#myTabs a:last').tab('show') // Select last tab
-		$('#myTabs li:eq(2) a').tab('show') // Select third tab (0-indexed)
-
-		$('#someTab').tab('show')
-		
-		$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-		  e.target // newly activated tab
-		  e.relatedTarget // previous active tab
-		})
-	</script>
-	<!--end enabling tabs-->
 	
-	<!--Horizontal Nav Bar at Top, credit to http://www.bootply.com/98314-->
-		<nav class="navbar navbar-default" role="navigation">
-		  <div class="navbar-header">
-		    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-		      <span class="icon-bar"></span>
-		      <span class="icon-bar"></span>
-		      <span class="icon-bar"></span>
-		    </button>    
-		  </div>
-		  <a class="navbar-brand" href="#">MUMS</a>
-		  <div class="navbar-collapse collapse">
-		    <ul class="nav navbar-nav navbar-right">
-		      <li>
-		      	<a href="testSetUp.html"><span class="glyphicon glyphicon-camera" aria-hidden="true"></span> Start New Test</a>
-		      	
-		      </li>
-		      <li><a href="Dashboard.html"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Back To Database</a>
-		      </li>
-		    </ul>
-		  </div>
-		</nav>
-	<!--end nav bar-->
+    <!--Primary Nav-->
+    <div class="header">  
+            <button type="button" class="button-left" onclick="window.location.href = 'Dashboard.html'"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>&nbsp;&nbsp;ALL PATIENTS</button>
+              
+            <div class="header-center"><span id="navtitle1">PROFILE&nbsp;</span><span id="navtitle2"></span></div>   
+            
+            <button type="button" class="button-right" onclick="test_href()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;&nbsp;NEW TEST</button>  
+		  
+		</div>
+	<!--end Primary Nav-->
+    
+<div id="content" style="z-index: -1;">
+    <!--Secondary Nav-->
+    
+    <div class="row" style="background: #e6e6e6;">
+        <div class="profile_header tab_active" onclick="profile_href()">OVERVIEW</div>
+        <div class="profile_header tab_slant"></div>
+        <div class="profile_header" onclick="chart_href()">TRENDS</div>
+        <div class="profile_header tab_slant"></div>
+        <div class="profile_header" onclick="test_href()">TESTS</div>
+        <div class="profile_header tab_slant"></div>
+        <div class="profile_header" onclick="notes_href()">NOTES</div>
+    </div>
+    
+    <!--end Secondary Nav-->
 
-	<!--sidebar-->
-	<div class="area"></div>
-	<nav class="main-menu">
-	<ul>
-	  <li>
-	    <a href="#">
-	      <span class="glyphicon glyphicon-hdd nav-icon"></span> 
-	      <span class="nav-text">
-	                        Dashboard
-	                    </span>
-	    </a>
-	  </li>
-	  <li class="has-subnav">
-	    <a href="Charts.html">
-	      <span class="glyphicon glyphicon-tasks nav-icon"></span> 
-	      <span class="nav-text">
-	                        UI Components
-	                    </span>
-	    </a>
-
-	  </li>
-	  <li class="has-subnav">
-	    <a href="#">
-	      <span class="glyphicon glyphicon-flash nav-icon"></span> 
-	      <span class="nav-text">
-	                        Forms
-	                    </span>
-	    </a>
-
-	  </li>
-	  <li class="has-subnav">
-	    <a href="#">
-	      <span class="glyphicon glyphicon-open nav-icon"></span> 
-	      <span class="nav-text">
-	                        Pages
-	                    </span>
-	    </a>
-
-	  </li>
-	  <li>
-	    <a href="#">
-	      <span class="glyphicon glyphicon-home nav-icon"></span> 
-	      <span class="nav-text">
-	                        Graphs and Statistics
-	                    </span>
-	    </a>
-	  </li>
-	  <li>
-	    <a href="#">
-	      <span class="glyphicon glyphicon-time nav-icon"></span> 
-	      <span class="nav-text">
-	                        Typography and Icons
-	                    </span>
-	    </a>
-	  </li>
-	  <li>
-	    <a href="#">
-	      <span class="glyphicon glyphicon-th-list nav-icon"></span> 
-	      <span class="nav-text">
-	                        Tables
-	                    </span>
-	    </a>
-	  </li>
-
-	</ul>
-
-	<ul class="logout">
-	  <li>
-	    <a href="#">
-	      <span class="glyphicon glyphicon-off nav-icon"></span>
-	      <span class="nav-text">
-	                        Logout
-	                    </span>
-	    </a>
-	  </li>
-	</ul>
-	</nav>
-	<!--end sidebar-->
-
-
-	<!--tab header-->
-	<ul id="mainTabs" style="margin-bottom:20px;" class="nav nav-tabs">
-	  <li class="active"><a data-toggle="tab" href="#home">Overview</a></li>
-	  <li><a data-toggle="tab" href="#results">Results</a></li>
-	  <li><a data-toggle="tab" href="#notes" onclick="loadNotes()">Notes</a></li>
-	</ul>
-	<!--end tab header-->
-
-	<div class="tab-content">
-		<div id="home" class="tab-pane fade in active"> 
-			
-
-			<div class="container">
-			            
-			       <div class="row">
+			        <div id="prof_container" style="padding:20px"> 
                     <div class="col-md-8">
-                        <div class="card">
-                             
-                            <div class="content">
-	                           
-                                <div class="author">
-                                    <img id="profpic" src="img/default_profpic.png"> 
-
-                                    <h5 id="patientTitle" class="title"></h5></br>
-                                </div>
-                                
+                        <div class="box" style="height: 400px">
+                            <img id="profpic" src="img/default_profpic.png">     
                                 <div id="details">
-	                                <h4>Location:</h4>
-									<p id="location"></p>
-	                            	
-	                                <h4>Known Allergies: </h4>
-									<p id="known_drug_allergies"></p>
-	                            	
-	                                <h4>Medical History: </h4>
-	                                <p id="medical_history"></p>
+	                                Location:<span id="location" class="bold"></span>
+                                    <br>
+                                    Known Allergies:<span id="known_drug_allergies"></span>
+	                            	<br>
+                                    Medical History: <span id="medical_history"></span>
                                 </div>
 								<div id="editButton"><button type="button" class="btn btn-default" onclick="editInfo()">Edit</button></div>
 
                             </div>                           
-                        </div>
                     </div>
 
-                    <div id="recentLevels" class="col-md-4">
-                        <div class="card">
-                            <div class="header">
+                    <div id="recentLevels" class="box col-md-4" style="height: 400px">
+                            <div>
                                 <h4 class="title">Most Recent Test</h4>
                                 <p class="category">Date: </p>
                             </div>
-                            <div class="content">
                            			<table id="overviewTable" class="table table-striped">
 									    <tbody>
 									      <tr>
@@ -220,137 +101,24 @@
 									      </tr>
 									    </tbody>
 									</table>
-		                                                       
-                            </div>
-                        </div>
+
                     </div>
-                </div> 
-                       
-	                    
-
-
-
-
-
-
-	                     <!--	<div id="patientInfo col-md-6">
-	                                <img id="profpic" alt="Default Profile Picture">
-	                                <span id="patientTitle"></span>
-	                                <p><br>Location:<b><span id="location"></span></b>
-	                                <br>Known Drug Allergies:<b><span id="known_drug_allergies"></span></b>
-	                                <br>Medical History:<b><span id="medical_history"></span></b></p>
-	                                <div id="editButton"><button type="button" class="btn btn-default" onclick="editInfo()">Edit</button></div>
-				        	</div>       
-                                
-			          
-			               
-			                <div id="recentLevels" class="col-md-6 liltable">
-                                
-					               <div id="overviewTable" class="table table-striped"></div>
-		                       
-			               	</div><!--end results table-->
-			              
-							
-							<div id="charts" > 
-                           
-                                <div class="chartSingles card">
-                                <p>Nitrites</p>
-                                <canvas id="nitritesChart" width="170" height="170"></canvas>
-                                </div>
-                            
-                                <div class="chartSingles card">
-                                <p>Hemoglobin</p>
-                                <canvas id="hemoglobinChart" width="170" height="170"></canvas>
-                                </div>
-
-                                <div class="chartSingles card">
-                                <p>Glucose</p>
-                                <canvas id="glucoseChart" width="170" height="170"></canvas>
-                                </div>
-
-                                <div class="chartSingles card">
-                                <p>pH</p>
-                                <canvas id="pHChart" width="170" height="170"></canvas>
-                                </div>
-
-                                <div class="chartSingles card">
-                                <p>Proteins</p>
-                                <canvas id="ProteinsChart" width="170" height="170"></canvas>
-                            	</div>
-
-                       
-
-                            </div><!--end charts-->
-		                
-			        
-
-			            
-			</div><!--end container div-->
- 
-    <!--progress bar-->
+ </div>   
+</div>
+    <!--progress bar
     <div class="center progress-container" style="padding-top:30px;">
         <div id="loadBar" class="progress progress-striped active">
             <div class="progress-bar progress-bar-success" style="width:0%"></div>
         </div>
     </div>
-    <!--end progress bar-->
-
-
-		 </div><!--end home tab-->
+    end progress bar-->
 
 
 
-    <div id="results" class="tab-pane fade">
 
-            <div id="results_list" class="panel panel-default">
-                <div class="panel-heading"><h5>Select the date(s) below<br>to view past results:</h5></div>
-                <!--generate list items here-->
-            </div>
-            
-            <div id="display_space" class="col-sm-9">
-                <!--generate selected items here-->
-            </div> 
-                        
-    </div><!--end results tab-->
-
-
-
-<div id="notes" class="tab-pane fade">
-		    
-	<div class="container">
-        <textarea class="form-control" rows="5" id="noteField" placeholder="Add a note..."></textarea>
-        <br>
-        <button type="button" class="btn btn-success" onclick="addNote()">Add Note</button>
-        <br>
-        <br>
-        <div id="pastNotes"></div>
-    </div>
 
 </div><!--end notes tab div-->
 <script src="js/profile.js"></script>
-<script src="js/profile_chart.js"></script>
-<script>
-	$("#charts").hide();
-
-    $(".progress-bar").animate({        
-    width: "100%" 
-    }, 2999);
-
-    function hideBar(){
-    	$("#loadBar").hide();
-    };
-
-    function showCharts(){
-    	$("#charts").show();
-    };
-
-
-	setTimeout(hideBar, 2999);
-	setTimeout(showCharts, 2999);
-	setTimeout(createTables, 3000 );
-
-</script>
-
 
 </body>
 </html>
