@@ -1,49 +1,75 @@
 
 .center {
-    margin: auto;
-    width: 50%;
+    position: relative;
+    margin: 0 auto;
     text-align: center;
-  }
+}
 
 /*General Styles*/
 
+
+
 body {
-    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif
-}
-
-.topnav{
-    background-color: white;
-    height: 60px;
-}
-
-#navtitle1{
-    color: black;
-    font-size: 1.7em;
-}
-
-#navtitle2{
-    color: #22B573;
-    font-size: 1.7em;
+    font-family:  "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    background-image: url("file:///Users/BlairKoeneman/GitHub/MUMS/img/background.png");
 }
 
 span.glyphicon {
     font-size: 1.2em;
 }
 
-.navbar-left {
-    float: left;
-    position: relative;
+button {
+    color: black;
+    border: none;
+    border-radius: 5px;
+    background-color: white;
+    box-shadow: 1px 1px 1px 1px lightgrey;
+    height: 44px;
+    width: 150px;
 }
 
-.navbar-center {
-    text-align: center;
-    float: left;
+button.action {
+    background-color: #f47825;
+    color: white;
 }
 
-.navbar-right {
+.box {
+    background-color: white;
+    margin: 20px;
+    box-shadow: inset 0 0 1px #8c8c8c;
+    padding: 10px;
+}
+
+.header {
+    background-color: white;
+    height: 75px;
+    box-shadow: 0px 0px 10px 0px #a6a6a6;
+}
+
+.button-left {
+    float: left;
+    position: fixed;
+    top: 17px;
+    left: 20px;
+}
+
+.button-right {
     float: right;
->>>>>>> origin/master
+    position: fixed;
+    top: 17px;
+    right: 20px;
 }
+
+.header-center {
+    text-align: center;
+    position: relative;
+    top: 20px;
+    font-size: 1.6em;
+}
+
+#navtitle1{color: #4d4d4d;}
+
+#navtitle2{color: #f47825}
 
 /*Login Styles*/
 #LoginBox{
