@@ -4,75 +4,66 @@
 <head>
   	<meta charset="UTF-8">
 	<title>PatientList</title>
-	<meta name=“viewport” content=“width=device-width, intitial-scale=1.0”>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> 	 
-    <script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
+	<meta name=“viewport” content=“width=device-width, intitial-scale=1.0”> 
+    
+    
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
-  	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-	
-	<link rel="javascript" type="text/javascript" href="bootstrap.min.js">
-  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> 
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     
-    <style>
-        #profpic{
-            float: left;
-            margin-right: 20px;
-            width: 15%;
-        }
-    </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> 	 
+  	<link rel="stylesheet" href="css/style.css">
     
-    <!--FIREBASE-->
-    
+    <script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
     
 </head>
 
 <body>
 	
-    	<!--Horizontal Nav Bar at Top, credit to http://www.bootply.com/98314-->
-		<nav class="navbar navbar-default" role="navigation">
-		  <div class="navbar-header">
-		    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-		      <span class="icon-bar"></span>
-		      <span class="icon-bar"></span>
-		      <span class="icon-bar"></span>
-		    </button>    
-		  </div>
-		  <a class="navbar-brand" href="#">MUMS</a>
-		  <div class="navbar-collapse collapse">
-		    
-		    <ul class="nav navbar-nav navbar-right">
-            
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account Settings <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                  <li><a href="login.html">Log Out</a></li>
-                  <li><a href="#">Delete Account</a></li>
-                </ul>
-              </li> 
+    <!--Horizontal Nav Bar at Top, credit to http://www.bootply.com/98314-->
+        <nav class="navbar navbar-default" role="navigation">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>    
+          </div>
+          <a class="navbar-brand" href="#">MUMS</a>
+          <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+              <li>
+                <a href="testSetUp.html"><span class="glyphicon glyphicon-camera" aria-hidden="true"></span> Start New Test</a>
+                
+              </li>
+              <li><a href="Dashboard.html"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Back To Database</a>
+              </li>
             </ul>
-              
-		  </div>
-		</nav>
-	<!--end nav bar-->
+          </div>
+        </nav>
+    <!--end nav bar-->
+
     
-<br>
-    
-    <div id="imgHolder"></div>
-    <input type="file" id="fileElem" accept="image/*" style="display:none" onchange="handleFiles(this.files)">
-    <img id="profpic" src="img/take_new_profpic.png" style="cursor: pointer" alt="Default Profile Picture">
-    <br>
-    <div id="retake_text" style="display:none">Tap Photo to Retake</div>
-    <br>
-    <br>
-    <br>
-    <br>
-    
-    <input type='text' id='patient_fname' placeholder='First Name'>
-    <input type='text' id='patient_lname' placeholder='Last Name'>
-    <input type='text' id='location' placeholder='Location'>
-    <input type='text' id='known_drug_allergies' placeholder='Known Drug Allergies'>
-    <input type='text' id='medical_history' placeholder='Medical History'>
-    <button type="button" class="btn btn-success" onclick="add()">Add Note</button>
+
+
+<div class="container-wide">
+    <div class="form">
+        <div class="newPatientPic">
+            <div id="imgHolder"></div>
+            <input type="file" id="fileElem" accept="image/*" style="display:none" onchange="handleFiles(this.files)">
+            <img id="profpic" src="img/take_new_profpic.png" style="cursor: pointer" alt="Default Profile Picture">
+        </div>
+        
+        <div class="half">
+            <input type='text' id='patient_fname' placeholder='First Name'>
+            <input type='text' id='patient_lname' placeholder='Last Name'>
+        </div>
+        <input type='text' id='location' placeholder='Location'>
+        <input type='text' id='known_drug_allergies' placeholder='Known Drug Allergies'>
+        <input type='text' id='medical_history' placeholder='Medical History'>
+        <button type="button" class="btn btn-success" onclick="add()">Add Patient</button>
+    </div>
+</div><!--containerwide-->
+
     
     <script>
         var myDataRef = new Firebase('https://mums.firebaseio.com/');
@@ -92,8 +83,8 @@
                             prof_img: base64data,
                             lastTestRef: "none"
                             });
-            alert("added patient");
-            //window.location.href='Dashboard.html';
+            
+            window.location.href='Dashboard.html';
         }
       
     

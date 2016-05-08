@@ -1,10 +1,11 @@
 /*---------------------------General Styles---------------------------*/
 
-
-
 body {
-    font-family:  "Lucida Sans Unicode", "Lucida Grande", sans-serif;
-    background-image: url("file:///Users/BlairKoeneman/GitHub/MUMS/img/background.png");
+  font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;      
+  /*font-family:  "Lucida Sans Unicode", "Lucida Grande", sans-serif;*/
+  /*background-image: url("file:///Users/BlairKoeneman/GitHub/MUMS/img/background.png");*/
 }
 
 
@@ -85,7 +86,7 @@ button.action {
 }
 
 
-/*---------------------------Login Styles---------------------------*/
+/*---------------------------Login/Form/New Patient Styles---------------------------*/
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
 .login-page {
@@ -97,7 +98,7 @@ button.action {
   position: relative;
   z-index: 1;
   background: #FFFFFF;
-  max-width: 360px;
+  /*max-width: 550px;*/
   margin: 0 auto 100px;
   padding: 45px;
   text-align: center;
@@ -114,6 +115,19 @@ button.action {
   box-sizing: border-box;
   font-size: 14px;
 }
+
+.form .half input  {
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  width: 49.5%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
 .form button {
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;
@@ -143,11 +157,20 @@ button.action {
 .form .register-form {
   display: none;
 }
-.container {
+.form .login-form {
+  display: block;
+}
+.container { 
   position: relative;
   z-index: 1;
-  max-width: 300px;
+ /* max-width: 300px;*/
   margin: 0 auto;
+}
+.container-wide{
+    position: relative;
+    z-index: 1;
+    width: 500px;
+    margin: 0 auto;
 }
 .container:before, .container:after {
   content: "";
@@ -163,16 +186,12 @@ button.action {
   padding: 0;
   font-size: 36px;
   font-weight: 300;
-  color: #1a1a1a;
+  
 }
 .container .info span {
   color: #4d4d4d;
   font-size: 12px;
 }
-
-#navtitle1{color: #4d4d4d;}
-
-#navtitle2{color: #f47825}
 
 .container .info span a {
   color: #000000;
@@ -181,15 +200,9 @@ button.action {
 .container .info span .fa {
   color: #EF3B3A;
 }
-body {
-  background: #76b852; /* fallback for old browsers */
-  background: -webkit-linear-gradient(right, #76b852, #8DC26F);
-  background: -moz-linear-gradient(right, #76b852, #8DC26F);
-  background: -o-linear-gradient(right, #76b852, #8DC26F);
-  background: linear-gradient(to left, #76b852, #8DC26F);
-  font-family: "Roboto", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;      
+
+.newPatientPic{
+    margin-bottom: 20px;
 }
 
 

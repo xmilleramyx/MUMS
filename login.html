@@ -5,37 +5,22 @@
   	<meta charset="UTF-8">
 	<title>MUMS Login</title>
 	<meta name=“viewport” content=“width=device-width, intitial-scale=1.0”>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> 	 
-  	<link rel="stylesheet" href="css/style.css">
 
-    <script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
+
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> 	 
+  	<link rel="stylesheet" href="css/style.css">
     
-    	<!--
-	<script language="javascript">
-	function check(form)/*function to check userid & password*/
-	{
-	 /*the following code checks whether the entered userid and password are matching*/
-	 if(form.userid.value == "MUMS" && form.pswrd.value == "babies")
-	  {
-	    window.open('PatientList.html')
-	    /*opens the target page while Id & password matches*/
-	  }
-	 else
-	 {
-	   alert("Error Password or Username")/*displays error message*/
-	  }
-	}
-	</script>
-    -->
+    <script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
 
     <script>
-        
-        function checkLogin(){
-            var ref = new Firebase("https://mums.firebaseio.com");
+
+        function checkLogin(ref){
             var userid = $('#userid').val();
             var pswrd = $('#pswrd').val(); 
+            console.log(userid, pswrd);
             ref.authWithPassword({
                 email    : userid,
                 password : pswrd
@@ -49,63 +34,61 @@
             });
         }
 
-    </script>
-    
-    
-    
-    
+        function createNew(ref) {
+            
+            var makeuserid = $('#makeuserid').val();
+            var makepswrd = $('#makepswrd').val(); 
+            ref.createUser({
+                    email    : makeuserid,
+                    password : makepswrd
+                }, 
+                function(error, userData) {
+                    if (error) {
+                        alert(error);
+                    } else {
+                        alert("Successfully created user account for: " + makeuserid);
+                        window.location.href = 'login.html';
+                    }
+                });
+        }
+
+        function toggleViews(){
+          $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
+		 }
+        
+	</script>
+
+ 
 </head>
 
 <body>
-
-    <div class="login-page">
+<script>
+    var ref = new Firebase("https://mums.firebaseio.com");
+</script>
+    
+<div class="login-page">
   <div class="form">
-    <form class="register-form">
-      <input type="text" placeholder="email address"/>
-      <input type="password"  placeholder="password"/>
-      
-      <button>create</button>
-      <p class="message">Already registered? <a href="#">Sign In</a></p>
-    </form>
-    <form class="login-form">
+    <form name="login" class="login-form">
       <input type="text" id="userid" placeholder="email address"/>
       <input type="password" id="pswrd" placeholder="password"/>
-      <button >login</button>
-      <p class="message">Not registered? <a href="#">Create an account</a></p>
+      <button onclick="checkLogin(ref)" value="Login">login</button>
+      <p class="message" onclick="toggleViews()">Not registered? <a href="#">Create an account</a></p>
     </form>
+      
+    <form class="register-form">
+      <input type="text" id="makeuserid" placeholder="resgister with email"/>
+      <input type="password" id="makepswrd" placeholder="password"/>
+      
+      <button onclick="createNew(ref)" value="Create Account">create</button>
+      <p class="message" onclick="toggleViews()" >Already registered? <a href="#">Sign In</a></p>
+    </form>
+
+
   </div>
 </div>
+    
 
 
-	<script>
-	   $('.message a').click(function(){
-	   		$('form').animate({height: "toggle", opacity: "toggle"}, "slow");
-		});
-	</script>
-
- 		
-
-
-
-
-
-	<h2 style="text-align:center">Login Page</h2>
-	
-<div class="col-md-4"></div>
-<div id="LoginBox" class="col-md-4">
-	<form name="login">
-
-		Username<input type="text" id="userid"/></br>
-		Password<input type="password" id="pswrd"/></br>
-		
-		<input type="button" onclick="checkLogin()" value="Login"/>
-		<input type="reset" value="Cancel"/>
-        
-        <br>
-        <input type="button" onclick="window.location.href = 'createAccount.html'" value="Create Account"/>
-
-	</form>
-</div>
 
 </body>
 </html>
