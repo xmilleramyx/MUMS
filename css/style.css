@@ -14,6 +14,7 @@ body {
 .topnav{
     background-color: white;
     height: 60px;
+
 }
 
 #navtitle1{
@@ -30,6 +31,9 @@ span.glyphicon {
     font-size: 1.2em;
 }
 
+.navbar{
+  z-index: 1001;
+}
 .navbar-left {
     float: left;
     position: relative;
@@ -42,7 +46,7 @@ span.glyphicon {
 
 .navbar-right {
     float: right;
->>>>>>> origin/master
+
 }
 
 /*Login Styles*/
@@ -86,19 +90,27 @@ span.glyphicon {
     float: right;
     top: -60px;
 }
-#charts{
-    float: left;
-}
-
-.chartSingles{
-    margin-top: 30px;
-    margin-right: 5px;
-    background-color: #F0F7FA;
-    width:183px;
-    height:200px;
+#charts div{
+    border-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(63, 63, 68, 0.1);
+    background-color: #FFFFFF;
     float:left;
 }
 
+.selectable{
+  width:140px;
+  margin-right:5px;
+  margin-bottom: 10px;
+  
+}
+.selected{
+  width:750px;
+}
+
+#charts .selectable:active{
+  background-color: gray;
+
+}
 
 /*new*/
 #details{

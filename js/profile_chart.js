@@ -1,5 +1,5 @@
 ////CHARTS
-     
+
 
 Chart.defaults.global = {
     // Boolean - Whether to animate the chart
@@ -133,51 +133,24 @@ Chart.defaults.global = {
     onAnimationComplete: function(){}
 }
 
-//IN PROGRESS
-function changeDate(longDate){
-    var newArray=[];
-    for (i=0; i<longDate.length; i++){
+   
 
-        //arr[0]=month/day/year, arr[1] = hour:min:sec
-        var arr = longDate[i].split(" ");
+var hemoglobinX = [1, 2, 3, 4, 5];
+var hemoglobinY = [1, 2, 3, 4, 5];
+var glucoseX = [1, 2, 3];
+var glucoseY = [9, 8, 3];
+var nitriteX = [4, 5, 2, 9, 5];
+var nitriteY = [2, 4, 6, 6, 7];
+var pHX = [1, 2, 5, 3, 9];
+var pHY = [1,5, 6, 7, 4];
+var proteinX = [3, 12, 23, 2, 5];
+var proteinY = [1, 2, 3, 4, 5];
+var selectedX = [];
+var selectedY = [];
 
-        //date[0]=month, date[1]=day date[2]=year
-        var date = arr[0].split("/");
-        var monthKey = ["null", "January", "February", "March", "April", "May", "June", "July", "August", "September", "November", "December"];
-        var month = monthKey[date[0]];
-        var year = date[2];
-
-        //time[0]=hour, time[1]=min, time[2]=sec
-        var time = arr[1].split(":");
-        
-        
-        console.log(arr[0]);
-        console.log(arr[1]);
-        console.log(date[0]);
-        console.log(date[1]);
-        console.log(date[2]);
-        console.log("hour:"+time[0]);
-        console.log("min:"+time[1]);
-        console.log("sec:"+time[2]);
-        console.log(month+" "+year);
-        
-
-        newArray.push(month+" "+year);
-        
-      };
-      return newArray;
-}
-
-var hemoglobinX = [];
-var hemoglobinY = [];
-var glucoseX = [];
-var glucoseY = [];
-var nitriteX = [];
-var nitriteY = [];
-var pHX = [];
-var pHY = [];
-var proteinX = [];
-var proteinY = [];
+//temporary selction
+selectedX = nitriteX;
+selectedY = nitriteY;
 
 function loadCharts(){
     var chartRef = myDataRef.child("tests");
@@ -205,21 +178,9 @@ function loadCharts(){
 }
 
 
-//IN PROGRESS
-
-  //convert dates before adding x values to charts
-  hemoglobinX = changeDate(hemoglobinX);
-  glucoseX = changeDate(glucoseX);
-  nitriteX = changeDate(nitriteX);
-  pHX = changeDate(pHX);
-  proteinX = changeDate(proteinX);
-
-
-
-
 
   //protein chart data
-      var ProteinData = {
+      var proteinData = {
           
           labels: proteinX,
           datasets: [
@@ -237,7 +198,7 @@ function loadCharts(){
       }
 
   //ketones chart data
-      var nitritesData = {
+      var nitriteData = {
           
           labels: nitriteX,
           datasets: [
@@ -256,7 +217,7 @@ function loadCharts(){
 
   //hemoglobin Chart Data
 
-var hemoglobinData = {
+      var hemoglobinData = {
             
           labels: hemoglobinX,
           datasets: [
@@ -308,6 +269,23 @@ var hemoglobinData = {
           ]
       }
 
+  //Selected Chart Data
+      var selectedData = {
+          
+          labels: selectedX,
+          datasets: [
+              {
+                  label: "Selected",
+                  fillColor: "rgba(151,187,205,0.2)",
+                  strokeColor: "rgba(151,187,205,1)",
+                  pointColor: "rgba(151,187,205,1)",
+                  pointStrokeColor: "#fff",
+                  pointHighlightFill: "#fff",
+                  pointHighlightStroke: "rgba(151,187,205,1)",
+                  data: selectedY
+              }              
+          ]
+      }
 
 
 
@@ -316,16 +294,19 @@ function createTables(){
       // Get the context of the canvas elements we want to select
       var Hctx = document.getElementById("hemoglobinChart").getContext("2d");
       var Gctx = document.getElementById("glucoseChart").getContext("2d");
-      var Nctx = document.getElementById("nitritesChart").getContext("2d");
+      var Nctx = document.getElementById("nitriteChart").getContext("2d");
       var Pctx = document.getElementById("pHChart").getContext("2d");
-      var Prctx = document.getElementById("ProteinsChart").getContext("2d");
+      var Prctx = document.getElementById("proteinChart").getContext("2d");
+      var Selctx = document.getElementById("selectedChart").getContext("2d");
+
 
       //generate chart
       var myHemoglobinChart = new Chart(Hctx).Bar(hemoglobinData);
       var myGlucoseChart = new Chart(Gctx).Line(glucoseData);
-      var myNitritesChart = new Chart(Nctx).Line(nitritesData);
+      var myNitriteChart = new Chart(Nctx).Line(nitriteData);
       var mypHChart = new Chart(Pctx).Line(pHData);
-      var myProteinsChart = new Chart(Prctx).Line(ProteinData);
+      var myproteinChart = new Chart(Prctx).Line(proteinData);
+      var mySelectedChart = new Chart(Selctx).Line(selectedData);
 
     };
 

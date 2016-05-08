@@ -12,11 +12,12 @@
 	<link rel="javascript" type="text/javascript" href="js/bootstrap.min.js">
   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> 
   	<link rel="stylesheet" href="css/style.css">
+  	<link rel="stylesheet" href="css/sidebar.css">
     
 
     <script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
     <script src="js/Chart.min.js"></script>
-    
+
     
 
 </head>
@@ -66,8 +67,84 @@
 		</nav>
 	<!--end nav bar-->
 
+	<!--sidebar-->
+	<div class="area"></div>
+	<nav class="main-menu">
+	<ul>
+	  <li>
+	    <a href="#">
+	      <span class="glyphicon glyphicon-hdd nav-icon"></span> 
+	      <span class="nav-text">
+	                        Dashboard
+	                    </span>
+	    </a>
+	  </li>
+	  <li class="has-subnav">
+	    <a href="Charts.html">
+	      <span class="glyphicon glyphicon-tasks nav-icon"></span> 
+	      <span class="nav-text">
+	                        UI Components
+	                    </span>
+	    </a>
 
+	  </li>
+	  <li class="has-subnav">
+	    <a href="#">
+	      <span class="glyphicon glyphicon-flash nav-icon"></span> 
+	      <span class="nav-text">
+	                        Forms
+	                    </span>
+	    </a>
 
+	  </li>
+	  <li class="has-subnav">
+	    <a href="#">
+	      <span class="glyphicon glyphicon-open nav-icon"></span> 
+	      <span class="nav-text">
+	                        Pages
+	                    </span>
+	    </a>
+
+	  </li>
+	  <li>
+	    <a href="#">
+	      <span class="glyphicon glyphicon-home nav-icon"></span> 
+	      <span class="nav-text">
+	                        Graphs and Statistics
+	                    </span>
+	    </a>
+	  </li>
+	  <li>
+	    <a href="#">
+	      <span class="glyphicon glyphicon-time nav-icon"></span> 
+	      <span class="nav-text">
+	                        Typography and Icons
+	                    </span>
+	    </a>
+	  </li>
+	  <li>
+	    <a href="#">
+	      <span class="glyphicon glyphicon-th-list nav-icon"></span> 
+	      <span class="nav-text">
+	                        Tables
+	                    </span>
+	    </a>
+	  </li>
+
+	</ul>
+
+	<ul class="logout">
+	  <li>
+	    <a href="#">
+	      <span class="glyphicon glyphicon-off nav-icon"></span>
+	      <span class="nav-text">
+	                        Logout
+	                    </span>
+	    </a>
+	  </li>
+	</ul>
+	</nav>
+	<!--end sidebar-->
 
 
 	<!--tab header-->
@@ -106,6 +183,8 @@
 	                                <h4>Medical History: </h4>
 	                                <p id="medical_history"></p>
                                 </div>
+								<div id="editButton"><button type="button" class="btn btn-default" onclick="editInfo()">Edit</button></div>
+
                             </div>                           
                         </div>
                     </div>
