@@ -11,7 +11,7 @@
 	
 	<link rel="javascript" type="text/javascript" href="css/bootstrap.min.js">
   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-  	<link rel="stylesheet" href="css/login.css">
+  	<link rel="stylesheet" href="css/style.css">
 
     <script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
     <script src='js/testResults.js'></script>
@@ -40,34 +40,22 @@
 
 <body>
     
-	<!--Horizontal Nav Bar at Top, credit to http://www.bootply.com/98314-->
-		<nav class="navbar navbar-default" role="navigation">
-		  <div class="navbar-header">
-		    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-		      <span class="icon-bar"></span>
-		      <span class="icon-bar"></span>
-		      <span class="icon-bar"></span>
-		    </button>    
-		  </div>
-		  <a class="navbar-brand" href="#">MUMS</a>
-		  <div class="navbar-collapse collapse">
-		    <ul class="nav navbar-nav navbar-right">
-		      <li>
-		      	<a onclick="profile_href()">
-		      		<span class="glyphicon glyphicon-camera" aria-hidden="true"></span> View Profile</a>
-		      </li>
-		      <li><a href="Dashboard.html"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> View Database</a>
-		      </li>
-		    </ul>
-		  </div>
-		</nav>
-	<!--end nav bar-->
-
+    <!--Primary Nav-->
+    <div class="header">  
+            <button type="button" class="button-left" onclick="setup_href()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>&nbsp;&nbsp;BACK TO SETUP</button>
+              
+            <div class="header-center"><span id="navtitle1">NEW TEST&nbsp;</span><span id="navtitle2"></span></div>   
+            
+            <button type="button" class="button-right" onclick="test_href()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;&nbsp;VIEW PROFILE</button>  
+		  
+		</div>
+	<!--end Primary Nav-->
+<br>
     <div id="imgHolder">
     </div>
     <input type="file" id="fileElem" accept="image/*" style="display:none" onchange="handleFiles(this.files)">
     <button class="btn btn-default" id="fileSelect" style="">Take Photo</button>
-    <canvas id="example" width="750" height="100"></canvas>
+    <canvas id="example" width="750" height="100" style="position:relative; left:25%;"></canvas>
     <div id= "reload" style="display:none">
         <input type=button value="Retake"  onClick="location.reload();">
     </div>
@@ -77,32 +65,12 @@
     <br>
     <br>
 
-    <div id="calculatedResults" style="background: #e6e6e6; padding: 20px">
-        <h4 id="resultsTitle">Results:</h4>
-        <div class="results">
-            <b>Glucose       </b>
-            <span id="glucose_result" class="result_value"></span>
-        </div>
-        <div id="hemoglobin" class="results">
-            <b>Hemoglobin       </b>
-            <span id="hemoglobin_result" class="result_value"></span>
-        </div>
-        <div id="nitrite" class="results">
-            <b>Nitrite       </b>
-            <span id="nitrite_result" class="result_value"></span>
-        </div>
-        <div id="pH" class="results">
-            <b>pH       </b>
-            <span id="pH_result" class="result_value"></span>
-        </div>
-        <div id="protein" class="results">
-            <b>Protein       </b>
-            <span id="protein_result" class="result_value"></span>
-        </div>
+    <div class="box" style="width: 30%; position: relative; left:35%">
+        <div id="resultsTable" class="table"></div>
     </div>
 
-
     <script>
+    
         window.URL = window.URL || window.webkitURL;
 
         var fileSelect = document.getElementById("fileSelect"),

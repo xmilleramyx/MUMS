@@ -1,8 +1,9 @@
-
 var str = location.search;
 var res = str.slice(5);
 var myDataRef = new Firebase('https://mums.firebaseio.com/' + res);
-        
+
+function setup_href() {window.location.href = 'profile_results.html?key=' + res;  }
+
 function profile_href() { window.location.href = 'Profile.html?key=' + res;  }
         
 function getTimestamp(){
@@ -56,17 +57,6 @@ function add(){
         
 /************* RGB AVERAGING + CONVERSION TO HSV *************/
 
-//Load cropped strip image
-/*function init() {
-    var example = document.getElementById('example');
-    var context = example.getContext('2d');            
-    base_image = new Image();
-    base_image.src = 'img/test.png';
-    base_image.onload = function(){
-        context.drawImage(base_image, 0, 0);
-    }
-}*/
-            
 //Calculate average RGB
 function calcResult(){
     var example = document.getElementById('example');
@@ -95,52 +85,17 @@ function calcResult(){
     }
     
     //Call calculate functions based on square position
-    // GROUP 1 
-    glucose_hsv = calc_hsv("glucose", 548, 15); //10th square
-    // GROUP 2 glucose_hsv = calc_hsv("glucose", 548, 23); //10th square
-    // GROUP 3 glucose_hsv = calc_hsv("glucose", 551, 25); //10th square
-    // GROUP 4 glucose_hsv = calc_hsv("glucose", 545, 30); //10th square
-    // GROUP 5 glucose_hsv = calc_hsv("glucose", 543, 12); //10th square
-    
+    glucose_hsv = calc_hsv("glucose", 548, 15); //10th square   
     hemoglobin_hsv = calc_hsv("hemoglobin", 305, 14); //6th square
-    
-    //GROUP 1 pH_hsv = calc_hsv("pH", 247, 15); //5th square
-    //GROUP 1a pH_hsv = calc_hsv("pH", 248, 30); //5th square
-    //GROUP 2 pH_hsv = calc_hsv("pH", 252, 31); //5th square
-    //GROUP 3 
     pH_hsv = calc_hsv("pH", 253, 20); //5th square
-    //GROUP 4 pH_hsv = calc_hsv("pH", 258, 28); //5th square
-    
     protein_hsv = calc_hsv("protein", 185, 15); //4th square 
-    
-    // GROUP 1 
     nitrite_hsv = calc_hsv("nitrite", 71, 28); //2nd square
-    // GROUP 2 nitrite_hsv = calc_hsv("nitrite", 68, 30); //2nd square
-    // GROUP 3 nitrite_hsv = calc_hsv("nitrite", 66, 25); //2nd square
  
     //Display the values in the table
-    //nitrite and hemoglobin
     timeStamp = getTimestamp();
-    $("#glucose_result").text("");
-    $("#glucose_result").append(glucose_hsv);
-    //$("#glucose_result").css("background-color", glucose_hsv);
-    $("#hemoglobin_result").text("");
-    $("#hemoglobin_result").append(hemoglobin_hsv);
-    //$("#_result").css("background-color", ketone_hsv);
-    $("#nitrite_result").text("");
-    $("#nitrite_result").append(nitrite_hsv);
-    //$("#ketone_result").css("background-color", ketone_hsv);
-    $("#pH_result").text("");
-    $("#pH_result").append(pH_hsv);
-    //$("#pH_result").css("background-color", pH_hsv);
-    $("#protein_result").text("");
-    $("#protein_result").append(protein_hsv);
-    //$("#ketone_result").css("background-color", ketone_hsv);
+    $( '#resultsTable' ).append('<b style="text-align:center">Most recent test: ' + timeStamp + '</b><br><table class="table table-striped"><tbody><tr><td>Nitrite</td><td>' + nitrite_hsv + '</td></tr><tr><td>Protein</td><td>' + protein_hsv + '</td></tr><tr><td>pH</td><td>' + pH_hsv + '</td></tr><tr><td>Blood</td><td>' + hemoglobin_hsv + '</td></tr><tr><td>Glucose</td><td>' + glucose_hsv + '</td></tr></tbody></table>');
 }
 
-//load all HTML before javascript
-//document.addEventListener("DOMContentLoaded", init, false);
-        
 //Convert RGB to HSV
 function rgb2hsv (marker, r, g, b) {
 
@@ -175,29 +130,29 @@ function rgb2hsv (marker, r, g, b) {
     computedH = Number(Math.round(computedH+'e6')+'e-6');
     computedS = Number(Math.round(computedS+'e6')+'e-6');
     computedV = Number(Math.round(computedV+'e6')+'e-6');
-    answer = "<b>H</b> " + computedH + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>S</b> " + computedS + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>V</b> " + computedV;
-/* ADD EQUATIONS BACK IN  
+
+    //equations
     answer = "lol u lose";
     switch(marker) {
-    case "glucose":
-        var answer = findConcentration(computedH, computedS, computedV, glucose_equationH, glucose_equationS, glucose_equationV, glucose_cVal);
+    case "glucose":   
+        var answer = findConcentration(computedH, computedS, computedV, glucose_equationH, glucose_equationS, glucose_equationV, glucose_cVal) + " g/L";
         break;
     case "hemoglobin":
-        var answer = findConcentration(computedH, computedS, computedV, hemoglobin_equationH, hemoglobin_equationS, hemoglobin_equationV, hemoglobin_cVal);
+        var answer = findConcentration(computedH, computedS, computedV, hemoglobin_equationH, hemoglobin_equationS, hemoglobin_equationV, hemoglobin_cVal) + " [UNIT]";
         break;
     case "nitrite":
-        var answer = findConcentration(computedH, computedS, computedV, nitrite_equationH, nitrite_equationS, nitrite_equationV, nitrite_cVal);
+        var answer = findConcentration_Nitrite(computedH, computedS, computedV, nitrite_equationH, nitrite_equationS, nitrite_equationV, nitrite_cVal);
         break;
     case "pH":
-        var answer = findConcentration(computedH, computedS, computedV, pH_equationH, pH_equationS, pH_equationV, pH_cVal);
+        var answer = findConcentration(computedH, computedS, computedV, pH_equationH, pH_equationS, pH_equationV, pH_cVal) + " [UNIT]";
         break;
     case "protein":
-        var answer = findConcentration(computedH, computedS, computedV, protein_equationH, protein_equationS, protein_equationV, protein_cVal);
+        var answer = findConcentration(computedH, computedS, computedV, protein_equationH, protein_equationS, protein_equationV, protein_cVal) + " g/L";
         break;   
     default:
         alert("marker not loaded");
     }
-*/ 
+
     console.log(answer);
     return(answer);
 }
@@ -205,36 +160,64 @@ function rgb2hsv (marker, r, g, b) {
 
 
 /************* VARIABLES AND EQUATIONS SETUP *************/
-    
+
 //GLUCOSE
 var glucose_cVal = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0];
-function glucose_equationH(x){ return (-0.4313 * (x * x)) + (11.813 * x) + 55.449; }
-function glucose_equationS(x){ return (0.3803 * (x * x)) + (-5.9182 * x) + 42.864; }
-function glucose_equationV(x){ return (0.2773 * (x * x)) + (-4.3803 * x) + 77.361; }
+//Hy = -2E-06x3 + 0.0021x2 - 0.8353x + 181.03
+//R² = 0.99147
+function glucose_equationH(x){ return ((-2E-06 * (x * x * x)) + (0.0021 * (x * x)) + (-0.8353 * x) + 181.03)*(0.99147*0.99147*0.99147*0.99147); }
+//Sy = -2E-07x2 + 0.0006x + 0.2291
+//R² = 0.88974
+function glucose_equationS(x){ return (-2E-07 * (x * x)) + (0.0006 * x) + 0.2291; }
+//Vy = 4E-07x2 - 0.0007x + 0.9069
+//R² = 0.9491
+function glucose_equationV(x){ return (4E-07 * (x * x)) + (-0.0007 * x) + 0.9069; }
 
-//BILLRUBIN
+//HEMOGLOBIN
 var hemoglobin_cVal = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0];
-function hemoglobin_equationH(x){ return (1 * (x * x)) + (2 * x) + 3; }
-function hemoglobin_equationS(x){ return (1 * (x * x)) + (2 * x) + 3; }
-function hemoglobin_equationV(x){ return (1 * (x * x)) + (2 * x) + 3; }
+//Hy = -0.0017x2 + 0.9384x + 44.537
+//R² = 0.97721
+function hemoglobin_equationH(x){ return (-0.0017 * (x * x)) + (0.9384 * x) + 44.537; }
+//Sy = 2E-05x2 - 0.0072x + 0.6881
+//R² = 0.92774
+function hemoglobin_equationS(x){ return (2E-05 * (x * x)) + (-0.0072 * x) + 0.6881; }
+//Vy = 3E-05x2 - 0.0079x + 0.8513
+//R² = 0.9179
+function hemoglobin_equationV(x){ return (3E-05 * (x * x)) + (0.0079 * x) + 0.8513; }
 
-//KETONE
+//NITRITE
 var nitrite_cVal = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0];
-function nitrite_equationH(x){ return (1 * (x * x)) + (2 * x) + 3; }
-function nitrite_equationS(x){ return (1 * (x * x)) + (2 * x) + 3; }
-function nitrite_equationV(x){ return (1 * (x * x)) + (2 * x) + 3; }
+//Hy = 0.0249x2 - 1.6261x + 29.687
+//R² = 0.9694
+function nitrite_equationH(x){ return (0.0249 * (x * x)) + (-1.6261 * x) + 29.687; }
+//no trendline
+function nitrite_equationS(x){ return 0; }
+//no trendline
+function nitrite_equationV(x){ return 0; }
 
 //PH
 var pH_cVal = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0];
-function pH_equationH(x){ return (1 * (x * x)) + (2 * x) + 3; }
-function pH_equationS(x){ return (1 * (x * x)) + (2 * x) + 3; }
-function pH_equationV(x){ return (1 * (x * x)) + (2 * x) + 3; }
+//Hy = 9.0441x2 - 83.002x + 211.05
+//R² = 0.96833
+function pH_equationH(x){ return (9.0441 * (x * x)) + (83.002 * x) + 211.05; }
+//Sy = -0.0265x2 + 0.2463x + 0.1548
+//R² = 0.8534
+function pH_equationS(x){ return (-0.0265 * (x * x)) + (0.2463 * x) + 0.1548; }
+//Vy = -0.0386x2 + 0.3436x + 0.1955
+//R² = 0.95787
+function pH_equationV(x){ return (-0.0386 * (x * x)) + (0.3436 * x) + 0.1955; }
 
 //PROTEIN
-var protein_cVal = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 2.0, 3.0, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 20, 25, 30, 31, 32];
-function protein_equationH(x){ return (-0.4313 * (x * x)) + (11.813 * x) + 55.449; }
-function protein_equationS(x){ return (0.3803 * (x * x)) + (-5.9182 * x) + 42.864; }
-function protein_equationV(x){ return (0.2773 * (x * x)) + (-4.3803 * x) + 77.361; }
+var protein_cVal = [1, 2, 3, 4, 4.5, 5, 5.5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+//Hy = -0.309x2 + 10.758x + 54.879
+//R² = 0.99333
+function protein_equationH(x){ return (-0.309 * (x * x)) + (10.758 * x) + 54.879; }
+//Sy = 0.0016x2 - 0.0423x + 0.4298
+//R² = 0.90673
+function protein_equationS(x){ return (0.0016 * (x * x)) + (-0.0423 * x) + 0.4298; }
+//Vy = 0.0012x2 - 0.0343x + 0.7971
+//R² = 0.7856
+function protein_equationV(x){ return (0.0012 * (x * x)) + (-0.0343 * x) + 0.7971; }
 
 
 
@@ -254,10 +237,39 @@ function findConcentration(Ha, Sa, Va, equationH, equationS, equationV, c_array)
         
         //calc distances
         var Hd = (He - Ha) * (He - Ha);
-        var Sd = (He - Ha) * (He - Ha);
-        var Vd = (He - Ha) * (He - Ha);
+        var Sd = (Se - Sa) * (Se - Sa);
+        var Vd = (Ve - Va) * (Ve - Va);
         
         var Td = Hd + Sd + Vd;
+        var Td = Hd;
+        console.log("C:" + c_array[i] + " / Td: " + Td);
+        if(Td < min){
+            min = Td;
+            answer = c_array[i];
+        }
+    }
+    return (answer);
+}
+
+function findConcentration_Nitrite(Ha, Sa, Va, equationH, equationS, equationV, c_array){
+    //35>H>25 OR S<170 = NEGATIVE
+    var Hd_min = 10000000000.0;
+    var Hd_min = 10000000000.0;
+    
+    var answer;
+    for(var i=0; i<c_array.length; i++){
+        //calc expected
+        var He = equationH(c_array[i]);
+        var Se = equationS(c_array[i]);
+        var Ve = equationV(c_array[i]);
+        
+        //calc distances
+        var Hd = (He - Ha) * (He - Ha);
+        var Sd = (Se - Sa) * (Se - Sa);
+        var Vd = (Ve - Va) * (Ve - Va);
+        
+        var Td = Hd + Sd + Vd;
+        var Td = Hd;
         console.log("C:" + c_array[i] + " / Td: " + Td);
         if(Td < min){
             min = Td;

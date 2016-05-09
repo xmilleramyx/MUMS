@@ -125,7 +125,7 @@ var str = location.search;
                 var message = snapshot.val();
                 if(message == "none"){                    
                     $( '#overviewTable' ).text("");
-                    $( '#overviewTable' ).append("<div style='text-align:center; vertical-align:middle; font-weight:bold; position:relative; top:50px'>No tests saved for this patient.<br><button type='button' onclick='test_href()'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span>&nbsp;&nbsp;NEW TEST</button> ");
+                    $( '#overviewTable' ).append("<div style='text-align:center; vertical-align:middle; position:relative; top:50px'><b>No tests saved for this patient.</b><br><br><button type='button' onclick='test_href()'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span>&nbsp;&nbsp;NEW TEST</button> ");
                 }
                 else {
                     $( '#overviewTable' ).text("");
