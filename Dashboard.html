@@ -10,8 +10,12 @@
     <script src="DataTables-1.10.11/media/js/jquery.dataTables.min.js"></script>
     
     <script rel="javascript" type="text/javascript" href="js/bootstrap.min.js"></script>
+    <script rel="javascript" type="text/javascript" href="https://cdn.datatables.net/buttons/1.1.2/js/dataTables.buttons.min.js"></script>
+    <script rel="javascript" type="text/javascript" href="https://cdn.datatables.net/buttons/1.1.2/js/buttons.bootstrap.min.js"></script>
 	
     <link rel="stylesheet" href="DataTables-1.10.11/media/css/jquery.dataTables.min.css">
+    
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.1.2/css/buttons.bootstrap.min.css">
   
   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> 
   	<link rel="stylesheet" href="css/style.css">
@@ -29,13 +33,16 @@
                 //loop that adds each patient's info to the list
                 var message = snapshot.val();
                 var key = snapshot.key();
+                var name = message.patient_fname + " " + message.patient_lname;
              
-                
                 var addSet = [message.patient_fname, message.patient_lname, message.location, message.known_drug_allergies, message.medical_history,
-
-                '<a href="Profile.html?key=' + key + '">View</a> | <a href="testSetUp.html?key=' + key + '">Test</a> | <a href="#" onclick="deletePatient(' + "'" + key + "', '" +  name + "'" + ')">Delete</a>'
-                        
+                              
+                '<a class="btn btn-info btn-sm" href="Profile.html?key=' + key + '">' + 'View' + '</a>'+" "+
+                '<a class="btn btn-info btn-sm" href="testSetUp.html?key=' + key + '">' + 'Test' + '</a>'+" "+
+                '<a  class="btn btn-info btn-sm" href="#" onclick="deletePatient(' + "'" + key + "', '" +  name + "'" + ')">Delete</a>'
+                              
                 ];
+                
                 //pushes each profile dataset into data for table
                 dataSet.push(addSet);                                
     });
@@ -47,7 +54,9 @@ function toProfile(key){
 
                
         function deletePatient(path, name) {
-            if(confirm("Are you sure you want to delete all information for \n" + name + "?")==true){
+            
+            if(confirm("Are you sure you want to delete all information for " + name + "?")==true){
+
                 fullPath = "https://mums.firebaseio.com/" + path;
                 var patientRef = new Firebase(fullPath);
                 patientRef.remove();
@@ -58,6 +67,7 @@ function toProfile(key){
         function makeTable(bar){
             $('#patient_table').DataTable( {
                     data: dataSet,
+                    
                     columns: [
                         
                         { title: "First" },
@@ -133,13 +143,13 @@ function toProfile(key){
 <script>
     $(".progress-bar").animate({        
         width: "100%" 
-        }, 2000);
+        }, 4000);
     
     //make table after 2 seconds for loading data
-    setTimeout(makeTable, 2000);
+    setTimeout(makeTable, 4000);
 
     //hide load bar and show new patient button
-    setTimeout(revealButton, 2000);
+    setTimeout(revealButton, 4000);
 </script>
 </body>
 
