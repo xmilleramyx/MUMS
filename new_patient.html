@@ -47,12 +47,15 @@
 
 <div class="container-wide">
     <div class="form">
-        <div class="newPatientPic">
+        
+        <div class="image-cropper">
             <div id="imgHolder"></div>
             <input type="file" id="fileElem" accept="image/*" style="display:none" onchange="handleFiles(this.files)">
-            <img id="profpic" src="img/take_new_profpic.png" style="cursor: pointer" alt="Default Profile Picture">
+            <img id="newPatientPic" class="rounded" src="img/take_new_profpic.png" style="cursor: pointer" alt="Default Profile Picture">       
         </div>
         
+        
+      
         <div class="half">
             <input type='text' id='patient_fname' placeholder='First Name'>
             <input type='text' id='patient_lname' placeholder='Last Name'>
@@ -91,7 +94,7 @@
        //IMAGE PART
         window.URL = window.URL || window.webkitURL;
 
-        var fileSelect = document.getElementById("profpic"),
+        var fileSelect = document.getElementById("newPatientPic"),
                 fileElem = document.getElementById("fileElem"),
                 imgHolder = document.getElementById("imgHolder");
 
@@ -119,7 +122,7 @@
                 {
                     base64data = reader.result;
                     //for Profile.html - instead of base64data, this will be a variable when calling it back
-                    $('#profpic').attr("src", base64data);
+                    $('#newPatientPic').attr("src", base64data);
                     
                 };
                 $('#retake_text').show();

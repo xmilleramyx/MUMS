@@ -6,69 +6,170 @@
 	<title>Test Setup</title>
 	<meta name=“viewport” content=“width=device-width, intitial-scale=1.0”>
     
-	<link rel="stylesheet" href="css/style.css">
+
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	
-	<link rel="javascript" type="text/javascript" href="bootstrap.min.js">
   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> 
-  	
+	<link rel="stylesheet" href="css/style.css">  	
 
     <script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
-    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
     
-    <script>
-        var str = location.search;
-        var res = str.slice(5);
-        var myDataRef = new Firebase('https://mums.firebaseio.com/' + res);
+    <!--styles are unique to this page-->
+ <style>
+
+/*Timer*/
+.container-timer{
+    text-align: center;
+    font-family: sans-serif;
+    font-weight: 100;
+}
+
+
+#clockdiv{
+    margin-top: 30px;
+    font-family: sans-serif;
+    color: #fff;
+    display: inline-block;
+    font-weight: 100;
+    text-align: center;
+    font-size: 30px;
+    display: none;
+}
+
+#clockdiv > div{
+    padding: 10px;
+    border-radius: 3px;
+    background: #f47825;
+    display: inline-block;
+}
+
+#clockdiv div > span{
+    padding: 15px;
+    border-radius: 3px;
+    background: #780000;
+    display: inline-block;
+}
+
+#clockdiv p{
+    margin-top: 15px;
+    color:black;   
+}
+
+.smalltext{
+    padding-top: 5px;
+    font-size: 16px;
+    color: #fff;
+}
+
+
+ </style>
+    
+    
+<script>
+    var str = location.search;
+    var res = str.slice(5);
+    var myDataRef = new Firebase('https://mums.firebaseio.com/' + res);
+
+    function load_title(){
+        myDataRef.on('value', function(snapshot) {
+            var message = snapshot.val();
+            var name = message.patient_fname + " " + message.patient_lname;
+            $('#navtitle2').text("");
+            $('#navtitle2').append(name.toUpperCase());
+        });
+    }
+
+    function profile_href() {
+        window.location.href = 'Profile.html?key=' + res;  
+    }
+
+
+    function Results_href() {
+        window.location.href = 'testResults.html?key=' + res;  
+    }
         
-        function load_title(){
-            myDataRef.on('value', function(snapshot) {
-                var message = snapshot.val();
-                var name = message.patient_fname + " " + message.patient_lname;
-                $('#navtitle2').text("");
-                $('#navtitle2').append(name.toUpperCase());
-            });
+ 
+    function getTimeRemaining(endtime) {
+      var t = Date.parse(endtime) - Date.parse(new Date());
+      var seconds = Math.floor((t / 1000) % 60);
+      return {
+        'total': t,
+        'seconds': seconds
+      };
+    }
+
+    function initializeClock(id, endtime) {
+      var clock = document.getElementById(id);
+      var secondsSpan = clock.querySelector('.seconds');
+
+      function updateClock() {
+        var t = getTimeRemaining(endtime);
+        secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+
+        if (t.total <= 0) {
+          clearInterval(timeinterval);
+          Results_href();
         }
-        
-        function profile_href() {
-            window.location.href = 'Profile.html?key=' + res;  
-        }
-        
-        function test_href() {
-            window.location.href = 'testResults.html?key=' + res;  
-        }
-        
-    </script>
+      }
+
+      updateClock();
+      var timeinterval = setInterval(updateClock, 1000);
+    }
+
+    var timeInSeconds = 60;
+    var currentTime = Date.parse(new Date());
+    var deadline = new Date(currentTime + timeInSeconds*1000);
+    
+</script>
 
 </head>
 
 <body onload="load_title()">
     
-		<div class="header">  
-            <button type="button" class="button-left" onclick="window.location.href = 'Dashboard.html'"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>&nbsp;&nbsp;ALL PATIENTS</button>
-              
-            <div class="header-center"><span id="navtitle1">TEST SETUP&nbsp;</span><span id="navtitle2"></span></div>   
-            
-            <button type="button" class="button-right" onclick="profile_href()"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;&nbsp;VIEW PROFILE</button>  
+<div class="header">  
+    <button type="button" class="button-left" onclick="window.location.href = 'Dashboard.html'">
+        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>&nbsp;&nbsp;ALL PATIENTS</button>
+        <div class="header-center"><span id="navtitle1">TEST SETUP&nbsp;</span><span id="navtitle2"></span></div>   
+    <button type="button" class="button-right" onclick="profile_href()">
+        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;&nbsp;VIEW PROFILE</button>  
 		  
-		</div>
-	<!--end nav bar -->
+</div><!--end nav bar -->
     
     
-    <div id="instructions" class="box">
-        <ul>
-            <li><h4>Step number one</h4></li>
-            <li><h4>Step number two</h4></li>
-            <li><h4>Step number three</h4></li>
-            <li><h4>Step number four</h4></li>
-        </ul>
-    </div>
+<div id="instructions" class="box">
+    <ol>
+        <li>Ensure test strip slide is cleaned from previous use</li>
+        <li>Carefully, dip new strip into urine sample</li>
+        <li>Place the strip into the strip slide, and slide into box</li>
+        <li>Promptly select the "Start Test" button to begin the timer</li>
+        <li>When the timer has finished, take your photo and recieve the results</li>
+    </ol>
+    <br>
     
+    <button type="button" class="action" onclick="startTimer()">START TEST</button>
+    
+</div>
 
-    <button type="button" class="action" style="position: relative; left:43%;" onclick="test_href()">START TEST</button>
+<div class="container-timer">      
+    <div id="clockdiv">
+      <div>
+            <span class="seconds"></span>
+            <div class="smalltext">Seconds</div>
+      </div>
+            <p class="smalltext">Please wait 60 seconds for the strip to develop</p>
+            <button type="button" class="action" onclick="Results_href()">Skip</button>
 
-
+    </div><!--end clockdiv-->
+</div><!--container-->    
+<script>      
+    function startTimer(){
+            $("#instructions").hide();
+            $("#clockdiv").show();
+            initializeClock('clockdiv', deadline);
+            document.getElementById("navtitle1").innerHTML = "Timer";
+    }
+</script>  
 
 </body>
 </html>
