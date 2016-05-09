@@ -6,17 +6,17 @@
 	<title>MUMS Login</title>
 	<meta name=“viewport” content=“width=device-width, intitial-scale=1.0”>
 
-
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> 	 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> 
   	<link rel="stylesheet" href="css/style.css">
     
     <script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
 
     <script>
-
+    var ref = new Firebase("https://mums.firebaseio.com");
+        
         function checkLogin(ref){
             var userid = $('#userid').val();
             var pswrd = $('#pswrd').val(); 
@@ -63,7 +63,7 @@
 
 <body>
 <script>
-    var ref = new Firebase("https://mums.firebaseio.com");
+    
 </script>
     
 <div class="login-page">
