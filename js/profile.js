@@ -35,7 +35,7 @@ var str = location.search;
             window.location.href = 'profile_notes.html?key=' + res;  
         }
         function newtest_href() {
-            window.location.href = 'testSetup.html?key=' + res;  
+            window.location.href = 'testSetUp.html?key=' + res;  
         }
 
         function editInfo(){
