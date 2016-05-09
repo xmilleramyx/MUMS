@@ -22,18 +22,29 @@
         <div class="header">  
             <button type="button" class="button-left" onclick="window.location.href = 'Dashboard.html'"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>&nbsp;&nbsp;ALL PATIENTS</button>
               
-            <div class="header-center"><span id="navtitle1">NOTES&nbsp;</span><span id="navtitle2"></span></div>   
+            <div class="header-center"><span id="title1">NOTES&nbsp;</span><span id="title2"></span></div>   
             
-            <button type="button" class="button-right" onclick="test_href()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;&nbsp;NEW TEST</button>  
+            <button type="button" class="button-right" onclick="newtest_href()"><span class="glyphicon glyphicon-filter" aria-hidden="true"></span>&nbsp;&nbsp;NEW TEST</button>  
 		  
 		</div>
     
-    <br>
+        <!--Secondary Nav-->
     
-	<div id="notes" class="container">
+    <div class="row profile_header">
+        <div class="tab" onclick="profile_href()">OVERVIEW</div>
+        <div class="tab" onclick="chart_href()">CHARTS</div>
+        <div class="tab" onclick="test_href()">TESTS</div>
+        <div class="profile_active" onclick="notes_href()">NOTES</div>
+    </div>
+    <!--end Secondary Nav-->
+    
+    
+    <br><br>
+    
+	<div id="notes" class="main">
         <textarea class="form-control" rows="5" id="noteField" placeholder="Add a note..."></textarea>
         <br>
-        <button type="button" class="btn btn-success" onclick="addNote()">Add Note</button>
+        <button type="button" class="action" onclick="addNote()">ADD NOTE</button>
         <br>
         <br>
         <div id="pastNotes"></div>

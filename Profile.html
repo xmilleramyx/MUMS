@@ -34,28 +34,24 @@
     <div class="header">  
             <button type="button" class="button-left" onclick="window.location.href = 'Dashboard.html'"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>&nbsp;&nbsp;ALL PATIENTS</button>
               
-            <div class="header-center"><span id="navtitle1">PROFILE&nbsp;</span><span id="navtitle2"></span></div>   
+            <div class="header-center"><span id="title1">PROFILE&nbsp;</span><span id="title2"></span></div>   
             
-            <button type="button" class="button-right" onclick="test_href()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;&nbsp;NEW TEST</button>  
+            <button type="button" class="button-right" onclick="newtest_href()"><span class="glyphicon glyphicon-filter" aria-hidden="true"></span>&nbsp;&nbsp;NEW TEST</button>  
 		  
 		</div>
 	<!--end Primary Nav-->
-    
-<div id="content" style="z-index: -1;">
+
     <!--Secondary Nav-->
     
-    <div class="row" style="background: #e6e6e6;">
-        <div class="profile_header tab_active" onclick="profile_href()">OVERVIEW</div>
-        <div class="profile_header tab_slant"></div>
-        <div class="profile_header" onclick="chart_href()">TRENDS</div>
-        <div class="profile_header tab_slant"></div>
-        <div class="profile_header" onclick="test_href()">TESTS</div>
-        <div class="profile_header tab_slant"></div>
-        <div class="profile_header" onclick="notes_href()">NOTES</div>
+    <div class="row profile_header">
+        <div class="profile_active" onclick="profile_href()">OVERVIEW</div>
+        <div class="tab" onclick="chart_href()">CHARTS</div>
+        <div class="tab" onclick="test_href()">TESTS</div>
+        <div class="tab" onclick="notes_href()">NOTES</div>
     </div>
-    
     <!--end Secondary Nav-->
-
+    <br>
+<div class="main">
 			        <div id="prof_container" style="padding:20px"> 
                     <div class="col-md-8">
                         <div class="box" style="height: 400px">
@@ -63,19 +59,19 @@
                                 <div id="details">
 	                                Location:<span id="location" class="bold"></span>
                                     <br>
-                                    Known Allergies:<span id="known_drug_allergies"></span>
+                                    Known Allergies:<span id="known_drug_allergies" class="bold"></span>
 	                            	<br>
-                                    Medical History: <span id="medical_history"></span>
+                                    Medical History: <span id="medical_history" class="bold"></span>
                                 </div>
-								<div id="editButton"><button type="button" class="btn btn-default" onclick="editInfo()">Edit</button></div>
+								<div id="editButton"><button class="action" onclick="editInfo()">Edit</button></div>
 
                             </div>                           
                     </div>
 
-                    <div id="recentLevels" class="box col-md-4" style="height: 400px; background-color: lightgrey">
-                            <div style="background-color: lightgrey">
-                                <h4 class="title">Most Recent Test</h4>
-                                <p class="category">Date: </p>
+                    <div id="recentLevels" class="box col-md-4" style="height: 400px;">
+                            <div>
+                                <h4 class="title" style="color:orange; text-align:center">MOST RECENT TEST</h4>
+                                <h5 style="color:black; text-align:center">Date:&nbsp;&nbsp;<span id="recent_test_date"></span></h5>
                             </div>
                            			<table id="overviewTable" class="table table-striped box">
 									    <tbody>

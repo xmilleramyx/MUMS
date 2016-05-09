@@ -1,23 +1,14 @@
 var str = location.search;
         var res = str.slice(5);
         var myDataRef = new Firebase('https://mums.firebaseio.com/' + res); 
-        
-        function load_title(){
-            myDataRef.on('value', function(snapshot) {
-                var message = snapshot.val();
-                var name = message.patient_fname + " " + message.patient_lname;
-                $('#navtitle2').text("");
-                $('#navtitle2').append(name.toUpperCase());
-            });
-        }
 
         myDataRef.on('value', function(snapshot) {
             var message = snapshot.val();
             
             //load name in nav header
             var name = message.patient_fname + " " + message.patient_lname;
-                $('#navtitle2').text("");
-                $('#navtitle2').append(name.toUpperCase());
+                $('#title2').text("");
+                $('#title2').append(name.toUpperCase());
             
                 $('#profpic').attr("src", message.prof_img);
                 $( '#patientTitle' ).text("");
@@ -35,7 +26,7 @@ var str = location.search;
             window.location.href = 'Profile.html?key=' + res;  
         }
         function chart_href() {
-            window.location.href = 'profile_charts.html?key=' + res;  
+            window.location.href = 'Charts.html?key=' + res;  
         }
         function test_href() {
             window.location.href = 'profile_results.html?key=' + res;  
@@ -43,10 +34,13 @@ var str = location.search;
         function notes_href() {
             window.location.href = 'profile_notes.html?key=' + res;  
         }
+        function newtest_href() {
+            window.location.href = 'testSetup.html?key=' + res;  
+        }
 
         function editInfo(){
             $( '#editButton' ).text("");
-            $( '#editButton' ).append('<button type="button" class="btn btn-success" onclick="updateInfo()">Update</button>  <button type="button" class="btn btn-default" onclick="cancelUpdate()">Cancel</button>');
+            $( '#editButton' ).append('<div style="position:relative; left:20%"><button class="action" onclick="updateInfo()">Update</button>  <button type="button" onclick="cancelUpdate()">Cancel</button><div>');
             
             $("#patientInfo p").css("line-height", "100%");
             $('#profpic').attr("src", "img/take_new_profpic.png");
@@ -63,7 +57,7 @@ var str = location.search;
         
         function updateInfo(){
             $( '#editButton' ).text("");
-            $( '#editButton' ).append('<button type="button" class="btn btn-default" onclick="editInfo()">Edit</button>');
+            $( '#editButton' ).append('<button class="btn btn-default" onclick="editInfo()">Edit</button>');
             
             $("#patientInfo p").css("line-height", "300%");
             
@@ -82,7 +76,7 @@ var str = location.search;
         
         function cancelUpdate(){
             $( '#editButton' ).text("");
-            $( '#editButton' ).append('<button type="button" class="btn btn-default" onclick="editInfo()">Edit</button>');
+            $( '#editButton' ).append('<button class="action" onclick="editInfo()">Edit</button>');
             
             $("#patientInfo p").css("line-height", "300%");
             
@@ -125,11 +119,12 @@ var str = location.search;
                 var message = snapshot.val();
                 if(message == "none"){                    
                     $( '#overviewTable' ).text("");
-                    $( '#overviewTable' ).append("<div style='text-align:center; vertical-align:middle; position:relative; top:50px'><b>No tests saved for this patient.</b><br><br><button type='button' onclick='test_href()'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span>&nbsp;&nbsp;NEW TEST</button> ");
+                    $( '#overviewTable' ).append("<div style='text-align:center; vertical-align:middle; position:relative; top:50px'><b>No tests saved for this patient.</b><br><br><button type='button' onclick='newtest_href()'><span class='glyphicon glyphicon-filter' aria-hidden='true'></span>&nbsp;&nbsp;NEW TEST</button> ");
                 }
                 else {
                     $( '#overviewTable' ).text("");
-                    $( '#overviewTable' ).append('<b>Most recent test: ' + message.timeStamp + '</b><table class="table table-striped"><tbody><tr><td>pH</td><td>' + message.pH + '</td></tr><tr><td>Nitrite</td><td>' + message.nitrite + '</td></tr><tr><td>Ketone</td><td>' + message.ketone + '</td></tr><tr><td>Glucose</td><td>' + message.glucose + '</td></tr></tbody></table>');
+                    $('#recent_test_date').text(message.timeStamp);
+                    $( '#overviewTable' ).append('<table class="table table-striped"><tbody><tr><td>Nitrite</td><td>' + message.nitrite + '</td></tr><tr><td>Protein</td><td>' + message.protein + '</td></tr><tr><td>pH</td><td>' + message.pH + '</td></tr><tr><td>Blood</td><td>' + message.hemoglobin + '</td></tr><tr><td>Glucose</td><td>' + message.glucose + '</td></tr></tbody></table>');
                 }
                 
             });
@@ -145,7 +140,7 @@ var str = location.search;
                     $( '#button' + key ).css("background-color","rgb(128, 128, 128)");
                     $( '#button' + key ).css("color","white");
             
-                    $( '#display_space' ).append('<div id="table' + key + '" class="liltable2"><b>' + message.timeStamp + '</b><table class="table table-striped"><tbody><tr><td>pH</td><td>' + message.pH + '</td></tr><tr><td>Nitrite</td><td>' + message.nitrite + '</td></tr><tr><td>Ketone</td><td>' + message.ketone + '</td></tr><tr><td>Glucose</td><td>' + message.glucose + '</td></tr></tbody></table></div>');
+                    $( '#display_space' ).append('<div id="table' + key + '" class="table"><b>' + message.timeStamp + '</b><table class="table table-striped"><tbody><tr><td>Nitrite</td><td>' + message.nitrite + '</td></tr><tr><td>Protein</td><td>' + message.protein + '</td></tr><tr><td>pH</td><td>' + message.pH + '</td></tr><tr><td>Blood</td><td>' + message.hemoglobin + '</td></tr><tr><td>Glucose</td><td>' + message.glucose + '</td></tr></tbody></table></div>');
                 }
                 else if(checkColor == "rgb(128, 128, 128)"){
                     $( '#button' + key ).css("background-color","rgb(255, 255, 255)");

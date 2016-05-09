@@ -75,8 +75,8 @@
         myDataRef.on('value', function(snapshot) {
             var message = snapshot.val();
             var name = message.patient_fname + " " + message.patient_lname;
-            $('#navtitle2').text("");
-            $('#navtitle2').append(name.toUpperCase());
+            $('#title2').text("");
+            $('#title2').append(name.toUpperCase());
         });
     }
 
@@ -130,13 +130,13 @@
 <div class="header">  
     <button type="button" class="button-left" onclick="window.location.href = 'Dashboard.html'">
         <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>&nbsp;&nbsp;ALL PATIENTS</button>
-        <div class="header-center"><span id="navtitle1">TEST SETUP&nbsp;</span><span id="navtitle2"></span></div>   
+        <div class="header-center"><span id="title1">TEST SETUP&nbsp;</span><span id="title2"></span></div>   
     <button type="button" class="button-right" onclick="profile_href()">
         <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;&nbsp;VIEW PROFILE</button>  
 		  
 </div><!--end nav bar -->
     
-    
+<div class="main">    
 <div id="instructions" class="box">
     <ol>
         <li>Ensure test strip slide is cleaned from previous use</li>
@@ -150,8 +150,10 @@
     <button type="button" class="action" onclick="startTimer()">START TEST</button>
     
 </div>
+</div>
 
-<div class="container-timer">      
+<br><br>    
+<div style="position: relative; top:100px;">      
     <div id="clockdiv">
       <div>
             <span class="seconds"></span>
@@ -167,7 +169,6 @@
             $("#instructions").hide();
             $("#clockdiv").show();
             initializeClock('clockdiv', deadline);
-            document.getElementById("navtitle1").innerHTML = "Timer";
     }
 </script>  
 

@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
   	<meta charset="UTF-8">
-	<title>PatientList</title>
+	<title>MUMS: New Patient</title>
 	<meta name=“viewport” content=“width=device-width, intitial-scale=1.0”> 
     
     
@@ -19,51 +19,36 @@
 
 <body>
 	
-    <!--Horizontal Nav Bar at Top, credit to http://www.bootply.com/98314-->
-        <nav class="navbar navbar-default" role="navigation">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>    
-          </div>
-          <a class="navbar-brand" href="#">MUMS</a>
-          <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right">
-              <li>
-                <a href="testSetUp.html"><span class="glyphicon glyphicon-camera" aria-hidden="true"></span> Start New Test</a>
-                
-              </li>
-              <li><a href="Dashboard.html"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Back To Database</a>
-              </li>
-            </ul>
-          </div>
-        </nav>
-    <!--end nav bar-->
+        <!--Primary Nav-->
+    <div class="header">  
+            <button class="button-left" onclick='window.location.href="Dashboard.html"'><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>&nbsp;&nbsp;ALL PATIENTS</button> 
+            <div class="header-center">NEW PATIENT</div>
+            <button class="button-right" onclick='logout_href()'><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;&nbsp;LOG OUT</button> 
+		</div>
+	<!--end Primary Nav-->
 
     
 
 
-<div class="container-wide">
+<div class="container-wide" style="position:relative; top: 100px;">
     <div class="form">
         
-        <div class="image-cropper">
+        <div class="image-cropper" style="width:30%; position:relative; left:32.5%">
             <div id="imgHolder"></div>
             <input type="file" id="fileElem" accept="image/*" style="display:none" onchange="handleFiles(this.files)">
             <img id="newPatientPic" class="rounded" src="img/take_new_profpic.png" style="cursor: pointer" alt="Default Profile Picture">       
         </div>
-        
-        
-      
-        <div class="half">
-            <input type='text' id='patient_fname' placeholder='First Name'>
+        <br>
+        <br>
+        <br>
+        <br>
+            <input type='text' id='patient_fname'  placeholder='First Name'>
             <input type='text' id='patient_lname' placeholder='Last Name'>
-        </div>
         <input type='text' id='location' placeholder='Location'>
         <input type='text' id='known_drug_allergies' placeholder='Known Drug Allergies'>
         <input type='text' id='medical_history' placeholder='Medical History'>
-        <button type="button" class="btn btn-success" onclick="add()">Add Patient</button>
+        <button type="button" onclick="add()">ADD PATIENT</button>
+        <button type="button" onclick='window.location.href="Dashboard.html"' style="margin-top: 15px; background-color:white; color: black">CANCEL</button>
     </div>
 </div><!--containerwide-->
 
@@ -90,6 +75,9 @@
             window.location.href='Dashboard.html';
         }
       
+        function logout_href() {
+            window.location.href = 'login.html';  
+        }
     
        //IMAGE PART
         window.URL = window.URL || window.webkitURL;

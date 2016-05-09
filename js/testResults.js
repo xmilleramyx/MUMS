@@ -2,10 +2,19 @@ var str = location.search;
 var res = str.slice(5);
 var myDataRef = new Firebase('https://mums.firebaseio.com/' + res);
 
-function setup_href() {window.location.href = 'profile_results.html?key=' + res;  }
+function setup_href() {window.location.href = 'testSetup.html?key=' + res;  }
 
 function profile_href() { window.location.href = 'Profile.html?key=' + res;  }
-        
+
+function load_title(){
+        myDataRef.on('value', function(snapshot) {
+            var message = snapshot.val();
+            var name = message.patient_fname + " " + message.patient_lname;
+            $('#title2').text("");
+            $('#title2').append(name.toUpperCase());
+        });
+}
+
 function getTimestamp(){
     var date = new Date();
     currentDate = date.getDate();  
@@ -93,7 +102,8 @@ function calcResult(){
  
     //Display the values in the table
     timeStamp = getTimestamp();
-    $( '#resultsTable' ).append('<b style="text-align:center">Most recent test: ' + timeStamp + '</b><br><table class="table table-striped"><tbody><tr><td>Nitrite</td><td>' + nitrite_hsv + '</td></tr><tr><td>Protein</td><td>' + protein_hsv + '</td></tr><tr><td>pH</td><td>' + pH_hsv + '</td></tr><tr><td>Blood</td><td>' + hemoglobin_hsv + '</td></tr><tr><td>Glucose</td><td>' + glucose_hsv + '</td></tr></tbody></table>');
+    $('#calc_or_reload').hide();
+    $( '#resultsTable' ).append('<b>RESULTS</b><table class="table table-striped"><tbody><tr><td>Nitrite</td><td>' + nitrite_hsv + '</td></tr><tr><td>Protein</td><td>' + protein_hsv + '</td></tr><tr><td>pH</td><td>' + pH_hsv + '</td></tr><tr><td>Blood</td><td>' + hemoglobin_hsv + '</td></tr><tr><td>Glucose</td><td>' + glucose_hsv + '</td></tr></tbody></table><button id="save_results" class="action" style="position:relative; left:20%; width:200px;" onclick="add()">SAVE TO DATABASE</button>');
 }
 
 //Convert RGB to HSV

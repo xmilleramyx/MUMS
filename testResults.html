@@ -38,36 +38,34 @@
 
 </head>
 
-<body>
+<body onload="load_title()">
     
     <!--Primary Nav-->
     <div class="header">  
             <button type="button" class="button-left" onclick="setup_href()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>&nbsp;&nbsp;BACK TO SETUP</button>
               
-            <div class="header-center"><span id="navtitle1">NEW TEST&nbsp;</span><span id="navtitle2"></span></div>   
+            <div class="header-center"><span id="title1">NEW TEST&nbsp;</span><span id="title2"></span></div>   
             
-            <button type="button" class="button-right" onclick="test_href()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;&nbsp;VIEW PROFILE</button>  
+            <button type="button" class="button-right" onclick="profile_href()"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;&nbsp;VIEW PROFILE</button>  
 		  
 		</div>
 	<!--end Primary Nav-->
-<br>
+<div class="main">
     <div id="imgHolder">
     </div>
     <input type="file" id="fileElem" accept="image/*" style="display:none" onchange="handleFiles(this.files)">
-    <button class="btn btn-default" id="fileSelect" style="">Take Photo</button>
-    <canvas id="example" width="750" height="100" style="position:relative; left:25%;"></canvas>
-    <div id= "reload" style="display:none">
-        <input type=button value="Retake"  onClick="location.reload();">
+    <button class="action" id="fileSelect" style="position:relative; left:40%">TAKE PHOTO</button>
+    <canvas id="example" width="750" height="100" style="position:relative; left:22%;"></canvas>
+    <div id= "calc_or_reload" style="display:none; position:relative; left:35%">
+        <button id="calc_results" class="action" onclick="calcResult()" style="width:180px;">CALCULATE RESULTS</button>
+        <button onClick="location.reload();">RETAKE PHOTO</button>
     </div>
-    <br>
-    <button type="button" class="btn btn-default" onclick="calcResult()">Calculate Results</button>
-    <button type="button" class="btn btn-default" onclick="add()">Save Results to Database</button>
-    <br>
     <br>
 
     <div class="box" style="width: 30%; position: relative; left:35%">
         <div id="resultsTable" class="table"></div>
     </div>
+</div>
 
     <script>
     
@@ -91,7 +89,7 @@
             {
                 imgHolder.innerHTML = "";
                 $('#fileSelect').hide();
-                $('#reload').show();
+                $('#calc_or_reload').show();
                 $('#sendPhoto').toggle();
                 var imgCapture = document.createElement("img");
                 imgCapture.src = window.URL.createObjectURL(files[0]);

@@ -26,83 +26,27 @@
 <script>
   document.body.addEventListener('touchstart',function(){},false);
 </script>	
-	<!--Horizontal Nav Bar at Top, credit to http://www.bootply.com/98314-->
-		<nav class="navbar navbar-default" role="navigation">
-		  <div class="navbar-header">
-		    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-		      <span class="icon-bar"></span>
-		      <span class="icon-bar"></span>
-		      <span class="icon-bar"></span>
-		    </button>    
-		  </div>
-		  <a class="navbar-brand" href="#">MUMS</a>
-		  <div class="navbar-collapse collapse">
-		    <ul class="nav navbar-nav navbar-right">
-		      <li>
-		      	<a href="testSetUp.html"><span class="glyphicon glyphicon-camera" aria-hidden="true"></span> Start New Test</a>
-		      	
-		      </li>
-		      <li><a href="Dashboard.html"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Back To Database</a>
-		      </li>
-		    </ul>
-		  </div>
-		</nav>
-	<!--end nav bar-->
 
-	<!--sidebar-->
-	<div class="area"></div>
-	<nav class="main-menu">
-	<ul>
-	  <li>
-	    <a href="Profile.html">
-	      <span class="glyphicon glyphicon-user nav-icon"></span> 
-	      <span class="nav-text">
-	                        Patient Dashboard
-	                    </span>
-	    </a>
-	  </li>
-	  <li>
-	    <a href="Charts.html">
-	      <span class="glyphicon glyphicon-signal nav-icon"></span> 
-	      <span class="nav-text">
-	                        Charts
-	                    </span>
-	    </a>
+        <!--Primary Nav-->
+    <div class="header">  
+            <button type="button" class="button-left" onclick="window.location.href = 'Dashboard.html'"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>&nbsp;&nbsp;ALL PATIENTS</button>
+              
+            <div class="header-center"><span id="title1">PROFILE&nbsp;</span><span id="title2"></span></div>   
+            
+            <button type="button" class="button-right" onclick="newtest_href()"><span class="glyphicon glyphicon-filter" aria-hidden="true"></span>&nbsp;&nbsp;NEW TEST</button>  
+		  
+		</div>
+	<!--end Primary Nav-->
 
-	  </li>
-	  <li>
-	    <a href="#">
-	      <span class="glyphicon glyphicon-flash nav-icon"></span> 
-	      <span class="nav-text">
-	                        Forms
-	                    </span>
-	    </a>
-
-	  </li>
-	  <li>
-	    <a href="#">
-	      <span class="glyphicon glyphicon-open nav-icon"></span> 
-	      <span class="nav-text">
-	                        Pages
-	                    </span>
-	    </a>
-
-	  </li>
-	</ul>
-
-	<ul class="logout">
-	  <li>
-	    <a href="#">
-	      <span class="glyphicon glyphicon-off nav-icon"></span>
-	      <span class="nav-text">
-	                        Logout
-	                    </span>
-	    </a>
-	  </li>
-	</ul>
-	</nav>
-	<!--end sidebar-->
-
+    <!--Secondary Nav-->
+    
+    <div class="row profile_header">
+        <div class="tab" onclick="profile_href()">OVERVIEW</div>
+        <div class="profile_active" onclick="chart_href()">CHARTS</div>
+        <div class="tab" onclick="test_href()">TESTS</div>
+        <div class="tab" onclick="notes_href()">NOTES</div>
+    </div>
+    <!--end Secondary Nav-->
 
 <script>
 
@@ -135,8 +79,8 @@
 
 </script>
 		
-
-	<div class="container" >
+<br><br><br><br><br>
+	<div class="container" style="left:10%">
 	               
 		<row id="charts"> 
 	   
@@ -180,7 +124,7 @@
     <!--progress bar-->
     <div class="center progress-container" style="padding-top:30px;">
         <div id="loadBar" class="progress progress-striped active">
-            <div class="progress-bar progress-bar-success" style="width:0%"></div>
+            <div class="progress-bar progress-bar-warning" style="width:0%"></div>
         </div>
     </div>
     <!--end progress bar-->
