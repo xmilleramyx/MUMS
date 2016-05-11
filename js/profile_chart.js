@@ -20,7 +20,7 @@ Chart.defaults.global = {
     animationEasing: "easeOutQuart",
 
     // Boolean - If we should show the scale at all
-    showScale: true,
+    showScale: false,
 
     // Boolean - If we want to override with a hard coded scale
     scaleOverride: false,
@@ -70,7 +70,7 @@ Chart.defaults.global = {
     maintainAspectRatio: true,
 
     // Boolean - Determines whether to draw tooltips on the canvas or not
-    showTooltips: true,
+    showTooltips: false,
 
     // Function - Determines whether to execute the customTooltips function instead of drawing the built in tooltips (See [Advanced - External Tooltips](#advanced-usage-custom-tooltips))
     customTooltips: false,
@@ -135,16 +135,17 @@ Chart.defaults.global = {
 
    
 
-var hemoglobinX = [1, 2, 3, 4, 5];
-var hemoglobinY = [1, 2, 3, 4, 5];
-var glucoseX = [1, 2, 3];
-var glucoseY = [1,3,2];
-var nitriteX = [4, 5, 2, 9, 5];
-var nitriteY = [2, 4, 6, 6, 7];
-var pHX = [1, 2, 5, 3, 9];
-var pHY = [1,5, 6, 7, 4];
-var proteinX = [3, 12, 23, 2, 5];
-var proteinY = [1, 2, 3, 4, 5];
+var flag=1;  
+var hemoglobinX = [];
+var hemoglobinY = [];
+var glucoseX = [];
+var glucoseY = [];
+var nitriteX = [];
+var nitriteY = [];
+var pHX = [];
+var pHY = [];
+var proteinX = [];
+var proteinY = [];
 var selectedX = [];
 var selectedY = [];
 
@@ -180,39 +181,38 @@ function loadCharts(){
 
 
   //protein chart data
-      var proteinData = {
+      var proteinData = {//multiple cutoffs (trace 10-30, small +30-100, moderate ++100-300, high-moderate +++300-2000, large ++++2000+, mg/dl
           
           labels: proteinX,
           datasets: [
               {
                   label: "Proteins",
-                  fillColor: "rgba(151,187,205,0.2)",
-                  strokeColor: "rgba(151,187,205,1)",
-                  pointColor: "rgba(151,187,205,1)",
+                  fillColor: "rgba(239, 162, 26, 0.5)",
+                  strokeColor: "rgba(215, 146, 0, 0.9)",
+                  pointColor: "rgba(239, 162, 26, 0.5)",
                   pointStrokeColor: "#fff",
                   pointHighlightFill: "#fff",
-                  pointHighlightStroke: "rgba(151,187,205,1)",
+                  pointHighlightStroke: "rgba(215, 146, 0, 0.9)",
                   data: proteinY
-              }              
+              }
           ]
       }
 
-  //ketones chart data
-      var nitriteData = {
+  //nitrates chart data
+      var nitriteData = {//positive or negative
           
           labels: nitriteX,
-          datasets: [
-              {
-                  label: "Ketones",
-                  fillColor: "rgba(151,187,205,0.2)",
-                  strokeColor: "rgba(151,187,205,1)",
-                  pointColor: "rgba(151,187,205,1)",
-                  pointStrokeColor: "#fff",
-                  pointHighlightFill: "#fff",
-                  pointHighlightStroke: "rgba(151,187,205,1)",
-                  data: nitriteY
-              }              
-          ]
+          datasets: [{
+                
+                  type:"bar",
+                  label: "Nitrites",
+                  fillColor: "rgba(239, 162, 26, 0.5)",
+                  strokeColor: "rgba(215, 146, 0, 0.9)",
+                  highlightFill: "rgba(220,220,220,0.75)",
+                  highlightStroke: "rgba(215, 146, 0, 0.9)",
+                  data: nitriteY,
+
+              }]
       }
 
   //hemoglobin Chart Data
@@ -222,11 +222,13 @@ function loadCharts(){
           labels: hemoglobinX,
           datasets: [
               {
-                  label: "Billubrin",
-                  fillColor: "rgba(220,220,220,0.5)",
-                  strokeColor: "rgba(220,220,220,0.8)",
-                  highlightFill: "rgba(220,220,220,0.75)",
-                  highlightStroke: "rgba(220,220,220,1)",
+                  label: "Hemoglobin",
+                  fillColor: "rgba(239, 162, 26, 0.5)",
+                  strokeColor: "rgba(215, 146, 0, 0.9)",
+                  pointColor: "rgba(239, 162, 26, 0.5)",
+                  pointStrokeColor: "#fff",
+                  pointHighlightFill: "#fff",
+                  pointHighlightStroke: "rgba(215, 146, 0, 0.9)",
                   data: hemoglobinY
               }             
           ]
@@ -234,66 +236,58 @@ function loadCharts(){
 
 
   //Glucose Chart Data
-      var glucoseData = {
+      var glucoseData = {//mg/dl negative=<100, positive = >100, but still need to know concentration
           
           labels: glucoseX,
           datasets: [
               {
                   label: "Glucose",
-                  fillColor: "rgba(151,187,205,0.2)",
-                  strokeColor: "rgba(151,187,205,1)",
-                  pointColor: "rgba(151,187,205,1)",
-                  pointStrokeColor: "#fff",
-                  pointHighlightFill: "#fff",
-                  pointHighlightStroke: "rgba(151,187,205,1)",
+                  fillColor: "rgba(239, 162, 26, 0.5)",
+                  strokeColor: "rgba(215, 146, 0, 0.9)",
+                  highlightFill: "rgba(220,220,220,0.75)",
+                  highlightStroke: "rgba(220,220,220,1)",
                   data: glucoseY
               }              
           ]
       }
 
   //pH Chart Data
-      var pHData = {
+      var pHData = {//no units, range from 5-8.5
           
           labels: pHX,
           datasets: [
               {
                   label: "pH",
-                  fillColor: "rgba(151,187,205,0.2)",
-                  strokeColor: "rgba(151,187,205,1)",
-                  pointColor: "rgba(151,187,205,1)",
+                  fillColor: "rgba(239, 162, 26, 0.5)",
+                  strokeColor: "rgba(215, 146, 0, 0.9)",
+                  pointColor: "rgba(239, 162, 26, 0.5)",
                   pointStrokeColor: "#fff",
                   pointHighlightFill: "#fff",
-                  pointHighlightStroke: "rgba(151,187,205,1)",
+                  pointHighlightStroke: "rgba(215, 146, 0, 0.9)",
                   data: pHY
               }              
           ]
       }
 
   //Selected Chart Data
-      var selectedData = {
+var selectedData = {
+
+        labels: selectedX,
+        datasets: [{
+            label: "Selected",
+            fillColor: "rgba(239, 162, 26, 0.5)",
+            strokeColor: "rgba(215, 146, 0, 0.9)",
+            pointColor: "rgba(239, 162, 26, 0.5)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(215, 146, 0, 0.9)",
+            data: selectedY
+        }]
+}
           
-          labels: selectedX,
-          datasets: [
-              {
-                  label: "Selected",
-                  fillColor: "rgba(151,187,205,0.2)",
-                  strokeColor: "rgba(151,187,205,1)",
-                  pointColor: "rgba(151,187,205,1)",
-                  pointStrokeColor: "#fff",
-                  pointHighlightFill: "#fff",
-                  pointHighlightStroke: "rgba(151,187,205,1)",
-                  options: {
-                        xAxes: [{
-                            display: false
-                        }]
-                  },
-                  data: selectedY
-              }              
-          ]
-      }
 
-
-
+ 
+var mySelectedChart =[];
 function createTables(){
 
       // Get the context of the canvas elements we want to select
@@ -306,14 +300,24 @@ function createTables(){
 
 
       //generate chart
-      var myHemoglobinChart = new Chart(Hctx).Bar(hemoglobinData);
-      var myGlucoseChart = new Chart(Gctx).Line(glucoseData);
-      var myNitriteChart = new Chart(Nctx).Line(nitriteData);
+      var myHemoglobinChart = new Chart(Hctx).Line(hemoglobinData);
+      var myGlucoseChart = new Chart(Gctx).Bar(glucoseData);
+      var myNitriteChart = new Chart(Nctx).Bar(nitriteData);
       var mypHChart = new Chart(Pctx).Line(pHData);
-      var myproteinChart = new Chart(Prctx).Line(proteinData);
-      var mySelectedChart = new Chart(Selctx).Line(selectedData);
+      var myproteinChart = new Chart(Prctx).Line(proteinData); 
 
-    };
+    //0 means line chart, 1 means bar chart
+    if(flag==0){        
+        mySelectedChart = new Chart(Selctx).Line(selectedData, {showScale:true, showTooltips: true});
+    }
+    else{
+        mySelectedChart = new Chart(Selctx).Bar(selectedData, {showScale:true, showTooltips: true});
+    }
+
+
+};
+
+
 
 
 

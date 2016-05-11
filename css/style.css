@@ -105,6 +105,49 @@ button.action {
 
 }
 
+/*Timer*/
+.container-timer{
+    text-align: center;
+    font-family: sans-serif;
+    font-weight: 100;
+}
+
+
+#clockdiv{
+    margin-top: 30px;
+    font-family: sans-serif;
+    color: #fff;
+    display: inline-block;
+    font-weight: 100;
+    text-align: center;
+    font-size: 30px;
+    display: none;
+}
+
+#clockdiv > div{
+    padding: 10px;
+    border-radius: 3px;
+    background: #f47825;
+    display: inline-block;
+}
+
+#clockdiv div > span{
+    padding: 15px;
+    border-radius: 3px;
+    background: #780000;
+    display: inline-block;
+}
+
+#clockdiv p{
+    margin-top: 15px;
+    color:black;   
+}
+
+.smalltext{
+    padding-top: 5px;
+    font-size: 16px;
+    color: #fff;
+}
 
 /*---------------------------Login/Form/New Patient Styles---------------------------*/
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
@@ -319,36 +362,51 @@ button.action {
     right: 20%;
 }
 
+
+/****************CHART STUFF****************/
 #charts{
-position: relative;
-  z-index: 1;
- /* max-width: 300px;*/
-  margin: 0 auto 100px;
-  padding: 45px;
-  text-align: left;
+    position: relative;
+    z-index: 1;
+    margin: 0 auto 100px;
+    padding: 45px;
+    text-align: left;
 }
 
 #charts div{
     border-radius: 4px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(63, 63, 68, 0.1);
     background-color: #FFFFFF;
-    float:left;
+    float: left;
+}
+
+
+.center-chart {
+    margin: auto;
+    width: 75%;
+    text-align: center;
 }
 
 .selectable{
-  width:140px;
-  margin-right:5px;
-  margin-bottom: 10px;
+    width:18%;
+    margin-right:2.5%;
+    margin-bottom: 10px;
+    padding:5px;
   
 }
 .selected{
-  width:750px;
+  position:relative;
+    width:100%;
 }
 
 #charts .selectable:active{
   background-color: gray;
 
 }
+
+
+
+
+
 
 /*new*/
 #details{

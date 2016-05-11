@@ -47,15 +47,18 @@
         <div class="tab" onclick="notes_href()">NOTES</div>
     </div>
     <!--end Secondary Nav-->
-
+<script src="js/profile.js"></script>
+<script src="js/profile_chart.js"></script>
 <script>
 
-    function chartSelect(title,X,Y){
-    	
+    function chartSelect(title,X,Y,barFlag){
+        
+        flag = barFlag;
        	selectedX = X;
     	selectedY = Y;
     	document.getElementById('selectedChartName').innerHTML = title;
-	
+        mySelectedChart.destroy();
+	   
 	  //Selected Chart Data
 	    selectedData = {
 	          
@@ -63,14 +66,13 @@
 	          datasets: [
 	              {
 	                  label: "Selected",
-	                  fillColor: "rgba(151,187,205,0.2)",
-	                  strokeColor: "rgba(151,187,205,1)",
-	                  pointColor: "rgba(151,187,205,1)",
-	                  pointStrokeColor: "#fff",
-	                  pointHighlightFill: "#fff",
-	                  pointHighlightStroke: "rgba(151,187,205,1)",
-                      
-	                  data: selectedY
+                    fillColor: "rgba(239, 162, 26, 0.5)",
+                    strokeColor: "rgba(215, 146, 0, 0.9)",
+                    pointColor: "rgba(239, 162, 26, 0.5)",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(215, 146, 0, 0.9)",
+                      data: selectedY
 	              }              
 	          ]
 	      }
@@ -80,47 +82,44 @@
 
 </script>
 		
-<br><br><br><br><br>
-	<div class="container" style="left:10%">
-	               
-		<row id="charts"> 
+<br><br>
+<div class="container center-chart" >
+    <div id="charts">
 
-	        <div class="col-md-2 selectable" onClick="chartSelect('Nitrites', nitriteX,nitriteY);">
-	        <p>Nitrites</p>
-	        <canvas id="nitriteChart"></canvas>
-	        </div>
-	    
-	        <div class="col-md-2 selectable" onClick="chartSelect('Hemoglobin', hemoglobinX,hemoglobinY);">
-	        <p>Hemoglobin</p>
-	        <canvas id="hemoglobinChart" ></canvas>
-	        </div>
+ 
+        <div class="selectable" onClick="chartSelect('Hemoglobin', hemoglobinX, hemoglobinY, 0);">
+            <p>Hemoglobin</p>
+            <canvas id="hemoglobinChart" ></canvas>
+        </div>
+        
+        <div class="selectable" onClick="chartSelect('Nitrites', nitriteX, nitriteY, 1);">
+            <p>Nitrites</p>
+            <canvas id="nitriteChart"></canvas>
+        </div>
 
-	        <div class="col-md-2 selectable" onClick="chartSelect('Glucose',glucoseX,glucoseY);">
-	        <p>Glucose</p>
-	        <canvas id="glucoseChart"></canvas>
-	        </div>
+        <div class="selectable" onClick="chartSelect('pH',pHX, pHY,0);">
+            <p>pH</p>
+            <canvas id="pHChart"></canvas>
+        </div>		
 
-	        <div class="col-md-2 selectable" onClick="chartSelect('pH',pHX,pHY);">
-	        <p>pH</p>
-	        <canvas id="pHChart"></canvas>
-	        </div>		
+         <div class="selectable" onClick="chartSelect('Glucose',glucoseX, glucoseY,1);">
+            <p>Glucose</p>
+            <canvas id="glucoseChart"></canvas>
+        </div>
+        
+        <div class="selectable" style="margin-right:0;" onClick="chartSelect('Protein',proteinX, proteinY,0);">
+            <p>Proteins</p>
+            <canvas id="proteinChart"></canvas>
+        </div>
 
-	       	<!--in-line style overrides right margin-->
-	        <div class="col-md-2 selectable"  onClick="chartSelect('Protein',proteinX,proteinY);" style="margin-right:0px;">
-	        <p>Proteins</p>
-	        <canvas id="proteinChart"></canvas>
-	    	</div>
+        <div class="col-md-12 selected">
+            <h4>Past Test Results:</h4>
+            <p id="selectedChartName">Nitrites</p>
+            <canvas id="selectedChart"></canvas>
+        </div>
 
-	    	<div class="col-md-12 selected">
-	        <h4>Selected: </h4><p id="selectedChartName">Nitrites</p>
-	        <canvas id="selectedChart"></canvas>
-	    	</row>
-
-
-
-	    </div><!--end charts-->
-	            
-	</div><!--end container div-->
+    </div><!--end charts-->
+</div><!--end container div-->
  
     <!--progress bar-->
     <div class="center progress-container" style="padding-top:30px;">
@@ -131,8 +130,7 @@
     <!--end progress bar-->
 
 
-<script src="js/profile.js"></script>
-<script src="js/profile_chart.js"></script>
+
 <script>
 	$("#charts").hide();
 
