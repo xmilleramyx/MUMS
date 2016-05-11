@@ -26,11 +26,11 @@
           <button id="buttonLogin" value="Login">login</button>
           <p class="message" onclick="toggleViews()">Not registered? <a href="#">Create an account</a></p>
     </form>
-      
+
     <form class="register-form">
           <input type="text" id="makeuserid" placeholder="resgister with email"/>
           <input type="password" id="makepswrd" placeholder="password"/>
-          <button id="buttonNew" value="Create Account">create</button>
+          <button id="buttonNew" onclick="createNew()" value="Create Account">create</button>
           <p class="message" onclick="toggleViews()" >Already registered? <a href="#">Sign In</a></p>
     </form>
 
@@ -39,26 +39,27 @@
 </div>
     
 <script>
-
+    $('#buttonLogin').click(function(e) {
+        e.preventDefault()
         var ref = new Firebase("https://mums.firebaseio.com");
-    
-        function checkLogin(){
-            var userid = $('#userid').val();
-            var pswrd = $('#pswrd').val(); 
-            
-            ref.authWithPassword({
-                email    : userid,
-                password : pswrd
-            }, function(error, authData) {
-                if (error) {
-                    alert("Login Failed!", error);
-                } else {
-                    console.log("Authenticated successfully with payload:", authData);
-                    window.location.href = 'Dashboard.html';
-                }
-            });
-        }
+        var userid = $('#userid').val();
+        var pswrd = $('#pswrd').val();
 
+        ref.authWithPassword({
+            email: userid,
+            password: pswrd
+        }, function (error, authData) {
+
+            if (error === null) {
+                console.log("Authenticated successfully with payload:", authData);
+                window.location.replace("dashboard.html");
+
+            } else {
+                console.log("Login Failed!", error);
+            }
+        });
+        return false;
+    });
         function createNew() {
             var makeuserid = $('#makeuserid').val();
             var makepswrd = $('#makepswrd').val(); 
@@ -75,9 +76,6 @@
                     }
                 });
         }
-    
-    document.getElementById("buttonLogin").onclick = checkLogin;
-    document.getElementById("buttonNew").onclick = createNew;
 
     function toggleViews(){
         $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
