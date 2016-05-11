@@ -124,7 +124,7 @@ var str = location.search;
                 else {
                     $( '#overviewTable' ).text("");
                     $('#recent_test_date').text(message.timeStamp);
-                    $( '#overviewTable' ).append('<table class="table table-striped"><tbody><tr><td>Nitrite</td><td>' + message.nitrite + '</td></tr><tr><td>Protein</td><td>' + message.protein + '</td></tr><tr><td>pH</td><td>' + message.pH + '</td></tr><tr><td>Blood</td><td>' + message.hemoglobin + '</td></tr><tr><td>Glucose</td><td>' + message.glucose + '</td></tr></tbody></table>');
+                    $( '#overviewTable' ).append('<table class="table table-striped"><tbody><tr><td>Nitrite</td><td>' + message.nitrite + ' μmol/L</td></tr><tr><td>Protein</td><td>' + message.protein + ' mg/dl</td></tr><tr><td>pH</td><td>' + message.pH + '</td></tr><tr><td>Blood</td><td>' + message.hemoglobin + ' μg/L</td></tr><tr><td>Glucose</td><td>' + message.glucose + ' mg/dl</td></tr></tbody></table>');
                 }
                 
             });
@@ -140,7 +140,7 @@ var str = location.search;
                     $( '#button' + key ).css("background-color","rgb(128, 128, 128)");
                     $( '#button' + key ).css("color","white");
             
-                    $( '#display_space' ).append('<div id="table' + key + '" class="table"><b>' + message.timeStamp + '</b><table class="table table-striped"><tbody><tr><td>Nitrite</td><td>' + message.nitrite + '</td></tr><tr><td>Protein</td><td>' + message.protein + '</td></tr><tr><td>pH</td><td>' + message.pH + '</td></tr><tr><td>Blood</td><td>' + message.hemoglobin + '</td></tr><tr><td>Glucose</td><td>' + message.glucose + '</td></tr></tbody></table></div>');
+                    $( '#display_space' ).append('<div id="table' + key + '" class="box mult_table"><b>' + message.timeStamp + '</b><table class="table table-striped"><tbody><tr><td>Nitrite</td><td>' + message.nitrite + ' μmol/L</td></tr><tr><td>Protein</td><td>' + message.protein + ' mg/dl</td></tr><tr><td>pH</td><td>' + message.pH + '</td></tr><tr><td>Blood</td><td>' + message.hemoglobin + ' μg/L</td></tr><tr><td>Glucose</td><td>' + message.glucose + ' mg/dl</td></tr></tbody></table></div>');
                 }
                 else if(checkColor == "rgb(128, 128, 128)"){
                     $( '#button' + key ).css("background-color","rgb(255, 255, 255)");

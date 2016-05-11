@@ -31,14 +31,88 @@
             position: relative;
             left: 10px;
         }
-    
+        
+        /*Timer*/
+.container-timer{
+    text-align: center;
+    font-family: sans-serif;
+    font-weight: 100;
+}
+
+
+#clockdiv{
+    font-family: sans-serif;
+    color: #fff;
+    display: inline-block;
+    text-align: center;
+    display: none;
+}
+
+#clockdiv > div{
+    padding: 10px;
+    border-radius: 3px;
+    background: #f47825;
+    display: inline-block;
+}
+
+#clockdiv div > span{
+    padding: 15px;
+    border-radius: 3px;
+    background: #780000;
+    display: inline-block;
+}
+
+#clockdiv p{
+    margin-top: 15px;
+    color:black;   
+}
+
+.smalltext{
+    padding-top: 5px;
+    font-size: 16px;
+    color: #fff;
+}
+        
     </style>
     
+<script>
+function getTimeRemaining(endtime) {
+      var t = Date.parse(endtime) - Date.parse(new Date());
+      var seconds = Math.floor((t / 1000) % 60);
+      return {
+        'total': t,
+        'seconds': seconds
+      };
+    }
 
+    function initializeClock(id, endtime) {
+      var clock = document.getElementById(id);
+      var secondsSpan = clock.querySelector('.seconds');
 
+      function updateClock() {
+        var t = getTimeRemaining(endtime);
+        secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+
+        if (t.total <= 0) {
+          clearInterval(timeinterval);
+          start_camera();
+          console.log("done");
+        }
+      }
+
+      updateClock();
+      var timeinterval = setInterval(updateClock, 1000);
+    }
+
+    var timeInSeconds = 2;
+    var currentTime = Date.parse(new Date());
+    var deadline = new Date(currentTime + timeInSeconds*1000);     
+</script>
+
+    
 </head>
 
-<body onload="load_title()">
+<body onload="load_title(); startTimer();">
     
     <!--Primary Nav-->
     <div class="header">  
@@ -50,23 +124,42 @@
 		  
 		</div>
 	<!--end Primary Nav-->
-<div class="main">
-    <div id="imgHolder">
-    </div>
+<div class="main" style="position: relative; top: 70px;">
+    <!--clock div start-->
+    
+<br><br>
+    <div id="clockdiv">
+      <div>
+            <span class="seconds" style="font-size: 30px;"></span>
+            <div class="smalltext">seconds</div>
+      </div>
+            <p class="smalltext">Please wait 60 seconds for the strip to develop</p>
+            <button class="action" onclick="start_camera();">TAKE PHOTO</button>
+
+    </div><!--end clockdiv-->
+    
+    
+    <div id="imgHolder"></div>
     <input type="file" id="fileElem" accept="image/*" style="display:none" onchange="handleFiles(this.files)">
-    <button class="action" id="fileSelect" style="position:relative; left:40%">TAKE PHOTO</button>
     <canvas id="example" width="750" height="100" style="position:relative; left:22%;"></canvas>
-    <div id= "calc_or_reload" style="display:none; position:relative; left:35%">
-        <button id="calc_results" class="action" onclick="calcResult()" style="width:180px;">CALCULATE RESULTS</button>
-        <button onClick="location.reload();">RETAKE PHOTO</button>
+    <div id= "calc_or_reload" style="display:none; position:relative; left:33%">
+        <button id="calc_results" class="action" onclick="calcResult()" style="float:left;width:180px;">CALCULATE RESULTS</button>
+        <button onClick="location.reload();" style="float: left; margin-left: 20px; width:180px;">RETAKE PHOTO</button>
     </div>
     <br>
 
-    <div class="box" style="width: 30%; position: relative; left:35%">
-        <div id="resultsTable" class="table"></div>
+    <div id="resultsTable_container" class="box" style="display:none; width: 30%; position: relative; left:35%">
+        <div id="resultsTable" class="table"><span style="color:orange; font-weight:bold; font-size: 18px">RESULTS</span></div>
     </div>
 </div>
 
+    <script>      
+    function startTimer(){
+            $("#clockdiv").show();
+            initializeClock('clockdiv', deadline);
+    }
+</script>  
+    
     <script>
     
         window.URL = window.URL || window.webkitURL;
@@ -75,12 +168,19 @@
                 fileElem = document.getElementById("fileElem"),
                 imgHolder = document.getElementById("imgHolder");
 
+        function start_camera() {
+            if (fileElem) fileElem.click();
+            
+        }
+        
+        /*
         fileSelect.addEventListener("click", function(e) {
             if (fileElem) {fileElem.click();
             }
             e.preventDefault(); // prevent navigation to "#"
         }, false);
-
+        */        
+        
         function handleFiles(files) {
             if (!files.length) {
                 imgHolder.innerHTML = "<p>Strip Not Yet Tested</p>";
@@ -88,9 +188,9 @@
             else
             {
                 imgHolder.innerHTML = "";
-                $('#fileSelect').hide();
+                $('#clockdiv').hide();
                 $('#calc_or_reload').show();
-                $('#sendPhoto').toggle();
+                //$('#sendPhoto').toggle();
                 var imgCapture = document.createElement("img");
                 imgCapture.src = window.URL.createObjectURL(files[0]);
                 //img.height = 60;
@@ -128,6 +228,8 @@
         }
 
     </script>
+
+
 
 
 </body>

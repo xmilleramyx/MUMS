@@ -23,7 +23,7 @@ function getTimestamp(){
     hour = date.getHours();
     min = date.getMinutes();
     sec = date.getSeconds();
-    return (month + "/" + currentDate + "/" + year + "  " + hour + ":" + min + ":" + sec);
+    return (month + "/" + currentDate + "/" + year);
 }
         
 function makeTimeRef(){
@@ -61,6 +61,8 @@ function add(){
         hemoglobin: hemoglobin_hsv,
         glucose: glucose_hsv
     });  
+    
+    profile_href();
 }
         
         
@@ -103,7 +105,8 @@ function calcResult(){
     //Display the values in the table
     timeStamp = getTimestamp();
     $('#calc_or_reload').hide();
-    $( '#resultsTable' ).append('<b>RESULTS</b><table class="table table-striped"><tbody><tr><td>Nitrite</td><td>' + nitrite_hsv + '</td></tr><tr><td>Protein</td><td>' + protein_hsv + '</td></tr><tr><td>pH</td><td>' + pH_hsv + '</td></tr><tr><td>Blood</td><td>' + hemoglobin_hsv + '</td></tr><tr><td>Glucose</td><td>' + glucose_hsv + '</td></tr></tbody></table><button id="save_results" class="action" style="position:relative; left:20%; width:200px;" onclick="add()">SAVE TO DATABASE</button>');
+    $('#resultsTable_container').show();
+    $( '#resultsTable' ).append('<table class="table table-striped"><tbody><tr><td>Nitrite</td><td>' + nitrite_hsv + ' μmol/L</td></tr><tr><td>Protein</td><td>' + protein_hsv + ' mg/dl</td></tr><tr><td>pH</td><td>' + pH_hsv + '</td></tr><tr><td>Blood</td><td>' + hemoglobin_hsv + ' μg/L</td></tr><tr><td>Glucose</td><td>' + glucose_hsv + ' mg/dl</td></tr></tbody></table><br><button id="save_results" class="action" style="position:relative; left:20%; width:200px;" onclick="add()">SAVE TO DATABASE</button>');
 }
 
 //Convert RGB to HSV
@@ -145,19 +148,19 @@ function rgb2hsv (marker, r, g, b) {
     answer = "lol u lose";
     switch(marker) {
     case "glucose":   
-        var answer = findConcentration(computedH, computedS, computedV, glucose_equationH, glucose_equationS, glucose_equationV, glucose_cVal) + " g/L";
+        var answer = findConcentration(computedH, computedS, computedV, glucose_equationH, glucose_equationS, glucose_equationV, glucose_cVal) * 100;
         break;
     case "hemoglobin":
-        var answer = findConcentration(computedH, computedS, computedV, hemoglobin_equationH, hemoglobin_equationS, hemoglobin_equationV, hemoglobin_cVal) + " [UNIT]";
+        var answer = findConcentration(computedH, computedS, computedV, hemoglobin_equationH, hemoglobin_equationS, hemoglobin_equationV, hemoglobin_cVal);
         break;
     case "nitrite":
         var answer = findConcentration_Nitrite(computedH, computedS, computedV, nitrite_equationH, nitrite_equationS, nitrite_equationV, nitrite_cVal);
         break;
     case "pH":
-        var answer = findConcentration(computedH, computedS, computedV, pH_equationH, pH_equationS, pH_equationV, pH_cVal) + " [UNIT]";
+        var answer = findConcentration(computedH, computedS, computedV, pH_equationH, pH_equationS, pH_equationV, pH_cVal);
         break;
     case "protein":
-        var answer = findConcentration(computedH, computedS, computedV, protein_equationH, protein_equationS, protein_equationV, protein_cVal) + " g/L";
+        var answer = findConcentration(computedH, computedS, computedV, protein_equationH, protein_equationS, protein_equationV, protein_cVal) * 100;
         break;   
     default:
         alert("marker not loaded");
@@ -288,3 +291,6 @@ function findConcentration_Nitrite(Ha, Sa, Va, equationH, equationS, equationV, 
     }
     return (answer);
 }
+
+
+

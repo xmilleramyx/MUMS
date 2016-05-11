@@ -14,6 +14,22 @@
 	<link rel="stylesheet" href="css/style.css">  	
 
     <script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
+<<<<<<< Updated upstream
+=======
+      
+<style>
+#instructions h4{
+    padding: 20px 20px 20px 40px;
+    width: 24%;
+    float: left;
+    margin-left: 10px;
+    height: 250px;
+    font-size: 16px;
+    font-weight: 600;
+}
+    
+</style>    
+>>>>>>> Stashed changes
     
     
     
@@ -36,42 +52,10 @@
     }
 
 
-    function Results_href() {
+    function results_href() {
         window.location.href = 'testResults.html?key=' + res;  
     }
         
- 
-    function getTimeRemaining(endtime) {
-      var t = Date.parse(endtime) - Date.parse(new Date());
-      var seconds = Math.floor((t / 1000) % 60);
-      return {
-        'total': t,
-        'seconds': seconds
-      };
-    }
-
-    function initializeClock(id, endtime) {
-      var clock = document.getElementById(id);
-      var secondsSpan = clock.querySelector('.seconds');
-
-      function updateClock() {
-        var t = getTimeRemaining(endtime);
-        secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
-
-        if (t.total <= 0) {
-          clearInterval(timeinterval);
-          Results_href();
-        }
-      }
-
-      updateClock();
-      var timeinterval = setInterval(updateClock, 1000);
-    }
-
-    var timeInSeconds = 60;
-    var currentTime = Date.parse(new Date());
-    var deadline = new Date(currentTime + timeInSeconds*1000);
-    
 </script>
 
 </head>
@@ -86,42 +70,25 @@
         <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;&nbsp;VIEW PROFILE</button>  
 		  
 </div><!--end nav bar -->
-    
-<div class="main">    
-<div id="instructions" class="box">
+
+<br>
+<div class="main" >    
+<div id="instructions" style="position: relative; left: -25px; top: -25px;">
     <ol>
-        <li>Ensure test strip slide is cleaned from previous use</li>
-        <li>Carefully, dip new strip into urine sample</li>
-        <li>Place the strip into the strip slide, and slide into box</li>
-        <li>Promptly select the "Start Test" button to begin the timer</li>
-        <li>When the timer has finished, take your photo and recieve the results</li>
+        <h4 class="box"><li>Ensure the test strip slide is clean.</li><br>
+        <img src="img/clean_slide.png" alt="clean the slide" width="200"></h4>
+        <h4 class="box"><li>Position iPad on top of box.</li><br><br>
+        <img src="img/ipad.png" alt="box with iPad" width="200"></h4>
+        <h4 class="box"><li>Dip test strip into urine sample.</li><br>
+        <img src="img/pee.jpg" alt="strip in urine sample" width="200"></h4>
+        <h4 class="box"><li>Place strip into slide and push slide into box.</li><br>
+        <img src="img/box_iPad.png" alt="box with strip" width="200"></h4>
+        </div>
     </ol>
     <br>
-    
-    <button type="button" class="action" onclick="startTimer()">START TEST</button>
-    
+    <button class="action" onclick="results_href()" style="position:relative; left: 43.5%">CONTINUE</button>
 </div>
 </div>
-
-<br><br>    
-<div style="position: relative; top:100px;">      
-    <div id="clockdiv">
-      <div>
-            <span class="seconds"></span>
-            <div class="smalltext">Seconds</div>
-      </div>
-            <p class="smalltext">Please wait 60 seconds for the strip to develop</p>
-            <button type="button" class="action" onclick="Results_href()">Skip</button>
-
-    </div><!--end clockdiv-->
-</div><!--container-->    
-<script>      
-    function startTimer(){
-            $("#instructions").hide();
-            $("#clockdiv").show();
-            initializeClock('clockdiv', deadline);
-    }
-</script>  
 
 </body>
 </html>
