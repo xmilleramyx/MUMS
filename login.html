@@ -36,6 +36,16 @@
 
 
   </div>
+
+    
+    <div id="successBox" class="alert alert-success fade in" style="display:none">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Success!</strong> You have created a new user account.
+    </div>
+    <div id="failureBox" class="alert alert-danger fade in" style="display:none">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Oh Snap!</strong> Login Failed.
+    </div>
 </div>
     
 <script>
@@ -56,6 +66,8 @@
 
             } else {
                 console.log("Login Failed!", error);
+                showFailure();
+                
             }
         });
         return false;
@@ -72,6 +84,7 @@
                         alert(error);
                     } else {
                         console.log("Successfully created user account with uid:", userData.uid);
+                        showSuccess();
                         window.location.href = 'login.html';
                     }
                 });
@@ -80,6 +93,15 @@
     function toggleViews(){
         $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
     };
+    
+    function showSuccess(){
+        $("#successBox").show();   
+    }
+    
+    function showFailure(){
+        $("#failureBox").show();
+    }
+    
     
     </script>
 
