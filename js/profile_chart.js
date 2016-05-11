@@ -282,6 +282,11 @@ function loadCharts(){
                   pointStrokeColor: "#fff",
                   pointHighlightFill: "#fff",
                   pointHighlightStroke: "rgba(151,187,205,1)",
+                  options: {
+                        xAxes: [{
+                            display: false
+                        }]
+                  },
                   data: selectedY
               }              
           ]

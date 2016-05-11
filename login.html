@@ -13,14 +13,39 @@
   	<link rel="stylesheet" href="css/style.css">
     
     <script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
+</head>
 
-    <script>
-    var ref = new Firebase("https://mums.firebaseio.com");
-        
-        function checkLogin(ref){
+<body>
+
+    
+<div class="login-page">
+  <div class="form">
+    <form name="login" class="login-form">
+          <input type="email" id="userid" placeholder="email address"/>
+          <input type="password" id="pswrd" placeholder="password"/>
+          <button id="buttonLogin" value="Login">logdin</button>
+          <p class="message" onclick="toggleViews()">Not registered? <a href="#">Create an account</a></p>
+    </form>
+      
+    <form class="register-form">
+          <input type="text" id="makeuserid" placeholder="resgister with email"/>
+          <input type="password" id="makepswrd" placeholder="password"/>
+          <button id="buttonNew" value="Create Account">create</button>
+          <p class="message" onclick="toggleViews()" >Already registered? <a href="#">Sign In</a></p>
+    </form>
+
+
+  </div>
+</div>
+    
+<script>
+
+        var ref = new Firebase("https://mums.firebaseio.com");
+    
+        function checkLogin(){
             var userid = $('#userid').val();
             var pswrd = $('#pswrd').val(); 
-            console.log(userid, pswrd);
+            
             ref.authWithPassword({
                 email    : userid,
                 password : pswrd
@@ -28,14 +53,13 @@
                 if (error) {
                     alert("Login Failed!", error);
                 } else {
-                    alert("Authenticated successfully for: " + userid);
+                    console.log("Authenticated successfully with payload:", authData);
                     window.location.href = 'Dashboard.html';
                 }
             });
         }
 
-        function createNew(ref) {
-            
+        function createNew() {
             var makeuserid = $('#makeuserid').val();
             var makepswrd = $('#makepswrd').val(); 
             ref.createUser({
@@ -46,48 +70,20 @@
                     if (error) {
                         alert(error);
                     } else {
-                        alert("Successfully created user account for: " + makeuserid);
+                        console.log("Successfully created user account with uid:", userData.uid);
                         window.location.href = 'login.html';
                     }
                 });
         }
-
-        function toggleViews(){
-          $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
-		 }
-        
-	</script>
-
- 
-</head>
-
-<body>
-<script>
     
-</script>
+    document.getElementById("buttonLogin").onclick = checkLogin;
+    document.getElementById("buttonNew").onclick = createNew;
+
+    function toggleViews(){
+        $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
+    };
     
-<div class="login-page">
-  <div class="form">
-    <form name="login" class="login-form">
-      <input type="text" id="userid" placeholder="email address"/>
-      <input type="password" id="pswrd" placeholder="password"/>
-      <button onclick="checkLogin(ref)" value="Login">login</button>
-      <p class="message" onclick="toggleViews()">Not registered? <a href="#">Create an account</a></p>
-    </form>
-      
-    <form class="register-form">
-      <input type="text" id="makeuserid" placeholder="resgister with email"/>
-      <input type="password" id="makepswrd" placeholder="password"/>
-      
-      <button onclick="createNew(ref)" value="Create Account">create</button>
-      <p class="message" onclick="toggleViews()" >Already registered? <a href="#">Sign In</a></p>
-    </form>
-
-
-  </div>
-</div>
-    
-
+    </script>
 
 
 </body>
