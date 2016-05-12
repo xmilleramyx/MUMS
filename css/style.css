@@ -398,8 +398,9 @@ button.action {
     width:100%;
 }
 
-#charts .selectable:active{
-  background-color: gray;
+#charts .selectable:active,
+#charts .selectable:hover{
+  background-color: rgba(255, 193, 123, 0.6);
 
 }
 

@@ -135,7 +135,7 @@ Chart.defaults.global = {
 
    
 
-var flag=1;  
+var flag=0;  
 var hemoglobinX = [];
 var hemoglobinY = [];
 var glucoseX = [];
@@ -150,8 +150,8 @@ var selectedX = [];
 var selectedY = [];
 
 //temporary selction
-selectedX = nitriteX;
-selectedY = nitriteY;
+selectedX = hemoglobinX;
+selectedY = hemoglobinY;
 
 function loadCharts(){
     var chartRef = myDataRef.child("tests");
@@ -187,12 +187,12 @@ function loadCharts(){
           datasets: [
               {
                   label: "Proteins",
-                  fillColor: "rgba(239, 162, 26, 0.5)",
-                  strokeColor: "rgba(215, 146, 0, 0.9)",
-                  pointColor: "rgba(239, 162, 26, 0.5)",
-                  pointStrokeColor: "#fff",
-                  pointHighlightFill: "#fff",
-                  pointHighlightStroke: "rgba(215, 146, 0, 0.9)",
+                    fillColor: "rgba(232, 233, 232, 0.8)",
+                    strokeColor: "rgba(207, 209, 211, 1)",
+                    pointColor: "rgba(255, 254, 255, 0.8)",
+                    pointStrokeColor: "rgba(207, 209, 211, 1)",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(207, 209, 211, 1)",
                   data: proteinY
               }
           ]
@@ -206,10 +206,10 @@ function loadCharts(){
                 
                   type:"bar",
                   label: "Nitrites",
-                  fillColor: "rgba(239, 162, 26, 0.5)",
-                  strokeColor: "rgba(215, 146, 0, 0.9)",
-                  highlightFill: "rgba(220,220,220,0.75)",
-                  highlightStroke: "rgba(215, 146, 0, 0.9)",
+                  fillColor: "rgba(232, 233, 232, 0.8)",
+                    strokeColor: "rgba(207, 209, 211, 1)",
+                  highlightFill: "#fff",
+                  highlightStroke: "rgba(207, 209, 211, 1)",
                   data: nitriteY,
 
               }]
@@ -223,12 +223,12 @@ function loadCharts(){
           datasets: [
               {
                   label: "Hemoglobin",
-                  fillColor: "rgba(239, 162, 26, 0.5)",
-                  strokeColor: "rgba(215, 146, 0, 0.9)",
-                  pointColor: "rgba(239, 162, 26, 0.5)",
-                  pointStrokeColor: "#fff",
-                  pointHighlightFill: "#fff",
-                  pointHighlightStroke: "rgba(215, 146, 0, 0.9)",
+                    fillColor: "rgba(232, 233, 232, 0.8)",
+                    strokeColor: "rgba(207, 209, 211, 1)",
+                    pointColor: "rgba(255, 254, 255, 0.8)",
+                    pointStrokeColor: "rgba(207, 209, 211, 1)",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(207, 209, 211, 1)",
                   data: hemoglobinY
               }             
           ]
@@ -242,10 +242,10 @@ function loadCharts(){
           datasets: [
               {
                   label: "Glucose",
-                  fillColor: "rgba(239, 162, 26, 0.5)",
-                  strokeColor: "rgba(215, 146, 0, 0.9)",
-                  highlightFill: "rgba(220,220,220,0.75)",
-                  highlightStroke: "rgba(220,220,220,1)",
+                  fillColor: "rgba(232, 233, 232, 0.8)",
+                    strokeColor: "rgba(207, 209, 211, 1)",
+                  highlightFill: "#fff",
+                  highlightStroke: "rgba(207, 209, 211, 1)",
                   data: glucoseY
               }              
           ]
@@ -258,12 +258,12 @@ function loadCharts(){
           datasets: [
               {
                   label: "pH",
-                  fillColor: "rgba(239, 162, 26, 0.5)",
-                  strokeColor: "rgba(215, 146, 0, 0.9)",
-                  pointColor: "rgba(239, 162, 26, 0.5)",
-                  pointStrokeColor: "#fff",
-                  pointHighlightFill: "#fff",
-                  pointHighlightStroke: "rgba(215, 146, 0, 0.9)",
+                    fillColor: "rgba(232, 233, 232, 0.8)",
+                    strokeColor: "rgba(207, 209, 211, 1)",
+                    pointColor: "rgba(255, 254, 255, 0.8)",
+                    pointStrokeColor: "rgba(207, 209, 211, 1)",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(207, 209, 211, 1)",
                   data: pHY
               }              
           ]
@@ -275,12 +275,12 @@ var selectedData = {
         labels: selectedX,
         datasets: [{
             label: "Selected",
-            fillColor: "rgba(239, 162, 26, 0.5)",
-            strokeColor: "rgba(215, 146, 0, 0.9)",
-            pointColor: "rgba(239, 162, 26, 0.5)",
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(215, 146, 0, 0.9)",
+                    fillColor: "rgba(255, 193, 123, 0.6)",
+                    strokeColor: "rgba(255, 94, 40, 0.6)",
+                    pointColor: "rgba(255, 254, 255, 0.8)",
+                    pointStrokeColor: "rgba(207, 209, 211, 1)",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(207, 209, 211, 1)",
             data: selectedY
         }]
 }
@@ -290,6 +290,8 @@ var selectedData = {
 var mySelectedChart =[];
 function createTables(){
 
+    
+        
       // Get the context of the canvas elements we want to select
       var Hctx = document.getElementById("hemoglobinChart").getContext("2d");
       var Gctx = document.getElementById("glucoseChart").getContext("2d");
@@ -311,13 +313,20 @@ function createTables(){
         mySelectedChart = new Chart(Selctx).Line(selectedData, {showScale:true, showTooltips: true});
     }
     else{
-        mySelectedChart = new Chart(Selctx).Bar(selectedData, {showScale:true, showTooltips: true});
+        mySelectedChart = new Chart(Selctx).Bar(selectedData, {
+            showScale:true, 
+            showTooltips: true, 
+            barShowStroke: false,        
+            responsive: true,
+        });
+            
+                             
     }
 
 
 };
 
-
+   
 
 
 
