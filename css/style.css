@@ -5,7 +5,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;      
   font-family:  "Lucida Sans Unicode", "Lucida Grande", sans-serif;
-  background-image: url("http://students.engr.scu.edu/~kkoenema/MUMS/img/background.png");
+  background-image: url("http://students.engr.scu.edu/~kkoenema/MUMS/img/background_darker.png");
   background-attachment: fixed;
 }
 
@@ -357,9 +357,7 @@ button.action {
 
 #editButton{
     position: relative;
-    float: right;
-    top: 80%;
-    right: 20%;
+    top: 20px;
 }
 
 
@@ -413,7 +411,7 @@ button.action {
 #details{
     position: relative;
     float: left;
-    margin: 0px 20px 20px 40px;
+    margin: 0px 0px 20px 20px;
     font-size: 16px;
     line-height: 50px;
     
@@ -426,7 +424,7 @@ button.action {
 }
 
 #profpic {
-  height: 100%;
+  width: 35%;
   float:left;
   /*overflow: hidden;
   border-radius: 50%;*/
