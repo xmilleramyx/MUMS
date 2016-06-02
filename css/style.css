@@ -5,7 +5,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;      
   font-family:  "Lucida Sans Unicode", "Lucida Grande", sans-serif;
-  background-image: url("http://students.engr.scu.edu/~kkoenema/MUMS/img/background_darker.png");
+  background-image: url("http://students.engr.scu.edu/~kkoenema/MUMS/img/background.jpg");*/
   background-attachment: fixed;
 }
 
@@ -100,10 +100,6 @@ button.action {
 
 #title2 {
     color: orange;
-}
-
-.table{
-
 }
 
 /*Timer*/

@@ -39,11 +39,11 @@ var str = location.search;
         }
 
         function editInfo(){
+            $("#details").css("line-height", "20px");
             $( '#editButton' ).text("");
-            $( '#editButton' ).append('<div style="position:relative; left:20%"><button class="action" onclick="updateInfo()">Update</button>  <button type="button" onclick="cancelUpdate()">Cancel</button><div>');
+            $( '#editButton' ).append('<div style="position:relative; left:20%"><button class="action" onclick="updateInfo()">UPDATE</button>  <button type="button" onclick="cancelUpdate()">CANCEL</button><div>');
             
             $("#patientInfo p").css("line-height", "100%");
-            $('#profpic').attr("src", "img/take_new_profpic.png");
             myDataRef.on('value', function(snapshot) {
                 var message = snapshot.val();
                 $( '#location' ).text("");
@@ -56,8 +56,9 @@ var str = location.search;
         }
         
         function updateInfo(){
+            $("#details").css("line-height", "50px");
             $( '#editButton' ).text("");
-            $( '#editButton' ).append('<button class="btn btn-default" onclick="editInfo()">Edit</button>');
+            $( '#editButton' ).append('<button class="action" onclick="editInfo()">EDIT INFO</button>');
             
             $("#patientInfo p").css("line-height", "300%");
             
@@ -75,8 +76,9 @@ var str = location.search;
         }
         
         function cancelUpdate(){
+            $("#details").css("line-height", "50px");
             $( '#editButton' ).text("");
-            $( '#editButton' ).append('<button class="action" onclick="editInfo()">Edit</button>');
+            $( '#editButton' ).append('<button class="action" onclick="editInfo()">EDIT INFO</button>');
             
             $("#patientInfo p").css("line-height", "300%");
             
@@ -117,6 +119,43 @@ var str = location.search;
             var lastTestRef = myDataRef.child("lastTestRef");
             lastTestRef.on('value', function(snapshot) {
                 var message = snapshot.val();
+                
+                var glucose_value = "hi", hemoglobin_value = "hi", protein_value = "hi";
+                var glucose_hsv = message.glucose;
+                var hemoglobin_hsv = message.hemoglobin;
+                var protein_hsv = message.protein;
+    
+    //Call calculate functions based on square position
+
+    if(glucose_hsv<100) 
+        glucose_value = "Negative"; 
+    else if(glucose_hsv>=100)
+        glucose_value = "Positive";
+
+    if(hemoglobin_hsv<8) 
+        hemoglobin_value = "Negative"; 
+    else if(hemoglobin_hsv>=8 && hemoglobin_hsv<21)
+        hemoglobin_value = "Trace";
+    else if(hemoglobin_hsv>=21 && hemoglobin_hsv<43)
+        hemoglobin_value = "+ (small)";
+    else if(hemoglobin_hsv>=43 && hemoglobin_hsv<80)
+        hemoglobin_value = "++ (moderate)";
+    else if(hemoglobin_hsv>=80)
+        hemoglobin_value = "+++ (large)";
+
+    if(protein_hsv<10) 
+        protein_value = "Negative"; 
+    else if(protein_hsv>=10 && protein_hsv<30)
+        protein_value = "Trace";
+    else if(protein_hsv>=30 && protein_hsv<100)
+        protein_value = "+";
+    else if(protein_hsv>=100 && protein_hsv<300)
+        protein_value = "++";
+    else if(protein_hsv>=300 && protein_hsv<2000)
+        protein_value = "+++";
+    else if(protein_hsv>=2000)
+        protein_value = "++++";
+                
                 if(message == "none"){                    
                     $( '#overviewTable' ).text("");
                     $( '#overviewTable' ).append("<div style='text-align:center; vertical-align:middle; position:relative; top:50px'><b>No tests saved for this patient.</b><br><br><button type='button' onclick='newtest_href()'><span class='glyphicon glyphicon-filter' aria-hidden='true'></span>&nbsp;&nbsp;NEW TEST</button> ");
@@ -124,7 +163,7 @@ var str = location.search;
                 else {
                     $( '#overviewTable' ).text("");
                     $('#recent_test_date').text(message.timeStamp);
-                    $( '#overviewTable' ).append('<table class="table table-striped"><tbody><tr><td>Nitrite</td><td>' + message.nitrite + ' μmol/L</td></tr><tr><td>Protein</td><td>' + message.protein + ' mg/dl</td></tr><tr><td>pH</td><td>' + message.pH + '</td></tr><tr><td>Blood</td><td>' + message.hemoglobin + ' μg/L</td></tr><tr><td>Glucose</td><td>' + message.glucose + ' mg/dl</td></tr></tbody></table>');
+                    $( '#overviewTable' ).append('<table class="table table-striped"><tbody><tr><td>Nitrite</td><td></td><td><b>' + message.nitrite + '</b></td></tr><tr><td>Protein</td><td>' + message.protein + ' mg/dl</td><td><b>' + protein_value + '</b></td></tr><tr><td>pH</td><td>' + message.pH + '</td><td></td></tr><tr><td>Blood</td><td>' + message.hemoglobin + '</td><td><b>' + hemoglobin_value + '</b></td></tr><tr><td>Glucose</td><td>' + message.glucose + ' mg/dl</td><td><b>' + glucose_value + '</b></td></tr></tbody></table>');
                 }
                 
             });
@@ -134,13 +173,48 @@ var str = location.search;
             var tableRef = DateRef.child(key);
             tableRef.on('value', function(snapshot) {
                 var message = snapshot.val();
+                var glucose_value = "hi", hemoglobin_value = "hi", protein_value = "hi";
+                var glucose_hsv = message.glucose;
+                var hemoglobin_hsv = message.hemoglobin;
+                var protein_hsv = message.protein;
+    
+    //Call calculate functions based on square position
+
+    if(glucose_hsv<100) 
+        glucose_value = "Negative"; 
+    else if(glucose_hsv>=100)
+        glucose_value = "Positive";
+
+    if(hemoglobin_hsv<8) 
+        hemoglobin_value = "Negative"; 
+    else if(hemoglobin_hsv>=8 && hemoglobin_hsv<21)
+        hemoglobin_value = "Trace";
+    else if(hemoglobin_hsv>=21 && hemoglobin_hsv<43)
+        hemoglobin_value = "+ (small)";
+    else if(hemoglobin_hsv>=43 && hemoglobin_hsv<80)
+        hemoglobin_value = "++ (moderate)";
+    else if(hemoglobin_hsv>=80)
+        hemoglobin_value = "+++ (large)";
+
+    if(protein_hsv<10) 
+        protein_value = "Negative"; 
+    else if(protein_hsv>=10 && protein_hsv<30)
+        protein_value = "Trace";
+    else if(protein_hsv>=30 && protein_hsv<100)
+        protein_value = "+";
+    else if(protein_hsv>=100 && protein_hsv<300)
+        protein_value = "++";
+    else if(protein_hsv>=300 && protein_hsv<2000)
+        protein_value = "+++";
+    else if(protein_hsv>=2000)
+        protein_value = "++++";
                 
                 var checkColor = $('#button' + key).css("background-color");
                 if(checkColor == "rgb(245, 245, 245)" || checkColor == "rgb(255, 255, 255)"){
                     $( '#button' + key ).css("background-color","rgb(128, 128, 128)");
                     $( '#button' + key ).css("color","white");
-            
-                    $( '#display_space' ).append('<div id="table' + key + '" class="box mult_table"><b>' + message.timeStamp + '</b><table class="table table-striped"><tbody><tr><td>Nitrite</td><td>' + message.nitrite + '</td></tr><tr><td>Protein</td><td>' + message.protein + ' mg/dl</td></tr><tr><td>pH</td><td>' + message.pH + '</td></tr><tr><td>Blood</td><td>' + message.hemoglobin + '</td></tr><tr><td>Glucose</td><td>' + message.glucose + ' mg/dl</td></tr></tbody></table></div>');
+
+                    $( '#display_space' ).append('<div id="table' + key + '" class="box mult_table"><b>' + message.timeStamp + '</b><table class="table table-striped"><tbody><tr><td>Nitrite</td><td></td><td><b>' + message.nitrite + '</b></td></tr><tr><td>Protein</td><td>' + message.protein + ' mg/dl</td><td><b>' + protein_value + '</b></td></tr><tr><td>pH</td><td>' + message.pH + '</td><td></td></tr><tr><td>Blood</td><td>' + message.hemoglobin + '</td><td><b>' + hemoglobin_value + '</b></td></tr><tr><td>Glucose</td><td>' + message.glucose + ' mg/dl</td><td><b>' + glucose_value + '</b></td></tr></tbody></table></div>');
                 }
                 else if(checkColor == "rgb(128, 128, 128)"){
                     $( '#button' + key ).css("background-color","rgb(255, 255, 255)");

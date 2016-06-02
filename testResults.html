@@ -112,7 +112,7 @@ function getTimeRemaining(endtime) {
     
 </head>
 
-<body onload="load_title(); startTimer();">
+<body onload="load_title(); startTimer(); start_arrays();">
     
     <!--Primary Nav-->
     <div class="header">  
@@ -134,7 +134,7 @@ function getTimeRemaining(endtime) {
             <div class="smalltext">seconds</div>
       </div>
             <p class="smalltext">Please wait 60 seconds for the strip to develop</p>
-            <button class="action" onclick="start_camera();">TAKE PHOTO</button>
+            <button class="action" onclick="start_camera(); style='font-size: 16px'">TAKE PHOTO</button>
 
     </div><!--end clockdiv-->
     
@@ -148,7 +148,7 @@ function getTimeRemaining(endtime) {
     </div>
     <br>
 
-    <div id="resultsTable_container" class="box" style="display:none; width: 30%; position: relative; left:35%">
+    <div id="resultsTable_container" class="box" style="display:none; width: 40%; position: relative; left:28.5%">
         <div id="resultsTable" class="table"><span style="color:orange; font-weight:bold; font-size: 18px">RESULTS</span></div>
     </div>
 </div>

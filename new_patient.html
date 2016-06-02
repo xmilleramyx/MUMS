@@ -42,8 +42,8 @@
         <br>
         <br>
         <br>
-            <input type='text' id='patient_fname'  placeholder='First Name'>
-            <input type='text' id='patient_lname' placeholder='Last Name'>
+        <input type='text' id='patient_fname'  placeholder='First Name'>
+        <input type='text' id='patient_lname' placeholder='Last Name'>
         <input type='text' id='location' placeholder='Location'>
         <input type='text' id='known_drug_allergies' placeholder='Known Drug Allergies'>
         <input type='text' id='medical_history' placeholder='Medical History'>
@@ -58,21 +58,50 @@
         var base64data;
       
         function add(){
+            var flag = 0;
             var patient_fname = $('#patient_fname').val();
             var patient_lname = $('#patient_lname').val();
             var location = $('#location').val();
-            var known_drug_allergies = $('#known_drug_allergies').val();
+            var known_drug_allergies = $('#known_drug_allergies').val();            
             var medical_history = $('#medical_history').val();
-            myDataRef.push({patient_fname: patient_fname, 
-                            patient_lname: patient_lname,
-                            location: location,
-                            known_drug_allergies: known_drug_allergies,
-                            medical_history: medical_history,
-                            prof_img: base64data,
-                            lastTestRef: "none"
-                            });
             
-            window.location.href='Dashboard.html';
+            if (/^[0-9a-zA-Z ]+$/.test(patient_fname)==0){
+                alert("Information not valid");
+                window.location.href='new_patient.html';
+            }
+            else if (/^[0-9a-zA-Z ]+$/.test(patient_lname)==0){
+                alert("Information not valid");
+                window.location.href='new_patient.html';
+            }
+            else if (/^[0-9a-zA-Z ]+$/.test(location)==0){
+                alert("Information not valid");
+                window.location.href='new_patient.html';
+            }
+            else if (/^[0-9a-zA-Z ]+$/.test(known_drug_allergies)==0){
+                alert("Information not valid");
+                window.location.href='new_patient.html';
+            }
+            else if (/^[0-9a-zA-Z ]+$/.test(medical_history)==0){
+                alert("Information not valid");
+                window.location.href='new_patient.html';
+            }
+            
+            if(flag==0) {
+                myDataRef.push({patient_fname: patient_fname, 
+                    patient_lname: patient_lname,
+                    location: location,
+                    known_drug_allergies: known_drug_allergies,
+                    medical_history: medical_history,
+                    prof_img: base64data,
+                    lastTestRef: "none"
+                });
+                window.location.href='Dashboard.html';
+            }
+            else if(flag==0){
+                alert("Can't add patient because of wrong information.");
+                window.location.href='new_patient.html';    
+            }
+            
         }
       
         function logout_href() {
